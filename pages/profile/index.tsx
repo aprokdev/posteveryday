@@ -1,12 +1,7 @@
 import Layout from '../../components/layout';
 
 function Profile() {
-    return (
-        <div className="profile">
-            Welcome to Profile!
-            <Layout />
-        </div>
-    );
+    return <Layout>Welcome to Profile!</Layout>;
 }
 
 export default Profile;

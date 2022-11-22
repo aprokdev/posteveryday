@@ -1,4 +1,6 @@
 build
+.next
+node_modules
 coverage
 *.yml
 *.json

@@ -1,7 +1,16 @@
-import s from './style.module.scss';
+import Header from '../header';
+import Footer from '../footer';
 
-function Layout() {
-    return <div className={s.layout} style={{ color: 'coral' }}>Welcome to Layout!</div>
+function Layout({ children }) {
+    return (
+        <>
+            <Header />
+            <main className="mx-auto max-w-7xl sm:px-6 lg:px-8 xs:px-4 pt-6 min-h-mch">
+                {children}
+            </main>
+            <Footer />
+        </>
+    );
 }
 
-export default Layout
+export default Layout;
