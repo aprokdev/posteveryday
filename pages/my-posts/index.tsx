@@ -1,7 +1,5 @@
-import Layout from '../../components/layout';
+import Feed from '../feed';
 
-function Feed() {
-    return <Layout>Welcome to Feed!</Layout>;
+export default function MyPosts() {
+    return <Feed />;
 }
-
-export default Feed;
