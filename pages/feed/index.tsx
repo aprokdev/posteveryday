@@ -27,20 +27,20 @@ function Feed() {
                 <Card img={money} marginRight />
                 <Card img={chemistry} marginRight />
                 <Card img={medicine} />
-                <Card img={sign} marginRight/>
+                <Card img={sign} marginRight />
                 <Card img={train} marginRight />
-                <Card img={sunset}  />
+                <Card img={sunset} />
                 <Card img={plant} marginRight />
                 <Card img={t} marginRight />
-                <Card img={rel}  />
-                <Card img={phone} marginRight/>
+                <Card img={rel} />
+                <Card img={phone} marginRight />
                 <Card img={train2} marginRight />
-                <Card img={hromosome}  />
-                <Card img={house}  marginRight/>
+                <Card img={hromosome} />
+                <Card img={house} marginRight />
                 <Card img={london} marginRight />
-                <Card img={canada}  />
-                <Card img={ocean}  marginRight/>
-                <Card img={shoe}  marginRight/>
+                <Card img={canada} />
+                <Card img={ocean} marginRight />
+                <Card img={shoe} marginRight />
             </div>
         </Layout>
     );

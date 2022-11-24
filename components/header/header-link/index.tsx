@@ -3,9 +3,9 @@ import { useRouter } from 'next/router';
 
 function HeaderLink({ href, children }) {
     const regularStyle =
-        'xs:block transition hover:no-underline text-stone-900 hover:text-white px-3 py-2 rounded-md text-sm font-medium';
+        'relative xs:block transition hover:no-underline text-stone-900 hover:text-white px-3 py-2 rounded-md text-sm font-medium';
     const selectedStyle =
-        'xs:block hover:no-underline bg-stone-500 text-white px-3 py-2 rounded-md text-sm font-medium';
+        'relative xs:block hover:no-underline bg-stone-500 text-white px-3 py-2 rounded-md text-sm font-medium';
     const router = useRouter();
     let style = regularStyle;
     if (router.asPath === href) {

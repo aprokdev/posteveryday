@@ -16,7 +16,11 @@ interface ICardProps {
 
 function Card({ img, marginRight }: ICardProps) {
     return (
-        <article className={`xs:w-full lg:w-5.5/12 xl:w-1.5/4 shadow-lg rounded-lg border-2 border-stone-300 overflow-hidden mb-8${marginRight ? ' lg:mr-8' : ''}`}>
+        <article
+            className={`xs:w-full lg:w-5.5/12 xl:w-1.5/4 shadow-lg rounded-lg border-2 border-stone-300 overflow-hidden mb-8${
+                marginRight ? ' lg:mr-8' : ''
+            }`}
+        >
             <div className="w-full relative h-60">
                 <Image
                     src={img}
