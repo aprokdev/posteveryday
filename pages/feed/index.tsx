@@ -24,23 +24,23 @@ function Feed() {
     return (
         <Layout>
             <div className="flex lg:justify-start flex-wrap w-full">
-                <Card img={money} marginRight />
-                <Card img={chemistry} marginRight />
+                <Card img={money} />
+                <Card img={chemistry} />
                 <Card img={medicine} />
-                <Card img={sign} marginRight />
-                <Card img={train} marginRight />
+                <Card img={sign} />
+                <Card img={train} />
                 <Card img={sunset} />
-                <Card img={plant} marginRight />
-                <Card img={t} marginRight />
+                <Card img={plant} />
+                <Card img={t} />
                 <Card img={rel} />
-                <Card img={phone} marginRight />
-                <Card img={train2} marginRight />
+                <Card img={phone} />
+                <Card img={train2} />
                 <Card img={hromosome} />
-                <Card img={house} marginRight />
-                <Card img={london} marginRight />
+                <Card img={house} />
+                <Card img={london} />
                 <Card img={canada} />
-                <Card img={ocean} marginRight />
-                <Card img={shoe} marginRight />
+                <Card img={ocean} />
+                <Card img={shoe} />
             </div>
         </Layout>
     );

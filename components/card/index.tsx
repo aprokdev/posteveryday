@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import stalkerImg from '../../public/stalker2.jpg';
+import s from './style.module.scss';
 
 type StaticImageData = {
     src: string;
@@ -11,17 +11,14 @@ type StaticImageData = {
 
 interface ICardProps {
     img: StaticImageData;
-    marginRight?: boolean;
 }
 
-function Card({ img, marginRight }: ICardProps) {
+function Card({ img }: ICardProps) {
     return (
         <article
-            className={`xs:w-full lg:w-5.5/12 xl:w-1.5/4 shadow-lg rounded-lg border-2 border-stone-300 overflow-hidden mb-8${
-                marginRight ? ' lg:mr-8' : ''
-            }`}
+            className={`xs:w-full md:w-5.5/12 xl:w-1.5/4 shadow-lg rounded-lg border-2 border-stone-300 overflow-hidden mb-8 ${s.nthChild} bg-stone-100`}
         >
-            <div className="w-full relative h-60">
+            <div className="w-full relative h-48">
                 <Image
                     src={img}
                     alt="Picture of the author"
@@ -33,9 +30,13 @@ function Card({ img, marginRight }: ICardProps) {
                 />
             </div>
 
-            <div className="p-4 lg:p-8 prose prose-sm prose-h1:font-semibold">
-                <h1 className="">Garlic bread with cheese: What the science tells us</h1>
-                <p>
+            <div className="max-w-full p-4 lg:p-6 prose prose-sm prose-h1:font-semibold">
+                <div className="flex justify-between mb-4">
+                    <span className="text-xs">Anton Prokopenko</span>
+                    <span className="text-xs">24.11.2022</span>
+                </div>
+                <h1 className="mb-2">Garlic bread with cheese: What the science tells us</h1>
+                <p className={`${s.linesClip} ${s.boxOrient}`}>
                     For years parents have espoused the health benefits of eating garlic bread with
                     cheese to their children, with the food earning such an iconic status in our
                     culture that kids will often dress up as warm, cheesy loaf for Halloween.

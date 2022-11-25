@@ -1,0 +1,32 @@
+.nthChild {
+    @media (min-width: 768px) {
+        margin-right: 4%;
+        &:nth-child(2n) {
+            margin-right: 0;
+        }
+    }
+    @media (min-width: 1280px) {
+        margin-right: 2%;
+        &:nth-child(2n) {
+            margin-right: 2%;
+        }
+        &:nth-child(3n) {
+            margin-right: 0;
+        }
+    }
+}
+
+.linesClip {
+    /* autoprefixer: on */
+    display: block;
+    height: 108px;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.boxOrient {
+    /* autoprefixer: off */
+    -webkit-box-orient: vertical;
+}
