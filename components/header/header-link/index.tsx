@@ -1,7 +1,13 @@
 import React from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-function HeaderLink({ href, children }) {
+interface IHeaderLinkProps {
+    href: string;
+    children: React.ReactNode;
+}
+
+export default function HeaderLink({ href, children }: IHeaderLinkProps) {
     const regularStyle =
         'relative xs:block transition hover:no-underline text-stone-900 hover:text-stone-500 px-3 py-2 rounded-md text-sm font-medium';
     const selectedStyle =
@@ -13,10 +19,8 @@ function HeaderLink({ href, children }) {
     }
 
     return (
-        <a href={href} className={style}>
+        <Link href={href} className={style}>
             {children}
-        </a>
+        </Link>
     );
 }
-
-export default HeaderLink;

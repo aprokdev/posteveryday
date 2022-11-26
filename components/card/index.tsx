@@ -35,8 +35,10 @@ function Card({ img }: ICardProps) {
                     <span className="text-xs">Anton Prokopenko</span>
                     <span className="text-xs">24.11.2022</span>
                 </div>
-                <h1 className="mb-2">Garlic bread with cheese: What the science tells us</h1>
-                <p className={`${s.linesClip} ${s.boxOrient}`}>
+                <h1 className={`mb-2 ${s.linesClipHeader} ${s.boxOrient}`}>
+                    Garlic bread with cheese: What the science tells us tells us tells us
+                </h1>
+                <p className={`${s.linesClipText} ${s.boxOrient}`}>
                     For years parents have espoused the health benefits of eating garlic bread with
                     cheese to their children, with the food earning such an iconic status in our
                     culture that kids will often dress up as warm, cheesy loaf for Halloween.

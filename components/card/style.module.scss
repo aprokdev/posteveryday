@@ -16,14 +16,24 @@
     }
 }
 
-.linesClip {
+.linesClipHeader,
+.linesClipText {
     /* autoprefixer: on */
     display: block;
-    height: 108px;
+    height: 81px;
     display: -webkit-box;
-    -webkit-line-clamp: 4;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.linesClipHeader {
+    height: 81px;
+    -webkit-line-clamp: 2;
+}
+
+.linesClipText {
+    height: 108px;
+    -webkit-line-clamp: 4;
 }
 
 .boxOrient {

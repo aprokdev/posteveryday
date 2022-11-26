@@ -114,7 +114,7 @@ function Header() {
                                         <svg
                                             viewBox="0 0 330.49641693811066 95.21436007369684"
                                             preserveAspectRatio="xMidYMid meet"
-                                            className="css-k1x8l0"
+                                            className="w-full block grow"
                                             id="edfbfaee"
                                         >
                                             <defs id="SvgjsDefs1633"></defs>
@@ -142,7 +142,7 @@ function Header() {
                             <div>
                                 <button
                                     type="button"
-                                    className="flex rounded-full bg-stone-800 text-sm focus:outline-none focus:ring-2 focus:ring-white"
+                                    className="flex rounded-full bg-stone-800 text-sm focus:outline-none focus:ring-1 focus:ring-stone-900"
                                     id="user-menu-button"
                                     aria-expanded="false"
                                     aria-haspopup="true"
