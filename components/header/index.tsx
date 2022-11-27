@@ -40,12 +40,12 @@ function Header() {
 
     return (
         <nav
-            className="w-screen min-w-375 bg-stone-100 z-20 shadow-xl transition ease-in"
+            className="w-screen lg:w-full min-w-375 bg-stone-100 z-20 shadow-xl transition ease-in"
             style={style}
             ref={headerRef}
         >
             <div className="relative mx-auto px-2 sm:px-6 lg:px-8">
-                <div className="w-screen right-0 left-0 h-full flex absolute justify-center sm:hidden z-10">
+                <div className="w-screen lg:w-full right-0 left-0 h-full flex absolute justify-center sm:hidden z-10">
                     <a href="/" className="w-24 flex items-stretch">
                         <svg
                             viewBox="0 0 330.49641693811066 95.21436007369684"
