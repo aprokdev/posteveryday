@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import { useInView } from 'react-intersection-observer';
 import s from './style.module.scss';
 
 type StaticImageData = {
@@ -14,9 +15,20 @@ interface ICardProps {
 }
 
 function Card({ img }: ICardProps) {
+    const { ref, inView } = useInView({
+        threshold: 0.005,
+    });
+
+    const flagRef = React.useRef(false);
+
+    const animationClassName = `transition-top-opacity duration-500 ease-in ${
+        inView || flagRef.current ? 'opacity-100 top-0' : 'opacity-0 top-12'
+    }`;
+
     return (
         <article
-            className={`xs:w-full md:w-5.5/12 xl:w-1.5/4 shadow-lg rounded-lg border-2 border-stone-300 overflow-hidden mb-8 ${s.nthChild} bg-stone-100`}
+            ref={ref}
+            className={`relative xs:w-full md:w-5.5/12 xl:w-1.5/4 shadow-lg rounded-lg border-2 border-stone-300 overflow-hidden mb-8 ${s.nthChild} bg-stone-100`}
         >
             <div className="w-full relative h-48">
                 <Image

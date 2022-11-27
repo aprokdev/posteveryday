@@ -12,6 +12,9 @@ module.exports = {
             minWidth: {
                 375: '375px',
             },
+            transitionProperty: {
+                'top-opacity': 'top, opacity',
+            },
         },
         screens: {
             xs: '0px',
