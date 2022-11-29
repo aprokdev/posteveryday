@@ -27,8 +27,8 @@ export default function Card({ img }: ICardProps) {
         flagRef.current = true;
     }
 
-    const animationClassName = `transition-top-opacity duration-500 ease-in ${changableClasses}`;
-    // const animationClassName = '';
+    // const animationClassName = `transition-top-opacity duration-500 ease-in ${changableClasses}`;
+    const animationClassName = '';
 
     return (
         <article

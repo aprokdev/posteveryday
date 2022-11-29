@@ -1,9 +1,9 @@
 import React from 'react';
 
 export function useDropdown() {
-    const [isVisible, setVisiability] = React.useState(false);
-    const openBtnRef = React.useRef();
-    const popupRef = React.useRef();
+    const [isVisible, setVisiability] = React.useState<boolean>(false);
+    const openBtnRef = React.useRef<HTMLButtonElement>();
+    const popupRef = React.useRef<HTMLDivElement>();
 
     React.useEffect(() => {
         function handleClickOutside({ target }) {

@@ -40,7 +40,7 @@ export function Humburger({ color = '#000' }) {
     );
 }
 
-export function Close({ color = '#111'}) {
+export function Close({ color = '#111' }) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"

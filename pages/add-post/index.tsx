@@ -6,7 +6,7 @@ function AddPost() {
     const [value, setValue] = React.useState('');
     return (
         <Layout>
-            <Input value={value} onChange={({ target }) => setValue(target.value)} />           
+            <Input value={value} onChange={({ target }) => setValue(target.value)} />
         </Layout>
     );
 }
