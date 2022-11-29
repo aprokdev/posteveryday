@@ -4,7 +4,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prettify": "npx prettier --write ."
+    "prettify": "npx prettier --write .",
+    "eslint": "npx eslint ./src --ext .ts,.tsx"
   },
   "dependencies": {
     "next": "^13.0.3",

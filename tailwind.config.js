@@ -14,6 +14,7 @@ module.exports = {
             },
             transitionProperty: {
                 'top-opacity': 'top, opacity',
+                'top': 'top',
             },
         },
         screens: {

@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Footer() {
+export default function Footer() {
     return (
         <footer className="bg-stone-400">
             <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -13,5 +13,3 @@ function Footer() {
         </footer>
     );
 }
-
-export default Footer;

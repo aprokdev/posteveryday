@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-interface IHeaderLinkProps {
+export interface IHeaderLinkProps {
     href: string;
     children: React.ReactNode;
 }

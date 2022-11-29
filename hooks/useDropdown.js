@@ -1,7 +1,7 @@
 import React from 'react';
 
 export function useDropdown() {
-    const [isVisible, setVisiability] = React.useState(false);
+    const [isVisible, setVisiability] = React.useState<boolean>(false);
     const openBtnRef = React.useRef();
     const popupRef = React.useRef();
 

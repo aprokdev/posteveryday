@@ -14,7 +14,7 @@ interface ICardProps {
     img: StaticImageData;
 }
 
-function Card({ img }: ICardProps) {
+export default function Card({ img }: ICardProps) {
     const { ref, inView } = useInView({
         threshold: 0.005,
     });
@@ -27,13 +27,13 @@ function Card({ img }: ICardProps) {
         flagRef.current = true;
     }
 
-    // const animationClassName = `transition-top-opacity duration-500 ease-in ${changableClasses}`;
-    const animationClassName = '';
+    const animationClassName = `transition-top-opacity duration-500 ease-in ${changableClasses}`;
+    // const animationClassName = '';
 
     return (
         <article
             ref={ref}
-            className={`${animationClassName} relative xs:w-full md:w-5.5/12 xl:w-1.5/4 shadow-lg rounded-lg border-2 border-stone-300 overflow-hidden mb-8 ${s.nthChild} bg-stone-100`}
+            className={`${animationClassName} ${s.nthChild} relative xs:w-full md:w-5.5/12 xl:w-1.5/4 shadow-lg rounded-lg border-2 border-stone-300 overflow-hidden xs:mb-4 sm:mb-6 lg:mb-8 xl:mb-8 bg-stone-100`}
         >
             <div className="w-full relative h-48">
                 <Image
@@ -64,5 +64,3 @@ function Card({ img }: ICardProps) {
         </article>
     );
 }
-
-export default Card;
