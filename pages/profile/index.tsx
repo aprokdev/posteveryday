@@ -1,4 +1,4 @@
-import Layout from '../../components/layout';
+import Layout from '@components/layout';
 
 function Profile() {
     return <Layout>Welcome to Profile!</Layout>;

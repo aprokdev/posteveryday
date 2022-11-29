@@ -1,5 +1,5 @@
-import Layout from '../../components/layout';
-import Card from '../../components/card';
+import Layout from '@components/layout';
+import Card from '@components/card';
 import money from 'public/money.jpg';
 import chemistry from 'public/chemistry.jpg';
 import sign from 'public/sign.jpg';

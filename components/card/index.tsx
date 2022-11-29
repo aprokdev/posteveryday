@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { useInView } from 'react-intersection-observer';
+import { PhotoIcon } from '@heroicons/react/24/outline';
 import s from './style.module.scss';
 
 type StaticImageData = {
@@ -12,9 +13,10 @@ type StaticImageData = {
 
 interface ICardProps {
     img: StaticImageData;
+    animate?: boolean;
 }
 
-export default function Card({ img }: ICardProps) {
+export default function Card({ img, animate }: ICardProps) {
     const { ref, inView } = useInView({
         threshold: 0.005,
     });
@@ -22,28 +24,28 @@ export default function Card({ img }: ICardProps) {
     const flagRef = React.useRef<boolean>(false);
 
     let changableClasses = 'opacity-0 top-12';
-    if (inView || flagRef.current) {
+    if ((inView || flagRef.current) && animate) {
         changableClasses = 'opacity-100 top-0';
         flagRef.current = true;
     }
 
-    // const animationClassName = `transition-top-opacity duration-500 ease-in ${changableClasses}`;
-    const animationClassName = '';
+    let animationClassName = '';
+    if (animate) {
+        animationClassName = `transition-top-opacity duration-500 ease-in ${changableClasses}`;
+    }
 
     return (
         <article
             ref={ref}
             className={`${animationClassName} ${s.nthChild} relative xs:w-full md:w-5.5/12 xl:w-1.5/4 shadow-lg rounded-lg border-2 border-stone-300 overflow-hidden xs:mb-4 sm:mb-6 lg:mb-8 xl:mb-8 bg-stone-100`}
         >
-            <div className="w-full relative h-48">
+            <div className="w-full relative h-48 flex items-center justify-center bg-stone-200">
+                <PhotoIcon className="block w-24 h-24 text-stone-500" />
                 <Image
                     src={img}
                     alt="Picture of the author"
                     className="w-full h-40 object-cover object-center"
                     fill
-                    // height={100}
-                    // blurDataURL="data:..." automatically provided
-                    // placeholder="blur" // Optional blur-up while loading
                 />
             </div>
 

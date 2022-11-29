@@ -1,14 +1,15 @@
 import React from 'react';
 import HeaderLink from './header-link';
 import HeaderProfile from './header-profile';
-import { Logo, Humburger, Close } from '../../icons';
+import { Logo } from '@icons';
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 
 export default function Header() {
-    const [isMobileMenuIsOpened, setMobileMenuIsOpened] = React.useState(false);
+    const [isMobileMenuIsOpened, setMobileMenuIsOpened] = React.useState<boolean>(false);
 
     const headerRef = React.useRef<HTMLElement>();
 
-    const [isHeaderAttached, setAttached] = React.useState(false);
+    const [isHeaderAttached, setAttached] = React.useState<boolean>(false);
 
     React.useEffect(() => {
         // attaching header to top of viewport after scrolling page down
@@ -57,7 +58,11 @@ export default function Header() {
                             onClick={() => setMobileMenuIsOpened(!isMobileMenuIsOpened)}
                         >
                             <span className="sr-only">Open main menu</span>
-                            {isMobileMenuIsOpened ? <Close /> : <Humburger />}
+                            {isMobileMenuIsOpened ? (
+                                <XMarkIcon className="block w-full h-full text-stone-800" />
+                            ) : (
+                                <Bars3Icon className="block w-full h-full text-stone-800" />
+                            )}
                         </button>
                     </div>
                     <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">

@@ -1,5 +1,6 @@
 import React from 'react';
-import { useDropdown } from '../../../hooks/useDropdown';
+import { useDropdown } from '@hooks/useDropdown';
+import { UserCircleIcon } from '@heroicons/react/24/outline';
 
 export default function HeaderProfile() {
     const { openBtnRef, popupRef, isVisible, setVisiability } = useDropdown();
@@ -7,7 +8,7 @@ export default function HeaderProfile() {
         <div className="relative z-20">
             <button
                 type="button"
-                className="flex rounded-full bg-stone-800 text-sm focus:outline-none focus:ring-1 focus:ring-stone-900"
+                className="flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-stone-900"
                 id="user-menu-button"
                 aria-expanded="false"
                 aria-haspopup="true"
@@ -15,11 +16,14 @@ export default function HeaderProfile() {
                 ref={openBtnRef}
             >
                 <span className="sr-only">Open user menu</span>
-                <img
-                    className="h-10 w-10 rounded-full"
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                    alt=""
-                />
+                <span className="block relative h-10 w-10">
+                    <UserCircleIcon className="block w-full h-full text-stone-800" />
+                    <img
+                        className="absolute top-0 right-0 bottom-0 left-0 h-10 w-10 rounded-full"
+                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        alt=""
+                    />
+                </span>
             </button>
             {isVisible && (
                 <div
