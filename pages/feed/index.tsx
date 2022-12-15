@@ -21,6 +21,9 @@ import medicine from 'public/medicine.jpg';
 import shoe from 'public/shoe.jpg';
 import skyscrapper from 'public/skyscrapper.jpg';
 import kitchen from 'public/kitchen.jpg';
+import rainy from 'public/rainy.jpg';
+import airport from 'public/airport.jpg';
+import room from 'public/room.jpg';
 
 function Feed() {
     return (
@@ -38,13 +41,14 @@ function Feed() {
                 <Card img={phone} />
                 <Card img={train2} />
                 <Card img={hromosome} />
-                <Card img={house} />
+                <Card img={room} />
                 <Card img={london} />
                 <Card img={canada} />
                 <Card img={ocean} />
                 <Card img={shoe} />
                 <Card img={skyscrapper} />
                 <Card img={kitchen} />
+                <Card img={airport} />
             </div>
         </Layout>
     );

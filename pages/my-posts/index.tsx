@@ -30,23 +30,28 @@ import night from 'public/night.jpg';
 import woman from 'public/woman.jpg';
 import room from 'public/room.jpg';
 import clearSky from 'public/clear-sky.jpg';
-import browser from 'public/browser.jpg';
+import clearSky2 from 'public/clear-sky2.jpg';
+import chart from 'public/chart.jpg';
+import rainy from 'public/rainy.jpg';
+import airport from 'public/airport.jpg';
+import figures from 'public/figures.jpg';
 
 export default function MyPosts() {
     return (
         <Layout>
             <div className="grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8 xl:gap-6">
-                <Card img={browser} />
+                <Card img={airport} />
                 <Card img={clearSky} />
-                <Card img={door} />
+                <Card img={rainy} />
                 <Card img={cat} />
                 <Card img={city} />
+                <Card img={cancer} />
                 <Card img={room} />
                 <Card img={night} />
                 <Card img={woman} />
                 <Card img={kitchen} />
                 <Card img={skyscrapper} />
-                <Card img={plant} />
+                <Card img={figures} />
                 <Card img={canada} />
                 {/* <Card img={train}  />
                 <Card img={money}  />
