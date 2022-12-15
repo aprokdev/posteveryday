@@ -19,11 +19,13 @@ import sunset from 'public/sunset.jpg';
 import ocean from 'public/ocean.jpg';
 import medicine from 'public/medicine.jpg';
 import shoe from 'public/shoe.jpg';
+import skyscrapper from 'public/skyscrapper.jpg';
+import kitchen from 'public/kitchen.jpg';
 
 function Feed() {
     return (
         <Layout>
-            <div className="flex lg:justify-start flex-wrap w-full">
+            <div className="grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3 gap-4 sm:gap-6 md:gap-8 xl:gap-6">
                 <Card img={money} />
                 <Card img={chemistry} />
                 <Card img={medicine} />
@@ -41,6 +43,8 @@ function Feed() {
                 <Card img={canada} />
                 <Card img={ocean} />
                 <Card img={shoe} />
+                <Card img={skyscrapper} />
+                <Card img={kitchen} />
             </div>
         </Layout>
     );

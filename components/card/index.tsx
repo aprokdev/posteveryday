@@ -31,13 +31,13 @@ export default function Card({ img, animate }: ICardProps) {
 
     let animationClassName = '';
     if (animate) {
-        animationClassName = `transition-top-opacity duration-500 ease-in ${changableClasses}`;
+        animationClassName = `transition-top-opacity duration-500 ease-in ${changableClasses} `;
     }
 
     return (
         <article
             ref={ref}
-            className={`${animationClassName} ${s.nthChild} relative xs:w-full md:w-5.5/12 xl:w-1.5/4 shadow-lg rounded-lg border-2 border-stone-300 overflow-hidden xs:mb-4 sm:mb-6 lg:mb-8 xl:mb-8 bg-stone-100`}
+            className={`${animationClassName}relative shadow-lg rounded-lg border-2 border-stone-300 overflow-hidden bg-stone-100`}
         >
             <div className="w-full relative h-48 flex items-center justify-center bg-stone-200">
                 <PhotoIcon className="block w-24 h-24 text-stone-500" />

@@ -12,7 +12,7 @@ import plant from 'public/plant.jpg';
 import canada from 'public/canada.jpg';
 import t from 'public/t.jpg';
 import hromosome from 'public/hromosome.jpg';
-import butterfly from 'public/butterfly.jpg';
+import city from 'public/city.jpg';
 import london from 'public/london.jpg';
 import skyscrapper from 'public/skyscrapper.jpg';
 import sunset from 'public/sunset.jpg';
@@ -26,37 +26,41 @@ import door from 'public/door.jpg';
 import kitchen from 'public/kitchen.jpg';
 import meat from 'public/meat.jpg';
 import willa from 'public/willa.jpg';
+import night from 'public/night.jpg';
 import woman from 'public/woman.jpg';
+import room from 'public/room.jpg';
+import clearSky from 'public/clear-sky.jpg';
+import browser from 'public/browser.jpg';
 
 export default function MyPosts() {
     return (
         <Layout>
-            <div className="flex lg:justify-start flex-wrap w-full">
-                <Card img={butterfly} animate />
-                <Card img={cancer} animate />
-                <Card img={car} animate />
-                <Card img={cat} animate />
-                <Card img={door} animate />
-                <Card img={hromosome} animate />
-                <Card img={willa} animate />
-                <Card img={woman} animate />
-                <Card img={kitchen} animate />
-                <Card img={skyscrapper} animate />
-                <Card img={plant} animate />
-                <Card img={canada} animate />
-                {/* <Card img={train} animate />
-                <Card img={money} animate />
-                <Card img={chemistry} animate />
-                <Card img={medicine} animate />
-                <Card img={sign} animate />
-                <Card img={sunset} animate />
-                <Card img={t} animate />
-                <Card img={rel} animate />
-                <Card img={phone} animate />
-                <Card img={hromosome} animate />
-                <Card img={london} animate />
-                <Card img={ocean} animate />
-                <Card img={shoe} animate /> */}
+            <div className="grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8 xl:gap-6">
+                <Card img={browser} />
+                <Card img={clearSky} />
+                <Card img={door} />
+                <Card img={cat} />
+                <Card img={city} />
+                <Card img={room} />
+                <Card img={night} />
+                <Card img={woman} />
+                <Card img={kitchen} />
+                <Card img={skyscrapper} />
+                <Card img={plant} />
+                <Card img={canada} />
+                {/* <Card img={train}  />
+                <Card img={money}  />
+                <Card img={chemistry}  />
+                <Card img={medicine}  />
+                <Card img={sign}  />
+                <Card img={sunset}  />
+                <Card img={t}  />
+                <Card img={rel}  />
+                <Card img={phone}  />
+                <Card img={hromosome}  />
+                <Card img={london}  />
+                <Card img={ocean}  />
+                <Card img={shoe}  /> */}
             </div>
         </Layout>
     );
