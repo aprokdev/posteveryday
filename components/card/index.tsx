@@ -45,6 +45,8 @@ export default function Card({ img, animate }: ICardProps) {
                     src={img}
                     alt="Picture of the author"
                     className="w-full h-40 object-cover object-center"
+                    sizes="(min-width: 640px) 640px, (min-width: 768px) 768px,
+                    (min-width: 1024px) 1024px, (max-width: 1200px) 1200px"
                     fill
                 />
             </div>
