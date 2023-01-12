@@ -25,6 +25,10 @@ a:hover {
     text-decoration: underline;
 }
 
+.min-h {
+    min-height: calc(100vh + 1px);
+}
+
 img {
     max-width: 100%;
     display: block;
