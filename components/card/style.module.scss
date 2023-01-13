@@ -20,14 +20,14 @@
 .linesClipText {
     /* autoprefixer: on */
     display: block;
-    height: 81px;
+    height: 72px;
     display: -webkit-box;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .linesClipHeader {
-    height: 81px;
+    height: 72px;
     -webkit-line-clamp: 2;
 }
 

@@ -1,8 +1,9 @@
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { Logo } from '@icons';
+import Link from 'next/link';
 import React from 'react';
 import HeaderLink from './header-link';
 import HeaderProfile from './header-profile';
-import { Logo } from '@icons';
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 
 export default function Header() {
     const [isMobileMenuIsOpened, setMobileMenuIsOpened] = React.useState<boolean>(false);
@@ -44,9 +45,9 @@ export default function Header() {
         >
             <div className="relative mx-auto px-2 sm:px-6 lg:px-8">
                 <div className="w-screen lg:w-full right-0 left-0 h-full flex absolute justify-center sm:hidden z-10">
-                    <a href="/" className="w-24 flex items-stretch">
+                    <Link href="/" className="w-24 flex items-stretch">
                         <Logo />
-                    </a>
+                    </Link>
                 </div>
                 <div className="relative flex h-16 items-center justify-between">
                     <div className="absolute inset-y-0 left-0 flex items-center sm:hidden z-20">
@@ -69,9 +70,9 @@ export default function Header() {
                         <div className="hidden sm:block xl:grow">
                             <div className="flex space-x-4 relative w-full">
                                 <div className="xl:w-full flex xl:absolute top-1 justify-center">
-                                    <a href="/" className="w-24 flex center">
+                                    <Link href="/" className="w-24 flex center">
                                         <Logo />
-                                    </a>
+                                    </Link>
                                 </div>
 
                                 <HeaderLink href="/feed">Feed</HeaderLink>

@@ -3,17 +3,34 @@ import React from 'react';
 export type Ref = HTMLDivElement;
 
 interface IInputProps {
+    type?: string;
     value?: string;
-    onChange: Function;
+    onChange?: (e: React.SyntheticEvent<EventTarget>) => void;
+    placeholder?: string;
 }
 
-export default React.forwardRef<Ref, IInputProps>(function Input<Ref, IInputProps>(props, ref) {
+export default React.forwardRef<Ref, IInputProps>(function Input<Ref, IInputProps>(
+    { type = 'text', value, onChange, placeholder },
+    ref
+) {
     return (
         <input
-            className="block relative z-100 mt-20"
-            value={props.value}
-            onChange={props.onChange}
+            type={type}
+            className="
+                py-2
+                px-3
+                mt-1
+                block
+                w-full
+                rounded-md
+                bg-gray-100
+                border-transparent
+                focus:border-gray-500 focus:bg-white focus:ring-0s
+            "
+            value={value}
+            onChange={onChange}
             ref={ref}
+            placeholder={placeholder}
         />
     );
 });

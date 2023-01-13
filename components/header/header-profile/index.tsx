@@ -1,6 +1,7 @@
-import React from 'react';
-import { useDropdown } from '@hooks/useDropdown';
 import { UserCircleIcon } from '@heroicons/react/24/outline';
+import { useDropdown } from '@hooks/useDropdown';
+import Link from 'next/link';
+import React from 'react';
 
 export default function HeaderProfile() {
     const { openBtnRef, popupRef, isVisible, setVisiability } = useDropdown();
@@ -34,7 +35,7 @@ export default function HeaderProfile() {
                     tabIndex={-1}
                     ref={popupRef}
                 >
-                    <a
+                    <Link
                         href="profile"
                         className="hover:text-stone-500 transition block px-4 py-2 text-sm text-stone-700 hover:no-underline"
                         role="menuitem"
@@ -42,16 +43,16 @@ export default function HeaderProfile() {
                         id="user-menu-item-0"
                     >
                         Your Profile
-                    </a>
-                    <a
-                        href="#"
+                    </Link>
+                    <Link
+                        href="/login"
                         className="hover:text-stone-500 transition block px-4 py-2 text-sm text-stone-700 hover:no-underline"
                         role="menuitem"
                         tabIndex={-1}
                         id="user-menu-item-2"
                     >
                         Sign out
-                    </a>
+                    </Link>
                 </div>
             )}
         </div>
