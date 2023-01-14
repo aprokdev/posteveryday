@@ -30,6 +30,7 @@ export default function Header() {
         window.addEventListener('scroll', handleScroll, false);
         return () => {
             window.removeEventListener('scroll', handleScroll, false);
+            document.documentElement.classList.remove('pt-16');
         };
     }, [setAttached]);
 

@@ -10,7 +10,7 @@ interface IInputProps {
 }
 
 export default React.forwardRef<Ref, IInputProps>(function Input<Ref, IInputProps>(
-    { type = 'text', value, onChange, placeholder },
+    { type = 'text', value, onChange, placeholder, ...rest },
     ref
 ) {
     return (
@@ -31,6 +31,7 @@ export default React.forwardRef<Ref, IInputProps>(function Input<Ref, IInputProp
             onChange={onChange}
             ref={ref}
             placeholder={placeholder}
+            {...rest}
         />
     );
 });

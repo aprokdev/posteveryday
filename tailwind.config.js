@@ -16,6 +16,9 @@ module.exports = {
                 'top-opacity': 'top, opacity',
                 top: 'top',
             },
+            colors: {
+                red: 'red',
+            },
         },
         screens: {
             xs: '0px',
