@@ -16,7 +16,7 @@ interface ICardProps {
     animate?: boolean;
 }
 
-export default function Card({ img, animate }: ICardProps) {
+export default function Card({ img, animate }: ICardProps): JSX.Element {
     const { ref, inView } = useInView({
         threshold: 0.005,
     });
