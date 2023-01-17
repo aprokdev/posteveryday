@@ -9,26 +9,22 @@ import Input from '../input';
 
 interface IFormInputs {
     Email: string;
-    'First name': string;
-    'Last name': string;
     Password: string;
 }
 
-type Key = 'Email' | 'First name' | 'Last name' | 'Password';
+type Key = 'Email' | 'Password';
 
 const schema = yup
     .object({
         Email: yup.string().required().email(),
-        'First name': yup.string().required().min(2),
-        'Last name': yup.string().required().min(2),
         Password: yup.string().required().min(6),
     })
     .required();
 
-export default function RegisterForm(): JSX.Element {
+export default function LoginForm(): JSX.Element {
     const { reset, register, handleSubmit, formState } = useForm<IFormInputs>({
         resolver: yupResolver(schema),
-        defaultValues: { Email: '', 'First name': '', 'Last name': '', Password: '' },
+        defaultValues: { Email: '', Password: '' },
     });
     const { errors, isSubmitting, defaultValues } = formState;
     const onSubmit = useCallback(
@@ -38,20 +34,19 @@ export default function RegisterForm(): JSX.Element {
                 body[key.replace(/ /i, '_').toLowerCase()] = data[key];
             }
             try {
-                const res = await fetch('/api/register', {
+                const res = await fetch('/api/login', {
                     method: 'POST',
                     body: JSON.stringify(body),
                 }).then((res) => res.json());
-                reset();
-                console.log(JSON.parse(res.body));
+                alert('success');
+                // reset();
+                res.body && console.log(JSON.parse(res.body));
             } catch (error) {
                 alert(`error: ${error.message}`);
             }
         },
         [reset]
     );
-
-    console.log(errors);
 
     return (
         <form className="w-96 rounded-lg px-8 grid grid-cols-1" onSubmit={handleSubmit(onSubmit)}>
@@ -82,11 +77,11 @@ export default function RegisterForm(): JSX.Element {
                 disabled={isSubmitting}
                 className={`${isSubmitting ? ' opacity-80' : ''}`}
             >
-                Register
+                Login
             </Button>
 
             <span className="block text-center mt-8">
-                Ulready have an account? <Link href="/login">Sign in</Link>
+                Don't have an account? <Link href="/register">Sign up</Link>
             </span>
         </form>
     );
