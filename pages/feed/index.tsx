@@ -1,3 +1,5 @@
+import Card from '@components/card';
+import Layout from '@components/layout';
 import airport from 'public/airport.jpg';
 import canada from 'public/canada.jpg';
 import chemistry from 'public/chemistry.jpg';
@@ -22,8 +24,6 @@ import sunset from 'public/sunset.jpg';
 import t from 'public/t.jpg';
 import train2 from 'public/train2.jpg';
 import train from 'public/train.jpg';
-import Card from '@components/card';
-import Layout from '@components/layout';
 
 function Feed() {
     return (

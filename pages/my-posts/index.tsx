@@ -1,3 +1,5 @@
+import Card from '@components/card';
+import Layout from '@components/layout';
 import airport from 'public/airport.jpg';
 import canada from 'public/canada.jpg';
 import cancer from 'public/cancer.jpg';
@@ -32,8 +34,6 @@ import t from 'public/t.jpg';
 import train from 'public/train.jpg';
 import willa from 'public/willa.jpg';
 import woman from 'public/woman.jpg';
-import Card from '@components/card';
-import Layout from '@components/layout';
 
 export default function MyPosts() {
     return (

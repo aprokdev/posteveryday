@@ -1,6 +1,6 @@
+import Link from 'next/link';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Logo } from '@icons';
-import Link from 'next/link';
 import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -43,7 +43,6 @@ export default function RegisterForm(): JSX.Element {
                     body: JSON.stringify(body),
                 }).then((res) => res.json());
                 reset();
-                console.log(JSON.parse(res.body));
             } catch (error) {
                 alert(`error: ${error.message}`);
             }

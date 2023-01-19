@@ -1,5 +1,5 @@
-import { PhotoIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
+import { PhotoIcon } from '@heroicons/react/24/outline';
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
 import s from './style.module.scss';

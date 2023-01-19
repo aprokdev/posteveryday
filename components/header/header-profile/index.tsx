@@ -1,6 +1,6 @@
+import Link from 'next/link';
 import { UserCircleIcon } from '@heroicons/react/24/outline';
 import { useDropdown } from '@hooks/useDropdown';
-import Link from 'next/link';
 import React from 'react';
 
 export default function HeaderProfile() {

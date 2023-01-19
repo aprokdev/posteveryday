@@ -1,9 +1,9 @@
+import Input from '@components/input';
+import Layout from '@components/layout';
 import MarkdownIt from 'markdown-it';
 import React from 'react';
 import MdEditor from 'react-markdown-editor-lite';
 import 'react-markdown-editor-lite/lib/index.css';
-import Input from '@components/input';
-import Layout from '@components/layout';
 
 const mdParser = new MarkdownIt(/* Markdown-it options */);
 

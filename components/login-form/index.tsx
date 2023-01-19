@@ -1,9 +1,10 @@
+import Link from 'next/link';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Logo } from '@icons';
-import Link from 'next/link';
 import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
+import { login } from '../../frontend-api/api';
 import Button from '../button';
 import Input from '../input';
 
@@ -26,24 +27,13 @@ export default function LoginForm(): JSX.Element {
         resolver: yupResolver(schema),
         defaultValues: { Email: '', Password: '' },
     });
+
     const { errors, isSubmitting, defaultValues } = formState;
+
     const onSubmit = useCallback(
         async (data: IFormInputs) => {
-            let body = {};
-            for (const key in data) {
-                body[key.replace(/ /i, '_').toLowerCase()] = data[key];
-            }
-            try {
-                const res = await fetch('/api/login', {
-                    method: 'POST',
-                    body: JSON.stringify(body),
-                }).then((res) => res.json());
-                alert('success');
-                // reset();
-                res.body && console.log(JSON.parse(res.body));
-            } catch (error) {
-                alert(`error: ${error.message}`);
-            }
+            const response = await login(data);
+            console.log('onSubmit res: ', response);
         },
         [reset]
     );
