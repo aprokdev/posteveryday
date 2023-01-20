@@ -1,13 +1,14 @@
 import Link from 'next/link';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Logo } from '@icons';
+import { registerUser } from 'frontend-api';
 import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import Button from '../button';
 import Input from '../input';
 
-interface IFormInputs {
+export interface IRegisterFormInputs {
     Email: string;
     'First name': string;
     'Last name': string;
@@ -26,31 +27,18 @@ const schema = yup
     .required();
 
 export default function RegisterForm(): JSX.Element {
-    const { reset, register, handleSubmit, formState } = useForm<IFormInputs>({
+    const { reset, register, handleSubmit, formState } = useForm<IRegisterFormInputs>({
         resolver: yupResolver(schema),
         defaultValues: { Email: '', 'First name': '', 'Last name': '', Password: '' },
     });
     const { errors, isSubmitting, defaultValues } = formState;
     const onSubmit = useCallback(
-        async (data: IFormInputs) => {
-            let body = {};
-            for (const key in data) {
-                body[key.replace(/ /i, '_').toLowerCase()] = data[key];
-            }
-            try {
-                const res = await fetch('/api/register', {
-                    method: 'POST',
-                    body: JSON.stringify(body),
-                }).then((res) => res.json());
-                reset();
-            } catch (error) {
-                alert(`error: ${error.message}`);
-            }
+        async (data: IRegisterFormInputs) => {
+            const response = await registerUser(data);
+            console.log('onSubmit register', response);
         },
         [reset]
     );
-
-    console.log(errors);
 
     return (
         <form className="w-96 rounded-lg px-8 grid grid-cols-1" onSubmit={handleSubmit(onSubmit)}>

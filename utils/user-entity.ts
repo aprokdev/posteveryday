@@ -1,4 +1,3 @@
-// import { compare, hash } from 'bcryptjs';
 import { compare, hash } from 'bcryptjs';
 
 export interface IBody {
@@ -28,6 +27,9 @@ export class UserEntity implements IUserEntity {
     }
 
     async setPassword(password: string, salt: number): Promise<void> {
+        if (!salt) {
+            throw new Error('SALT was not provided');
+        }
         this.password = await hash(password, salt);
     }
 

@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
-import { sign } from 'jsonwebtoken';
-import signJWT from 'utils/signJWT';
+import signJWT from 'utils/sign-jwt';
 import { UserEntity } from '../../utils/user-entity';
 
 const prisma = new PrismaClient();

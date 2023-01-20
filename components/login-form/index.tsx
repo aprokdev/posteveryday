@@ -4,11 +4,11 @@ import { Logo } from '@icons';
 import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
-import { login } from '../../frontend-api/api';
+import { loginUser } from '../../frontend-api';
 import Button from '../button';
 import Input from '../input';
 
-interface IFormInputs {
+export interface ILoginFormInputs {
     Email: string;
     Password: string;
 }
@@ -23,7 +23,7 @@ const schema = yup
     .required();
 
 export default function LoginForm(): JSX.Element {
-    const { reset, register, handleSubmit, formState } = useForm<IFormInputs>({
+    const { reset, register, handleSubmit, formState } = useForm<ILoginFormInputs>({
         resolver: yupResolver(schema),
         defaultValues: { Email: '', Password: '' },
     });
@@ -31,8 +31,8 @@ export default function LoginForm(): JSX.Element {
     const { errors, isSubmitting, defaultValues } = formState;
 
     const onSubmit = useCallback(
-        async (data: IFormInputs) => {
-            const response = await login(data);
+        async (data: ILoginFormInputs) => {
+            const response = await loginUser(data);
             console.log('onSubmit res: ', response);
         },
         [reset]

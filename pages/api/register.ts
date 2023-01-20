@@ -6,18 +6,20 @@ const prisma = new PrismaClient();
 
 export default async function handler({ body }: NextApiRequest, res: NextApiResponse) {
     try {
-        const { email, first_name, last_name, password } = JSON.parse(body);
-        const user = new UserEntity({ email, first_name, last_name });
-        const salt = process.env.SALT;
-        if (!salt) {
-            throw new Error('SALT was not provided in config');
+        const { email, first_name, last_name, password } = body;
+        const response = await prisma.user.findUnique({ where: { email } });
+        if (response) {
+            return res
+                .status(401)
+                .json({ sucess: false, message: 'User with provided email is already exist' });
         }
-        await user.setPassword(password, Number(salt));
+        const user = new UserEntity({ email, first_name, last_name });
+        await user.setPassword(password, Number(process.env.SALT));
         const result = await prisma.user.create({ data: user });
-        if (result.id) {
+        if (result?.id) {
             return res.status(200).json({ success: true });
         }
     } catch (error) {
-        res.status(400).json({ body: JSON.stringify({ message: error.message }) });
+        res.status(400).json({ sucess: false, message: error.message });
     }
 }
