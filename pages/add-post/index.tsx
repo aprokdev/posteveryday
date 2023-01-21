@@ -1,4 +1,5 @@
 import dynamic from 'next/dynamic';
+import { decode as base64_decode, encode as base64_encode } from 'base-64';
 import MarkdownIt from 'markdown-it';
 import React from 'react';
 // import MdEditor from 'react-markdown-editor-lite';
@@ -25,20 +26,24 @@ function AddPost() {
 
     const [title, setTitle] = React.useState<string>('');
 
-    const toBase64 = (file): Promise<string | ArrayBuffer | Error> =>
-        new Promise((resolve, reject) => {
+    const toBase64 = (file): Promise<string | ArrayBuffer | Error> => {
+        return new Promise((resolve, reject) => {
+            console.log(file);
+
             const reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onload = () => resolve(reader.result);
             reader.onerror = (error) => reject(error);
         });
+    };
 
     const onImageUpload = React.useCallback(async (file): Promise<string | ArrayBuffer | Error> => {
-        return await toBase64(file);
+        const res = await toBase64(file);
+        console.log('res', res);
+        return res;
     }, []);
 
     function handleEditorChange({ html, text }) {
-        console.log('handleEditorChange text', text);
         console.log('handleEditorChange html', html);
     }
 
