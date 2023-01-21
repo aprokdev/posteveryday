@@ -1,5 +1,4 @@
 import dynamic from 'next/dynamic';
-import { decode as base64_decode, encode as base64_encode } from 'base-64';
 import MarkdownIt from 'markdown-it';
 import React from 'react';
 // import MdEditor from 'react-markdown-editor-lite';
