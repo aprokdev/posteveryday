@@ -1,13 +1,16 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, prisma } from '@prisma/client';
+import { database } from 'backend';
+import InversifyContainer from 'backend/inversify-config';
+import TYPES from 'backend/inversify-types';
+import { IDatabase } from 'backend/services/database/types';
 import { UserEntity } from '../../utils/user-entity';
-
-const prisma = new PrismaClient();
 
 export default async function handler({ body }: NextApiRequest, res: NextApiResponse) {
     try {
         const { email, first_name, last_name, password } = body;
-        const response = await prisma.user.findUnique({ where: { email } });
+        // const database = InversifyContainer.get<IDatabase>(TYPES.IDatabase);
+        const response = await database.user.findUnique({ where: { email } });
         if (response) {
             return res
                 .status(401)
@@ -15,7 +18,7 @@ export default async function handler({ body }: NextApiRequest, res: NextApiResp
         }
         const user = new UserEntity({ email, first_name, last_name });
         await user.setPassword(password, Number(process.env.SALT));
-        const result = await prisma.user.create({ data: user });
+        const result = await database.user.create({ data: user });
         if (result?.id) {
             return res.status(200).json({ success: true });
         }

@@ -5,8 +5,9 @@ import { registerUser } from 'frontend-api';
 import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
-import Button from '../button';
-import Input from '../input';
+import Button from '@components/button';
+import FormError from '@components/form/error';
+import Input from '@components/form/input';
 
 export interface IRegisterFormInputs {
     Email: string;
@@ -54,13 +55,7 @@ export default function RegisterForm(): JSX.Element {
                         disabled={isSubmitting}
                         aria-invalid={errors[key] ? 'true' : 'false'}
                     />
-                    <span
-                        className={`text-sm ${
-                            errors[key]?.message ? 'text-red' : 'text-transparent'
-                        }`}
-                    >
-                        {errors[key]?.message || 0}
-                    </span>
+                    <FormError>{errors[key]?.message}</FormError>
                 </label>
             ))}
 

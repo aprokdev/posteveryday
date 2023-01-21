@@ -4,9 +4,10 @@ import { Logo } from '@icons';
 import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
+import Button from '@components/button';
+import FormError from '@components/form/error';
+import Input from '@components/form/input';
 import { loginUser } from '../../frontend-api';
-import Button from '../button';
-import Input from '../input';
 
 export interface ILoginFormInputs {
     Email: string;
@@ -52,13 +53,7 @@ export default function LoginForm(): JSX.Element {
                         disabled={isSubmitting}
                         aria-invalid={errors[key] ? 'true' : 'false'}
                     />
-                    <span
-                        className={`text-sm ${
-                            errors[key]?.message ? 'text-red' : 'text-transparent'
-                        }`}
-                    >
-                        {errors[key]?.message || 0}
-                    </span>
+                    <FormError>{errors[key]?.message}</FormError>
                 </label>
             ))}
 

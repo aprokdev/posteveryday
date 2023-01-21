@@ -1,11 +1,16 @@
-import Input from '@components/input';
-import Layout from '@components/layout';
+import dynamic from 'next/dynamic';
 import MarkdownIt from 'markdown-it';
 import React from 'react';
-import MdEditor from 'react-markdown-editor-lite';
+// import MdEditor from 'react-markdown-editor-lite';
 import 'react-markdown-editor-lite/lib/index.css';
+import Input from '@components/form/input';
+import Layout from '@components/layout';
 
 const mdParser = new MarkdownIt(/* Markdown-it options */);
+
+const MdEditor = dynamic(() => import('react-markdown-editor-lite'), {
+    ssr: false,
+});
 
 // Finish!
 function handleEditorChange({ html, text }) {
@@ -18,7 +23,9 @@ function AddPost() {
         text: '![image](https://www.posteveryday.ca/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fchemistry.c2964d15.jpg&w=1920&q=75)',
     });
 
-    const toBase64 = (file) =>
+    const [title, setTitle] = React.useState<string>('');
+
+    const toBase64 = (file): Promise<string | ArrayBuffer | Error> =>
         new Promise((resolve, reject) => {
             const reader = new FileReader();
             reader.readAsDataURL(file);
@@ -26,7 +33,7 @@ function AddPost() {
             reader.onerror = (error) => reject(error);
         });
 
-    const onImageUpload = React.useCallback(async (file) => {
+    const onImageUpload = React.useCallback(async (file): Promise<string | ArrayBuffer | Error> => {
         return await toBase64(file);
     }, []);
 
@@ -38,12 +45,21 @@ function AddPost() {
     return (
         <Layout>
             {/* <h2 className="text-3xl">In development ¯\_(ツ)_/¯</h2> */}
-            <MdEditor
-                style={{ height: 'calc(100vh - 140px)' }}
-                renderHTML={(text) => mdParser.render(text)}
-                onChange={handleEditorChange}
-                onImageUpload={onImageUpload}
-            />
+            <label className="block">
+                <span className="text-gray-700">Title</span>
+                <Input value={title} onChange={({ target }) => setTitle(target.value)} autoFocus />
+                <span className={`text-sm text-transparent`}>Error</span>
+            </label>
+
+            <span className="block">
+                <span className="block text-gray-700 mb-4">Post body</span>
+                <MdEditor
+                    style={{ height: 'calc(100vh - 140px)' }}
+                    renderHTML={(text) => mdParser.render(text)}
+                    onChange={handleEditorChange}
+                    onImageUpload={onImageUpload}
+                />
+            </span>
         </Layout>
     );
 }

@@ -18,7 +18,7 @@ export async function post(path: string, data, options?: { headers: Headers }) {
         });
         return res.json();
     } catch (error) {
-        console.error(`login() error: ${error.message}`);
+        console.error(`post() error: ${error.message}`);
         return error;
     }
 }

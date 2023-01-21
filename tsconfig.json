@@ -23,7 +23,12 @@
       "@components/*": ["components/*"],
       "@icons": ["icons/index.tsx"],
       "@hooks/*": ["hooks/*"],
-    }
+    },
+    "types": [
+      "reflect-metadata"
+    ],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "include": [
     "next-env.d.ts",
