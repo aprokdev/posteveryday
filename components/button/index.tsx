@@ -8,6 +8,8 @@ const baseClassName = `
     text-center
     rounded-md
     bg-black
+    border-2
+    border-black
     hover:opacity-80 
     active:opacity-100 
     py-3 px-4 
