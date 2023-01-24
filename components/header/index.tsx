@@ -81,6 +81,8 @@ export default function Header() {
                                 <HeaderLink href="/my-posts">My posts</HeaderLink>
 
                                 <HeaderLink href="/add-post">Add post</HeaderLink>
+
+                                <HeaderLink href="/post">Post</HeaderLink>
                             </div>
                         </div>
                     </div>
@@ -98,6 +100,8 @@ export default function Header() {
                         <HeaderLink href="/my-posts">My posts</HeaderLink>
 
                         <HeaderLink href="/add-post">Add post</HeaderLink>
+
+                        <HeaderLink href="/post">Post</HeaderLink>
                     </div>
                 </div>
             )}

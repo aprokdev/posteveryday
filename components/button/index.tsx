@@ -1,7 +1,7 @@
 import { IButtonProps } from './types';
 
 const baseClassName = `
-    block mt-4
+    block
     shadow-lg
     duration-200
     cursor-pointer

@@ -1,5 +1,3 @@
-import Card from '@components/card';
-import Layout from '@components/layout';
 import airport from 'public/airport.jpg';
 import canada from 'public/canada.jpg';
 import cancer from 'public/cancer.jpg';
@@ -34,25 +32,29 @@ import t from 'public/t.jpg';
 import train from 'public/train.jpg';
 import willa from 'public/willa.jpg';
 import woman from 'public/woman.jpg';
+import Card from '@components/card';
+import Container from '@components/container';
+import Layout from '@components/layout';
 
 export default function MyPosts() {
     return (
         <Layout>
-            <div className="grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8 xl:gap-4">
-                <Card img={airport} />
-                <Card img={clearSky} />
-                <Card img={rainy} />
-                <Card img={cat} />
-                <Card img={city} />
-                <Card img={cancer} />
-                <Card img={room} />
-                <Card img={night} />
-                <Card img={woman} />
-                <Card img={kitchen} />
-                <Card img={skyscrapper} />
-                <Card img={figures} />
-                <Card img={canada} />
-                {/* <Card img={train}  />
+            <Container>
+                <div className="grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8 xl:gap-4">
+                    <Card img={airport} />
+                    <Card img={clearSky} />
+                    <Card img={rainy} />
+                    <Card img={cat} />
+                    <Card img={city} />
+                    <Card img={cancer} />
+                    <Card img={room} />
+                    <Card img={night} />
+                    <Card img={woman} />
+                    <Card img={kitchen} />
+                    <Card img={skyscrapper} />
+                    <Card img={figures} />
+                    <Card img={canada} />
+                    {/* <Card img={train}  />
                 <Card img={money}  />
                 <Card img={chemistry}  />
                 <Card img={medicine}  />
@@ -65,7 +67,8 @@ export default function MyPosts() {
                 <Card img={london}  />
                 <Card img={ocean}  />
                 <Card img={shoe}  /> */}
-            </div>
+                </div>
+            </Container>
         </Layout>
     );
 }

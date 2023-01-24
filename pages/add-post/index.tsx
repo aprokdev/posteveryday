@@ -1,69 +1,84 @@
-import dynamic from 'next/dynamic';
-import MarkdownIt from 'markdown-it';
+import { yupResolver } from '@hookform/resolvers/yup';
 import React from 'react';
-// import MdEditor from 'react-markdown-editor-lite';
-import 'react-markdown-editor-lite/lib/index.css';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
+import Button from '@components/button';
+import FormError from '@components/form/error';
+import FileInput from '@components/form/file-input';
 import Input from '@components/form/input';
 import Layout from '@components/layout';
+import MainContainer from '@components/main-container';
+import TinyEditor from '@components/tiny-editor';
 
-const mdParser = new MarkdownIt(/* Markdown-it options */);
-
-const MdEditor = dynamic(() => import('react-markdown-editor-lite'), {
-    ssr: false,
-});
-
-// Finish!
-function handleEditorChange({ html, text }) {
-    console.log('handleEditorChange', html, text);
+export interface IFormInputs {
+    Title: string;
+    Image: object;
 }
 
+const schema = yup
+    .object({
+        Title: yup.string().required().min(5),
+        Image: yup.mixed().required(),
+    })
+    .required();
+
 function AddPost() {
-    const [value, setValue] = React.useState({
-        html: '',
-        text: '![image](https://www.posteveryday.ca/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fchemistry.c2964d15.jpg&w=1920&q=75)',
+    const editorRef = React.useRef<any>();
+
+    const { register, handleSubmit, formState, watch } = useForm<IFormInputs>({
+        resolver: yupResolver(schema),
+        defaultValues: { Title: '', Image: null },
     });
 
-    const [title, setTitle] = React.useState<string>('');
+    const { errors, isSubmitting } = formState;
 
-    const toBase64 = (file): Promise<string | ArrayBuffer | Error> => {
-        return new Promise((resolve, reject) => {
-            console.log(file);
-
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = (error) => reject(error);
-        });
-    };
-
-    const onImageUpload = React.useCallback(async (file): Promise<string | ArrayBuffer | Error> => {
-        const res = await toBase64(file);
-        console.log('res', res);
-        return res;
+    const onSubmit = React.useCallback(async (data: IFormInputs) => {
+        let html = '';
+        if (editorRef.current) {
+            html = editorRef.current.getContent();
+        }
+        console.log('onSubmit res: ', { ...data, html });
     }, []);
-
-    function handleEditorChange({ html, text }) {
-        console.log('handleEditorChange html', html);
-    }
 
     return (
         <Layout>
-            {/* <h2 className="text-3xl">In development ¯\_(ツ)_/¯</h2> */}
-            <label className="block">
-                <span className="text-gray-700">Title</span>
-                <Input value={title} onChange={({ target }) => setTitle(target.value)} autoFocus />
-                <span className={`text-sm text-transparent`}>Error</span>
-            </label>
+            <div className="bg-gray-200 py-8">
+                <MainContainer>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <label className="block">
+                            <span className="text-gray-700">Post title</span>
+                            <Input
+                                {...register('Title')}
+                                disabled={isSubmitting}
+                                aria-invalid={errors['Title'] ? 'true' : 'false'}
+                                autoFocus
+                            />
+                            <FormError>{errors['Title']?.message}</FormError>
+                        </label>
 
-            <span className="block">
-                <span className="block text-gray-700 mb-4">Post body</span>
-                <MdEditor
-                    style={{ height: 'calc(100vh - 140px)' }}
-                    renderHTML={(text) => mdParser.render(text)}
-                    onChange={handleEditorChange}
-                    onImageUpload={onImageUpload}
-                />
-            </span>
+                        <label className="block">
+                            <span className="text-gray-700">Post image</span>
+                            <FileInput
+                                {...register('Image')}
+                                file={watch('Image')}
+                                disabled={isSubmitting}
+                                placeholder="Select image"
+                            />
+                            <FormError>{errors['Image']?.message}</FormError>
+                        </label>
+
+                        <span className="block">
+                            <span className="block text-gray-700 mb-1">Post body</span>
+                            <TinyEditor editorRef={editorRef} />
+                        </span>
+
+                        <Button type="submit" className="mt-8">
+                            Preview
+                        </Button>
+                    </form>
+                </MainContainer>
+            </div>
         </Layout>
     );
 }
