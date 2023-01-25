@@ -19,7 +19,7 @@ export interface IFormInputs {
 
 const schema = yup
     .object({
-        Title: yup.string().required().min(5),
+        Title: yup.string().required().min(20),
         Image: yup.mixed().required(),
     })
     .required();

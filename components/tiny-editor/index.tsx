@@ -1,9 +1,8 @@
 import { Editor } from '@tinymce/tinymce-react';
-import React, { useRef } from 'react';
 
-export default function TinyEditor({ editorRef, initialValue }) {
+export default function TinyEditor({ editorRef, initialValue = '<p>Write your post here...</p>' }) {
     return (
-        <>
+        <div className="bg-white min-h-500 shadow-inner" style={{ borderRadius: '10px' }}>
             <Editor
                 apiKey="8srmupem2vxdakc5vomuuu2hrn97ep4c78zupz4k5if90gjg"
                 onInit={(evt, editor) => (editorRef.current = editor)}
@@ -41,6 +40,6 @@ export default function TinyEditor({ editorRef, initialValue }) {
                         'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
                 }}
             />
-        </>
+        </div>
     );
 }

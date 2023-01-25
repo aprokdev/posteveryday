@@ -1,5 +1,3 @@
-import Image from 'next/image';
-import chemistry from 'public/chemistry.jpg';
 import { useEffect, useState } from 'react';
 import Button from '@components/button';
 import MainContainer from '@components/main-container';

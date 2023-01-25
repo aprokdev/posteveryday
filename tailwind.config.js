@@ -12,6 +12,9 @@ module.exports = {
             minWidth: {
                 375: '375px',
             },
+            minHeight: {
+                500: '500px',
+            },
             transitionProperty: {
                 'top-opacity': 'top, opacity',
                 top: 'top',
