@@ -4,7 +4,7 @@ import MainContainer from '@components/main-container';
 import s from './style.module.scss';
 
 export default function PostPreview({ image, title, html, backCallback }) {
-    const [URL, setURL] = useState(null);
+    const [url, setURL] = useState(null);
 
     useEffect(() => {
         setURL(URL.createObjectURL(image));
@@ -13,7 +13,7 @@ export default function PostPreview({ image, title, html, backCallback }) {
     return (
         <div className="min-h bg-grey-200">
             <div className="w-full overflow-hidden relative h-72 flex items-center justify-center bg-stone-200">
-                <img src={URL} alt="" className="block w-full object-cover" />
+                <img src={url} alt="" className="block w-full object-cover" />
             </div>
             <MainContainer>
                 <div className="mt-6">
