@@ -37,7 +37,7 @@ export default function Card({ img, animate }: ICardProps): JSX.Element {
     return (
         <article
             ref={ref}
-            className={`${animationClassName}relative shadow-lg border-2 border-stone-300 overflow-hidden bg-stone-100`}
+            className={`${animationClassName}relative shadow-lg border-2 border-stone-300 overflow-hidden bg-stone-100 rounded-md`}
         >
             <div className="w-full relative h-48 flex items-center justify-center bg-stone-200">
                 <PhotoIcon className="block w-24 h-24 text-stone-500" />

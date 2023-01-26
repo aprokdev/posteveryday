@@ -11,11 +11,11 @@ export default function LoginPage(): JSX.Element {
     return (
         <Layout>
             <div className="min-h bg-grey-200">
-                <div className="w-full relative h-64 flex items-center justify-center bg-stone-200">
+                <div className="w-full relative h-72 flex items-center justify-center bg-stone-200">
                     <Image
                         src={money}
                         alt="Picture of the author"
-                        className="w-full h-64 object-cover object-center"
+                        className="w-full h-72 object-cover object-center"
                         sizes="(min-width: 640px) 640px, (min-width: 768px) 768px,
                     (min-width: 1024px) 1024px, (max-width: 1200px) 1200px"
                         fill
