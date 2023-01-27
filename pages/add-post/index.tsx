@@ -17,6 +17,19 @@ export interface IFormInputs {
     Image: object;
 }
 
+const defaultTitle = 'What is Lorem Ipsum?';
+const defaultHTML = `<p><span style="font-size: 14pt; font-family: terminal, monaco, monospace;"><em><span style="text-decoration: underline;"><strong>Lorem Ipsum</strong></span></em>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span></p>
+<p>&nbsp;</p>
+<p><span style="font-size: 14pt; font-family: terminal, monaco, monospace;"><em><span style="text-decoration: underline;"><strong>Lorem Ipsum</strong></span></em>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span></p>
+<p>&nbsp;</p>
+<p><span style="font-size: 14pt; font-family: terminal, monaco, monospace;"><em><span style="text-decoration: underline;"><strong>Lorem Ipsum</strong></span></em>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span></p>
+<p>&nbsp;</p>
+<p><span style="font-size: 14pt; font-family: terminal, monaco, monospace;"><em><span style="text-decoration: underline;"><strong>Lorem Ipsum</strong></span></em>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span></p>
+<p>&nbsp;</p>
+<p><span style="font-size: 14pt; font-family: terminal, monaco, monospace;"><em><span style="text-decoration: underline;"><strong>Lorem Ipsum</strong></span></em>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span></p>
+<p>&nbsp;</p>
+<p><span style="font-size: 14pt; font-family: terminal, monaco, monospace;"><em><span style="text-decoration: underline;"><strong>Lorem Ipsum</strong></span></em>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span></p>`;
+
 const schema = yup
     .object({
         Title: yup.string().required().min(20),
@@ -31,7 +44,7 @@ function AddPost() {
 
     const { register, handleSubmit, formState, watch } = useForm<IFormInputs>({
         resolver: yupResolver(schema),
-        defaultValues: { Title: '', Image: null },
+        defaultValues: { Title: defaultTitle, Image: null },
     });
 
     const { errors, isSubmitting } = formState;
@@ -74,13 +87,17 @@ function AddPost() {
                                     file={watch('Image')}
                                     disabled={isSubmitting}
                                     placeholder="Select image"
+                                    accept="image/*,.png,.jpg,.jpeg,.web"
                                 />
                                 <FormError>{errors['Image']?.message}</FormError>
                             </label>
 
                             <span className="block">
                                 <span className="block text-gray-700 mb-1">Post body</span>
-                                <TinyEditor editorRef={editorRef} initialValue={preview?.html} />
+                                <TinyEditor
+                                    editorRef={editorRef}
+                                    initialValue={preview?.html || defaultHTML}
+                                />
                             </span>
 
                             <div className="flex items-center justify-end py-10">

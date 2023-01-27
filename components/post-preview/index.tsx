@@ -1,3 +1,4 @@
+// import { post } from 'frontend-api';
 import { useEffect, useState } from 'react';
 import Button from '@components/button';
 import MainContainer from '@components/main-container';
@@ -9,6 +10,25 @@ export default function PostPreview({ image, title, html, backCallback }) {
     useEffect(() => {
         setURL(URL.createObjectURL(image));
     }, []);
+
+    const publish = async () => {
+        const formData = new FormData();
+        formData.append('image', image);
+        formData.append('title', title);
+        formData.append('html', html);
+
+        try {
+            const res = await fetch('/api/blogs/create', {
+                method: 'POST',
+                body: formData,
+            });
+            const result = res.json();
+            console.log('publish result: ', result);
+        } catch (error) {
+            console.error(`post() error: ${error.message}`);
+            return error;
+        }
+    };
 
     return (
         <div className="min-h bg-grey-200">
@@ -30,7 +50,7 @@ export default function PostPreview({ image, title, html, backCallback }) {
                     >
                         Back
                     </Button>
-                    <Button type="submit" className="">
+                    <Button type="submit" className="" onClick={publish}>
                         Publish
                     </Button>
                 </div>

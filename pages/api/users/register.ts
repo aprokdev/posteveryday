@@ -4,7 +4,7 @@ import { database } from 'backend';
 // import InversifyContainer from 'backend/inversify-config';
 // import TYPES from 'backend/inversify-types';
 // import { IDatabase } from 'backend/services/database/types';
-import { UserEntity } from '../../utils/user-entity';
+import { UserEntity } from '../../../utils/user-entity';
 
 export default async function handler({ body }: NextApiRequest, res: NextApiResponse) {
     try {

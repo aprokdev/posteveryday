@@ -8,6 +8,7 @@ type File = {
 
 export interface IFileInput {
     file?: File | {};
-    disabled: boolean;
+    disabled?: boolean;
     placeholder: string;
+    accept?: string;
 }
