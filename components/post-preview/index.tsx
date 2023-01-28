@@ -1,31 +1,31 @@
-// import { post } from 'frontend-api';
 import { useEffect, useState } from 'react';
 import Button from '@components/button';
 import MainContainer from '@components/main-container';
 import s from './style.module.scss';
+import { IPostPreviewProps } from './types';
 
-export default function PostPreview({ image, title, html, backCallback }) {
+export default function PostPreview({ image, title, html, backCallback }: IPostPreviewProps) {
     const [url, setURL] = useState(null);
 
     useEffect(() => {
         setURL(URL.createObjectURL(image));
     }, []);
 
-    const publish = async () => {
+    const publishPost = async () => {
         const formData = new FormData();
         formData.append('image', image);
         formData.append('title', title);
         formData.append('html', html);
 
         try {
-            const res = await fetch('/api/blogs/create', {
+            const res = await fetch('/api/posts/create', {
                 method: 'POST',
                 body: formData,
             });
             const result = res.json();
-            console.log('publish result: ', result);
+            console.log('publishPost result: ', result);
         } catch (error) {
-            console.error(`post() error: ${error.message}`);
+            console.error(`publishPost error: ${error.message}`);
             return error;
         }
     };
@@ -50,7 +50,7 @@ export default function PostPreview({ image, title, html, backCallback }) {
                     >
                         Back
                     </Button>
-                    <Button type="submit" className="" onClick={publish}>
+                    <Button type="submit" className="" onClick={publishPost}>
                         Publish
                     </Button>
                 </div>

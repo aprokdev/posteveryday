@@ -1,4 +1,4 @@
 export const API_PATHS = {
-    login: '/api/login',
-    register: '/api/register',
+    login: '/api/users/login',
+    register: '/api/users/register',
 };
