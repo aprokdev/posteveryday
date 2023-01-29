@@ -94,10 +94,10 @@ function AddPost() {
 
                             <span className="block">
                                 <span className="block text-gray-700 mb-1">Post body</span>
-                                <TinyEditor
+                                {/* <TinyEditor
                                     editorRef={editorRef}
                                     initialValue={preview?.html || defaultHTML}
-                                />
+                                /> */}
                             </span>
 
                             <div className="flex items-center justify-end py-10">

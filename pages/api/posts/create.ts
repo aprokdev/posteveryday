@@ -14,8 +14,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const { files } = await parseFormData(req, uploadDir);
         const filePath = `${uploadDir}/${files.image.newFilename}`;
 
-        const buffer = createReadStream(filePath); // way from aws docs
-        // const buffer = await promises.readFile(filePath);  // works too
+        const buffer = createReadStream(filePath);
 
         const result = await uploadS3Image(buffer, files.image.originalFilename);
         const { Location: imgURL } = result;
@@ -25,7 +24,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         await promises.rm(filePath);
         await promises.rmdir(uploadDir);
 
-        res.status(200).json({ success: true });
+        res.status(200).json({ success: true, uploadDir, secret: process.env.SECRET });
     } catch (error) {
         res.status(400).json({ sucess: false, message: error.message });
     }
