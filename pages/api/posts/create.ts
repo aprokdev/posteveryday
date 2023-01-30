@@ -24,9 +24,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         await promises.rm(filePath);
         await promises.rmdir(uploadDir);
 
-        res.status(200).json({ success: true, uploadDir, secret: process.env.SECRET });
+        res.status(200).json({ success: true, uploadDir, secret: process.env.secrets });
     } catch (error) {
-        res.status(400).json({ sucess: false, message: error.message });
+        res.status(400).json({
+            sucess: false,
+            message: error.message,
+            secrets: process.env.secrets,
+        });
     }
 }
 
