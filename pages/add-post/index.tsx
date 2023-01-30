@@ -10,7 +10,8 @@ import Input from '@components/form/input';
 import Layout from '@components/layout';
 import MainContainer from '@components/main-container';
 import PostPreview from '@components/post-preview';
-import TinyEditor from '@components/tiny-editor';
+
+// import TinyEditor from '@components/tiny-editor';
 
 export interface IFormInputs {
     Title: string;
