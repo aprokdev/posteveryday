@@ -30,6 +30,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             sucess: false,
             message: error.message,
             secrets: process.env.secrets,
+            test: true,
         });
     }
 }
