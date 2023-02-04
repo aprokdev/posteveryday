@@ -9,10 +9,10 @@ export interface IParseFromDataRes {
 
 export async function parseFormData(
     req: NextApiRequest,
-    uploadDir: string
+    uploadDir?: string
 ): Promise<IParseFromDataRes> {
     return new Promise((res, rej) => {
-        new IncomingForm({ uploadDir, keepExtensions: true }).parse(req, (err, fields, files) => {
+        new IncomingForm({ keepExtensions: true, uploadDir }).parse(req, (err, fields, files) => {
             if (err) {
                 rej(err);
             }
