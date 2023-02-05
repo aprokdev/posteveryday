@@ -9,29 +9,16 @@ import { uploadS3Image } from 'utils/uploadToS3';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
-        const uploadDir = `${process.cwd()}/temp`;
-        // await promises.mkdir(uploadDir);
-        const { files } = await parseFormData(req, uploadDir);
-        // const filePath = `${uploadDir}/${files.image.newFilename}`;
-
+        const { files } = await parseFormData(req);
         const buffer = createReadStream(files.image.filepath);
 
         const result = await uploadS3Image(buffer, files.image.originalFilename);
-        // const { Location: imgURL } = result;
-        // console.log('result: ', result);
-        // console.log('imgURL: ', imgURL);
+        console.log('result: ', result);
 
-        // await promises.rm(filePath);
-        // await promises.rmdir(uploadDir);
-
-        res.status(200).json({ success: true, uploadDir, secret: process.env.secrets });
+        await promises.rm(files.image.filepath);
+        res.status(200).json({ success: true });
     } catch (error) {
-        res.status(400).json({
-            sucess: false,
-            message: error.message,
-            secrets: process.env.secrets,
-            test: true,
-        });
+        res.status(400).json({ sucess: false, message: error.message });
     }
 }
 
