@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { UserCircleIcon } from '@heroicons/react/24/outline';
-import { useDropdown } from '@hooks/useDropdown';
 import React from 'react';
+import { useDropdown } from 'src/hooks/useDropdown';
 
 export default function HeaderProfile() {
     const { openBtnRef, popupRef, isVisible, setVisiability } = useDropdown();

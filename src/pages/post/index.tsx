@@ -1,7 +1,7 @@
 import Image from 'next/image';
-import money from 'public/money.jpg';
-import Layout from '@components/layout';
-import MainContainer from '@components/main-container';
+import Layout from 'src/components/layout';
+import MainContainer from 'src/components/main-container';
+import money from '../../public/money.jpg';
 
 const html = `<p style="text-align: center;">&nbsp;</p>
 <p style="text-align: center;">&nbsp;</p>

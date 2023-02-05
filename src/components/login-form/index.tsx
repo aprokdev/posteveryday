@@ -1,13 +1,13 @@
 import Link from 'next/link';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Logo } from '@icons';
 import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
-import Button from '@components/button';
-import FormError from '@components/form/error';
-import Input from '@components/form/input';
 import { loginUser } from '../../frontend-api';
+import { Logo } from '../../icons';
+import Button from '../button';
+import FormError from '../form/error';
+import Input from '../form/input';
 
 export interface ILoginFormInputs {
     Email: string;

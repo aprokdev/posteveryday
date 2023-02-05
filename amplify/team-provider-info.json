@@ -1,0 +1,15 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-posteverydaybackend-staging-61609-authRole",
+      "UnauthRoleArn": "arn:aws:iam::240512947959:role/amplify-posteverydaybackend-staging-61609-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::240512947959:role/amplify-posteverydaybackend-staging-61609-authRole",
+      "Region": "ca-central-1",
+      "DeploymentBucketName": "amplify-posteverydaybackend-staging-61609-deployment",
+      "UnauthRoleName": "amplify-posteverydaybackend-staging-61609-unauthRole",
+      "StackName": "amplify-posteverydaybackend-staging-61609",
+      "StackId": "arn:aws:cloudformation:ca-central-1:240512947959:stack/amplify-posteverydaybackend-staging-61609/95337c00-a51c-11ed-8206-028b1307da5c",
+      "AmplifyAppId": "d1t7oi2v6eurrr"
+    }
+  }
+}

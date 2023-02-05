@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import { Logo } from '@icons';
 import React from 'react';
+import { Logo } from '../../icons';
 import HeaderLink from './header-link';
 import HeaderProfile from './header-profile';
 
