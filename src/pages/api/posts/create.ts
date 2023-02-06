@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { createReadStream, promises } from 'fs';
-import { parseFormData } from 'utils/parseFormData';
-import { uploadS3Image } from 'utils/uploadToS3';
+import { parseFormData } from '../../../utils/parseFormData';
+import { uploadS3Image } from '../../../utils/uploadToS3';
 
 // import InversifyContainer from 'backend/inversify-config';
 // import TYPES from 'backend/inversify-types';

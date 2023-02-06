@@ -3,7 +3,7 @@ import { database } from 'backend';
 // import InversifyContainer from 'backend/inversify-config';
 // import TYPES from 'backend/inversify-types';
 // import { IDatabase } from 'backend/services/database/types';
-import signJWT from 'utils/sign-jwt';
+import signJWT from '../../../utils/sign-jwt';
 import { UserEntity } from '../../../utils/user-entity';
 
 export default async function handler({ body }: NextApiRequest, res: NextApiResponse) {
