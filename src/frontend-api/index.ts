@@ -1,6 +1,6 @@
-import { ILoginFormInputs } from '../components/login-form';
-import { IRegisterFormInputs } from '../components/register-form';
-import makeReqBody from '../utils/make-request-body';
+import makeReqBody from '@utils/make-request-body';
+import { ILoginFormInputs } from '@components/login-form';
+import { IRegisterFormInputs } from '@components/register-form';
 import { API_PATHS } from './paths';
 import { IAPIResponse } from './types';
 

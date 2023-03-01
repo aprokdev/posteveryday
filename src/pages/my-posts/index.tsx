@@ -1,9 +1,10 @@
 import { DataStore } from '@aws-amplify/datastore';
 import React from 'react';
-import Card from 'src/components/card';
-import Container from 'src/components/container';
-import Layout from 'src/components/layout';
-import { Post } from '../../models';
+import Card from '@components/card';
+import Container from '@components/container';
+import Layout from '@components/layout';
+
+// import { Post } from '../../models';
 
 // import airport from '../../public/airport.jpg';
 // import canada from '../../public/canada.jpg';
@@ -41,23 +42,23 @@ import { Post } from '../../models';
 // import woman from '../../public/woman.jpg';
 
 export default function MyPosts() {
-    const [posts, setPosts] = React.useState([]);
+    // const [posts, setPosts] = React.useState([]);
 
-    React.useEffect(() => {
-        fetchPosts();
-        async function fetchPosts() {
-            const postData = await DataStore.query(Post);
-            console.log(postData);
-            setPosts(postData);
-        }
-    }, []);
+    // React.useEffect(() => {
+    //     fetchPosts();
+    //     async function fetchPosts() {
+    //         const postData = await DataStore.query(Post);
+    //         console.log(postData);
+    //         setPosts(postData);
+    //     }
+    // }, []);
     return (
         <Layout>
             <Container>
                 <div className="grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8 xl:gap-4">
-                    {posts.map((item) => (
+                    {/* {posts.map((item) => (
                         <Card {...item} key={item.id} />
-                    ))}
+                    ))} */}
                     <br />
                     {/* <Card img={airport} />
                     <Card img={clearSky} />

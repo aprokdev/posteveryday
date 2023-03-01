@@ -8,14 +8,14 @@ module.exports = {
     //         },
     //     ];
     // },
-    images: {
-        remotePatterns: [
-            {
-                protocol: 'https',
-                hostname: 'posteveryday.s3.ca-central-1.amazonaws.com',
-                port: '',
-                pathname: '/images/**',
-            },
-        ],
-    },
+    // images: {
+    //     remotePatterns: [
+    //         {
+    //             protocol: 'https',
+    //             hostname: 'posteveryday.s3.ca-central-1.amazonaws.com',
+    //             port: '',
+    //             pathname: '/images/**',
+    //         },
+    //     ],
+    // },
 };

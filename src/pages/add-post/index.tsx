@@ -2,16 +2,16 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import React, { useState } from 'react';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { useForm } from 'react-hook-form';
-import Button from 'src/components/button';
-import FormError from 'src/components/form/error';
-import FileInput from 'src/components/form/file-input';
-import Input from 'src/components/form/input';
-import Layout from 'src/components/layout';
-import MainContainer from 'src/components/main-container';
-import PostPreview from 'src/components/post-preview';
 import * as yup from 'yup';
+import Button from '@components/button';
+import FormError from '@components/form/error';
+import FileInput from '@components/form/file-input';
+import Input from '@components/form/input';
+import Layout from '@components/layout';
+import MainContainer from '@components/main-container';
+import PostPreview from '@components/post-preview';
 
-// import TinyEditor from 'src/components/tiny-editor';
+// import TinyEditor from '@components/tiny-editor';
 
 export interface IFormInputs {
     Title: string;

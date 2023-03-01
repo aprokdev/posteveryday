@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import Button from 'src/components/button';
-import MainContainer from 'src/components/main-container';
+import Button from '@components/button';
+import MainContainer from '@components/main-container';
 import s from './style.module.scss';
 import { IPostPreviewProps } from './types';
 

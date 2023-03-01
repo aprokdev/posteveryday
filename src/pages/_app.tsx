@@ -1,9 +1,5 @@
 import Head from 'next/head';
-import { Amplify } from 'aws-amplify';
-import config from '../aws-exports';
 import '../styles/globals.css';
-
-Amplify.configure({ ...config, ssr: true });
 
 export default function MyApp({ Component, pageProps }) {
     return (

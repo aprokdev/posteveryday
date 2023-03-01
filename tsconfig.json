@@ -18,11 +18,14 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "baseUrl": "./",
+    "baseUrl": "./src",
     "paths": {
       "@components/*": ["components/*"],
       "@icons": ["icons/index.tsx"],
       "@hooks/*": ["hooks/*"],
+      "@backend/*": ["backend/*"],
+      "@utils/*": ["utils/*"],
+      "@public/*": ["../public/*"],
     },
     "types": [
       "reflect-metadata"
