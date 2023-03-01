@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { parseFormData } from '@utils/parseFormData';
-import { uploadS3Image } from '@utils/uploadToS3';
+// import { uploadS3Image } from '@utils/uploadToS3';
 import { createReadStream, promises } from 'fs';
 
 // import InversifyContainer from 'backend/inversify-config';
@@ -12,8 +12,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const { files } = await parseFormData(req);
         const buffer = createReadStream(files.image.filepath);
 
-        const result = await uploadS3Image(buffer, files.image.originalFilename);
-        console.log('result: ', result);
+        // const result = await uploadS3Image(buffer, files.image.originalFilename);
+        // console.log('result: ', result);
 
         await promises.rm(files.image.filepath);
         res.status(200).json({ success: true });
