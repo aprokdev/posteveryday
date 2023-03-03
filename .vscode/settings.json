@@ -12,5 +12,20 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true,
     "source.fixAll.prettier": true
-  }
+  },
+  "sqltools.connections": [
+    {
+      "mysqlOptions": {
+        "authProtocol": "default"
+      },
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 3306,
+      "driver": "MySQL",
+      "name": "posteverydayDB",
+      "database": "posteveryday",
+      "username": "root",
+      "password": "9001"
+    }
+  ]
 }
