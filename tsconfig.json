@@ -24,6 +24,7 @@
       "@icons": ["icons/index.tsx"],
       "@hooks/*": ["hooks/*"],
       "@backend/*": ["backend/*"],
+      "@frontend/*": ["frontend/*"],
       "@utils/*": ["utils/*"],
       "@public/*": ["../public/*"],
     },

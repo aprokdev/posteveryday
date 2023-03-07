@@ -20,17 +20,17 @@ passport.use(localStrategy);
 
 export default nextConnect()
     .use(passport.initialize())
-    .post(async (req, res) => {
+    .post(async (req: NextApiRequest, res: NextApiResponse) => {
         try {
             const user = await authenticate('local', req, res);
             // session is the payload to save in the token, it may contain basic info about the user
             const session = { ...user };
 
+            // creates token for session and sets it as cookie-header in response
             await setLoginSession(res, session);
 
-            res.status(200).send({ done: true });
+            res.status(200).send({ success: true });
         } catch (error) {
-            console.error(error);
-            res.status(401).send(error.message);
+            res.status(500).json({ success: false, message: error.message });
         }
     });

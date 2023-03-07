@@ -5,7 +5,7 @@ import { Logo } from '../../icons';
 import HeaderLink from './header-link';
 import HeaderProfile from './header-profile';
 
-export default function Header({ isAuthenticated = false }) {
+export default function Header({ user }) {
     const [isMobileMenuIsOpened, setMobileMenuIsOpened] = React.useState<boolean>(false);
 
     const headerRef = React.useRef<HTMLElement>();
@@ -50,8 +50,8 @@ export default function Header({ isAuthenticated = false }) {
                         <Logo />
                     </Link>
                 </div>
-                <div className="relative flex h-16 items-center justify-between">
-                    {isAuthenticated && (
+                <div className="relative flex h-16 items-center justify-end">
+                    {user && (
                         <div className="absolute inset-y-0 left-0 flex items-center sm:hidden z-20">
                             <button
                                 type="button"
@@ -71,21 +71,19 @@ export default function Header({ isAuthenticated = false }) {
                     )}
 
                     <div
-                        className={`flex flex-1 items-center justify-center h-full sm:items-stretch ${
-                            isAuthenticated ? 'sm:justify-start' : 'sm:justify-center'
+                        className={`absolute top-0 left-0 right-0 flex flex-1 items-center justify-center h-full sm:items-stretch ${
+                            user ? 'sm:justify-start' : 'sm:justify-center'
                         }`}
                     >
                         <div className="hidden sm:block xl:grow">
-                            <div className={`flex space-x-4 relative w-full h-full`}>
-                                <div
-                                    className={`xl:top-0 h-full xl:w-full flex xl:absolute top-1 justify-center`}
-                                >
+                            <div className="flex space-x-4 relative w-full h-full">
+                                <div className="xl:top-0 h-full xl:w-full flex xl:absolute top-1 justify-center">
                                     <Link href="/" className="w-24 flex center">
                                         <Logo />
                                     </Link>
                                 </div>
 
-                                {isAuthenticated && (
+                                {user && (
                                     <>
                                         <HeaderLink href="/">Feed</HeaderLink>
                                         <HeaderLink href="/my-posts">My posts</HeaderLink>
@@ -95,17 +93,17 @@ export default function Header({ isAuthenticated = false }) {
                             </div>
                         </div>
                     </div>
-                    {isAuthenticated ? (
+                    {user ? (
                         <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:pr-0">
                             <HeaderProfile />
                         </div>
                     ) : (
-                        <HeaderLink href="/api/auth">Log In</HeaderLink>
+                        <HeaderLink href="/login">Log In</HeaderLink>
                     )}
                 </div>
             </div>
 
-            {isMobileMenuIsOpened && isAuthenticated && (
+            {isMobileMenuIsOpened && user && (
                 <div className="sm:hidden" id="mobile-menu">
                     <div className="space-y-1 px-2 pt-2 pb-3">
                         <HeaderLink href="/">Feed</HeaderLink>

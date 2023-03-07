@@ -1,10 +1,10 @@
 import Footer from '../footer';
 import Header from '../header';
 
-function Layout({ children }) {
+function Layout({ user, children }) {
     return (
         <>
-            <Header />
+            <Header user={user} />
             {children}
             <Footer />
         </>

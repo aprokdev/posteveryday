@@ -1,4 +1,4 @@
-import { useUser } from '@backend/hooks';
+import { useUser } from '@frontend/hooks/useUser';
 import LoginForm from '@components/login-form';
 
 export async function getStaticProps(context) {
@@ -8,7 +8,7 @@ export async function getStaticProps(context) {
 }
 
 export default function LoginPage(): JSX.Element {
-    useUser({ redirectTo: '/', redirectIfFound: true });
+    const user = useUser();
     return (
         <div className="flex items-center justify-center min-h">
             <LoginForm />

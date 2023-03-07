@@ -12,12 +12,15 @@ export const localStrategy = new Local.Strategy({ usernameField: 'email' }, asyn
 ) {
     try {
         const user = await prisma.user.findUnique({ where: { email } });
-        console.log('passport user', user);
-
-        if (user && validatePassword(password, user.hash, user.salt)) {
+        if (!user) {
+            done(new Error('Invalid email'));
+        }
+        const isPasswordValid = validatePassword(password, user.hash, user.salt);
+        if (user && !isPasswordValid) {
+            done(new Error('Invalid password'));
+        }
+        if (user && isPasswordValid) {
             done(null, user);
-        } else {
-            done(new Error('Invalid username and password combination'));
         }
     } catch (error) {
         done(error);

@@ -1,6 +1,6 @@
 import Link from 'next/link';
+import { useDropdown } from '@frontend/hooks/useDropdown';
 import { UserCircleIcon } from '@heroicons/react/24/outline';
-import { useDropdown } from '@hooks/useDropdown';
 import React from 'react';
 import HeaderLink from '../header-link';
 
@@ -50,13 +50,13 @@ export default function HeaderProfile() {
                         Your Profile
                     </Link>
                     <Link
-                        href="/login"
+                        href="/api/users/logout"
                         className="hover:text-stone-500 transition block px-4 py-2 text-sm text-stone-700 hover:no-underline"
                         role="menuitem"
                         tabIndex={-1}
                         id="user-menu-item-2"
                     >
-                        Sign out
+                        Log out
                     </Link>
                 </div>
             )}

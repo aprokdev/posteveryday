@@ -1,13 +1,14 @@
 import Link from 'next/link';
+import Router from 'next/router';
+import { loginUser } from '@frontend/api';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
-import { loginUser } from '../../frontend-api';
+import Button from '@components/button';
+import FormError from '@components/form/error';
+import Input from '@components/form/input';
 import { Logo } from '../../icons';
-import Button from '../button';
-import FormError from '../form/error';
-import Input from '../form/input';
 
 export interface ILoginFormInputs {
     Email: string;
@@ -24,7 +25,7 @@ const schema = yup
     .required();
 
 export default function LoginForm(): JSX.Element {
-    const { reset, register, handleSubmit, formState } = useForm<ILoginFormInputs>({
+    const { reset, register, setError, handleSubmit, formState } = useForm<ILoginFormInputs>({
         resolver: yupResolver(schema),
         defaultValues: { Email: '', Password: '' },
     });
@@ -34,14 +35,21 @@ export default function LoginForm(): JSX.Element {
     const onSubmit = useCallback(
         async (data: ILoginFormInputs) => {
             const response = await loginUser(data);
+            if (response?.success) {
+                Router.push('/');
+            } else if (response?.message === 'Invalid email') {
+                setError('Email', { type: 'custom', message: 'Invalid email' });
+            } else if (response?.message === 'Invalid password') {
+                setError('Password', { type: 'custom', message: 'Invalid password' });
+            }
             console.log('onSubmit res: ', response);
         },
-        [reset]
+        [reset, setError]
     );
 
     return (
         <form className="w-96 rounded-lg px-8 grid grid-cols-1" onSubmit={handleSubmit(onSubmit)}>
-            <Link href="/feed" className="w-32 m-auto mb-6">
+            <Link href="/" className="w-32 m-auto mb-6">
                 <Logo />
             </Link>
 

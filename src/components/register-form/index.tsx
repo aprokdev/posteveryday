@@ -1,9 +1,9 @@
 import Link from 'next/link';
+import { registerUser } from '@frontend/api';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
-import { registerUser } from '../../frontend-api';
 import { Logo } from '../../icons';
 import Button from '../button';
 import FormError from '../form/error';
@@ -43,7 +43,7 @@ export default function RegisterForm(): JSX.Element {
 
     return (
         <form className="w-96 rounded-lg px-8 grid grid-cols-1" onSubmit={handleSubmit(onSubmit)}>
-            <Link href="/feed" className="w-32 m-auto mb-6">
+            <Link href="/" className="w-32 m-auto mb-6">
                 <Logo />
             </Link>
 

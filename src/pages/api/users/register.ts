@@ -5,9 +5,7 @@ import { genPassword } from '@utils/user-entity';
 export default async function handler({ body }: NextApiRequest, res: NextApiResponse) {
     try {
         const { email, first_name, last_name, password } = body;
-
         const existedUser = await prisma.user.findUnique({ where: { email } });
-        console.log('existedUser', existedUser);
 
         if (existedUser) {
             return res
@@ -36,6 +34,6 @@ export default async function handler({ body }: NextApiRequest, res: NextApiResp
             res.json({ message: error.message });
         }
     } catch (error) {
-        res.status(400).json({ sucess: false, message: error.message });
+        res.status(500).json({ success: false, message: error.message });
     }
 }

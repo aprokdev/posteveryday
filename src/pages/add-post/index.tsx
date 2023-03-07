@@ -1,3 +1,4 @@
+import { useUser } from '@frontend/hooks/useUser';
 import { yupResolver } from '@hookform/resolvers/yup';
 import React, { useState } from 'react';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
@@ -45,6 +46,7 @@ const schema = yup
     .required();
 
 export default function AddPost() {
+    const user = useUser();
     const editorRef = React.useRef<any>();
     const [preview, setPreview] = useState(null);
     const [previewMode, setPreviewMode] = useState(false);
@@ -69,7 +71,7 @@ export default function AddPost() {
     };
 
     return (
-        <Layout>
+        <Layout user={user}>
             {previewMode ? (
                 <PostPreview {...preview} backCallback={setPreviewMode} />
             ) : (
