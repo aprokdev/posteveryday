@@ -1,4 +1,5 @@
 import { compare, hash } from 'bcryptjs';
+import crypto from 'crypto';
 
 export interface IBody {
     email: string;
@@ -36,4 +37,20 @@ export class UserEntity implements IUserEntity {
     static async comparePassword(password: string, passwordHash: string): Promise<boolean> {
         return await compare(password, passwordHash);
     }
+}
+
+export function validatePassword(password: string, hash: string, salt: string): boolean {
+    const hashVerify = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
+    return hash === hashVerify;
+}
+
+export type genPassword = {
+    salt: string;
+    hash: string;
+};
+
+export function genPassword(password: string): genPassword {
+    const salt = crypto.randomBytes(32).toString('hex');
+    const hash = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
+    return { salt, hash };
 }

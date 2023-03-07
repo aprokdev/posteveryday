@@ -1,34 +1,36 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-// import InversifyContainer from 'backend/inversify-config';
-// import TYPES from 'backend/inversify-types';
-// import { IDatabase } from 'backend/services/database/types';
-import signJWT from '@utils/sign-jwt';
-import { UserEntity } from '@utils/user-entity';
+import nextConnect from 'next-connect';
+import { setLoginSession } from '@backend/auth';
+import { localStrategy } from '@backend/passport-local';
+import passport from 'passport';
 
-// import { database } from 'backend';
-
-export default async function handler({ body }: NextApiRequest, res: NextApiResponse) {
-    try {
-        const { email, password } = body;
-        // const database = InversifyContainer.get<IDatabase>(TYPES.IDatabase);
-        // const response = await database.user.findUnique({ where: { email } });
-        // if (!response) {
-        //     return res
-        //         .status(401)
-        //         .json({ sucess: false, message: 'There is no user with provided email' });
-        // }
-
-        // const isPasswordValid = await UserEntity.comparePassword(password, response.password);
-        // if (!isPasswordValid) {
-        //     return res
-        //         .status(401)
-        //         .json({ sucess: false, message: "Provided password doesn't match" });
-        // }
-
-        // const secret = process.env.SECRET;
-        // const jwt = await signJWT(email, secret);
-        // res.status(200).json({ success: true, jwt });
-    } catch (error) {
-        res.status(400).json({ sucess: false, message: error.message });
-    }
+function authenticate(method, req, res): Promise<Object> {
+    return new Promise((resolve, reject) => {
+        passport.authenticate(method, { session: false }, (error, token) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(token);
+            }
+        })(req, res);
+    });
 }
+
+passport.use(localStrategy);
+
+export default nextConnect()
+    .use(passport.initialize())
+    .post(async (req, res) => {
+        try {
+            const user = await authenticate('local', req, res);
+            // session is the payload to save in the token, it may contain basic info about the user
+            const session = { ...user };
+
+            await setLoginSession(res, session);
+
+            res.status(200).send({ done: true });
+        } catch (error) {
+            console.error(error);
+            res.status(401).send(error.message);
+        }
+    });

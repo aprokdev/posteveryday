@@ -5,13 +5,14 @@ import React from 'react';
 export interface IHeaderLinkProps {
     href: string;
     children: React.ReactNode;
+    className?: string;
 }
 
-export default function HeaderLink({ href, children }: IHeaderLinkProps) {
+export default function HeaderLink({ href, children, className }: IHeaderLinkProps) {
     const regularStyle =
-        'relative xs:block transition hover:no-underline text-stone-900 hover:text-stone-500 px-3 py-2 rounded-md text-sm font-medium';
+        'relative xs:flex items-center transition hover:no-underline text-stone-900 hover:text-stone-500 px-3 py-2 rounded-md text-sm font-medium';
     const selectedStyle =
-        'underline underline-offset-8 decoration-2 hover:decoration-2 relative xs:block transition text-stone-900 px-3 py-2 rounded-md text-sm font-medium';
+        'xs:flex items-center underline underline-offset-8 decoration-2 hover:decoration-2 relative transition text-stone-900 px-3 py-2 rounded-md text-sm font-medium';
     const router = useRouter();
     let style = regularStyle;
     if (router.asPath === href) {
@@ -19,7 +20,7 @@ export default function HeaderLink({ href, children }: IHeaderLinkProps) {
     }
 
     return (
-        <Link href={href} className={style}>
+        <Link href={href} className={`${style} ${className}`}>
             {children}
         </Link>
     );

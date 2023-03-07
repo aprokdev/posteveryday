@@ -26,7 +26,7 @@ import Card from '@components/card';
 import Container from '@components/container';
 import Layout from '@components/layout';
 
-function Feed() {
+export default function Feed() {
     return (
         <Layout>
             <Container>
@@ -56,5 +56,3 @@ function Feed() {
         </Layout>
     );
 }
-
-export default Feed;

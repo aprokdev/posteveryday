@@ -5,7 +5,7 @@ import { Logo } from '../../icons';
 import HeaderLink from './header-link';
 import HeaderProfile from './header-profile';
 
-export default function Header() {
+export default function Header({ isAuthenticated = false }) {
     const [isMobileMenuIsOpened, setMobileMenuIsOpened] = React.useState<boolean>(false);
 
     const headerRef = React.useRef<HTMLElement>();
@@ -51,52 +51,65 @@ export default function Header() {
                     </Link>
                 </div>
                 <div className="relative flex h-16 items-center justify-between">
-                    <div className="absolute inset-y-0 left-0 flex items-center sm:hidden z-20">
-                        <button
-                            type="button"
-                            className="block h-10 w-10 rounded-md p-2 text-white hover:text-white focus:outline-none"
-                            aria-controls="mobile-menu"
-                            aria-expanded="false"
-                            onClick={() => setMobileMenuIsOpened(!isMobileMenuIsOpened)}
-                        >
-                            <span className="sr-only">Open main menu</span>
-                            {isMobileMenuIsOpened ? (
-                                <XMarkIcon className="block w-full h-full text-stone-800" />
-                            ) : (
-                                <Bars3Icon className="block w-full h-full text-stone-800" />
-                            )}
-                        </button>
-                    </div>
-                    <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+                    {isAuthenticated && (
+                        <div className="absolute inset-y-0 left-0 flex items-center sm:hidden z-20">
+                            <button
+                                type="button"
+                                className="block h-10 w-10 rounded-md p-2 text-white hover:text-white focus:outline-none"
+                                aria-controls="mobile-menu"
+                                aria-expanded="false"
+                                onClick={() => setMobileMenuIsOpened(!isMobileMenuIsOpened)}
+                            >
+                                <span className="sr-only">Open main menu</span>
+                                {isMobileMenuIsOpened ? (
+                                    <XMarkIcon className="block w-full h-full text-stone-800" />
+                                ) : (
+                                    <Bars3Icon className="block w-full h-full text-stone-800" />
+                                )}
+                            </button>
+                        </div>
+                    )}
+
+                    <div
+                        className={`flex flex-1 items-center justify-center h-full sm:items-stretch ${
+                            isAuthenticated ? 'sm:justify-start' : 'sm:justify-center'
+                        }`}
+                    >
                         <div className="hidden sm:block xl:grow">
-                            <div className="flex space-x-4 relative w-full">
-                                <div className="xl:w-full flex xl:absolute top-1 justify-center">
+                            <div className={`flex space-x-4 relative w-full h-full`}>
+                                <div
+                                    className={`xl:top-0 h-full xl:w-full flex xl:absolute top-1 justify-center`}
+                                >
                                     <Link href="/" className="w-24 flex center">
                                         <Logo />
                                     </Link>
                                 </div>
 
-                                <HeaderLink href="/feed">Feed</HeaderLink>
-
-                                <HeaderLink href="/my-posts">My posts</HeaderLink>
-
-                                <HeaderLink href="/add-post">Add post</HeaderLink>
+                                {isAuthenticated && (
+                                    <>
+                                        <HeaderLink href="/">Feed</HeaderLink>
+                                        <HeaderLink href="/my-posts">My posts</HeaderLink>
+                                        <HeaderLink href="/add-post">Add post</HeaderLink>
+                                    </>
+                                )}
                             </div>
                         </div>
                     </div>
-                    <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:pr-0">
-                        <HeaderProfile />
-                    </div>
+                    {isAuthenticated ? (
+                        <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:pr-0">
+                            <HeaderProfile />
+                        </div>
+                    ) : (
+                        <HeaderLink href="/api/auth">Log In</HeaderLink>
+                    )}
                 </div>
             </div>
 
-            {isMobileMenuIsOpened && (
+            {isMobileMenuIsOpened && isAuthenticated && (
                 <div className="sm:hidden" id="mobile-menu">
                     <div className="space-y-1 px-2 pt-2 pb-3">
-                        <HeaderLink href="/feed">Feed</HeaderLink>
-
+                        <HeaderLink href="/">Feed</HeaderLink>
                         <HeaderLink href="/my-posts">My posts</HeaderLink>
-
                         <HeaderLink href="/add-post">Add post</HeaderLink>
                     </div>
                 </div>

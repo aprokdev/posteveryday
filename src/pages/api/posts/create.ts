@@ -10,6 +10,8 @@ import { createReadStream, promises } from 'fs';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
         const { files } = await parseFormData(req);
+        console.log(req.cookies);
+
         const buffer = createReadStream(files.image.filepath);
 
         // const result = await uploadS3Image(buffer, files.image.originalFilename);
