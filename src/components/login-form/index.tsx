@@ -38,7 +38,7 @@ export default function LoginForm(): JSX.Element {
             if (response?.success) {
                 Router.push('/');
             } else if (response?.message === 'Invalid email') {
-                setError('Email', { type: 'custom', message: 'Invalid email' });
+                setError('Email', { type: 'custom', message: "User doesn't exist" });
             } else if (response?.message === 'Invalid password') {
                 setError('Password', { type: 'custom', message: 'Invalid password' });
             }
