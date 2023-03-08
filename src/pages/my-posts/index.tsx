@@ -1,5 +1,3 @@
-import { DataStore } from '@aws-amplify/datastore';
-// import { Post } from '../../models';
 import { getLoginSession } from '@backend/auth';
 import { prisma } from '@backend/index';
 import airport from '@public/airport.jpg';
@@ -41,39 +39,29 @@ import Card from '@components/card';
 import Container from '@components/container';
 import Layout from '@components/layout';
 
-export async function getServerSideProps({ req }) {
-    const session = await getLoginSession(req);
-    if (session) {
+export async function getServerSideProps({ req, res }) {
+    try {
+        res.setHeader('Cache-Control', 'public, s-maxage=10, stale-while-revalidate=59');
+        const session = await getLoginSession(req);
         const user = await prisma.user.findUnique({ where: { email: session?.email } });
         return {
             props: { user }, // will be passed to the page component as props
         };
-    } else {
+    } catch (error) {
         return {
-            props: {}, // will be passed to the page component as props
+            redirect: {
+                permanent: true,
+                destination: '/401',
+            },
         };
     }
 }
 
 export default function MyPosts({ user }) {
-    // const [posts, setPosts] = React.useState([]);
-
-    // React.useEffect(() => {
-    //     fetchPosts();
-    //     async function fetchPosts() {
-    //         const postData = await DataStore.query(Post);
-    //         console.log(postData);
-    //         setPosts(postData);
-    //     }
-    // }, []);
     return (
         <Layout user={user}>
             <Container>
                 <div className="grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8 xl:gap-4">
-                    {/* {posts.map((item) => (
-                        <Card {...item} key={item.id} />
-                    ))} */}
-                    {/* <br /> */}
                     <Card img={airport} />
                     <Card img={clearSky} />
                     <Card img={rainy} />

@@ -1,7 +1,7 @@
-import { removeTokenCookie } from '@backend/auth-cookies';
+import { cleanTokenCookie } from '@backend/auth';
 
 export default async function logout(req, res) {
-    removeTokenCookie(res);
+    cleanTokenCookie(res);
     res.writeHead(302, { Location: '/' });
     res.end();
 }

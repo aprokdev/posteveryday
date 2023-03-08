@@ -1,24 +1,24 @@
 import Image from 'next/image';
-import { useUser } from '@frontend/hooks/useUser';
+import { getLoginSession } from '@backend/auth';
+import { prisma } from '@backend/index';
 import chemistry from '@public/chemistry.jpg';
 import Button from '@components/button';
 import Layout from '@components/layout';
 import MainContainer from '@components/main-container';
 import s from '@components/post-preview/style.module.scss';
 
-export async function getStaticPaths() {
-    return {
-        paths: [{ params: { id: '1' } }, { params: { id: '2' } }],
-        fallback: false, // can also be true or 'blocking'
-    };
-}
-
-// `getStaticPaths` requires using `getStaticProps`
-export async function getStaticProps(context) {
-    return {
-        // Passed to the page component as props
-        props: { post: {} },
-    };
+export async function getServerSideProps({ req }) {
+    try {
+        const session = await getLoginSession(req);
+        const user = await prisma.user.findUnique({ where: { email: session?.email } });
+        return {
+            props: { user }, // will be passed to the page component as props
+        };
+    } catch (error) {
+        return {
+            props: {}, // will be passed to the page component as props
+        };
+    }
 }
 
 const defaultTitle = 'What is Lorem Ipsum?';
@@ -34,8 +34,7 @@ const defaultHTML = `<p><span style="font-size: 14pt; font-family: terminal, mon
 <p>&nbsp;</p>
 <p><span style="font-size: 14pt; font-family: terminal, monaco, monospace;"><em><span style="text-decoration: underline;"><strong>Lorem Ipsum</strong></span></em>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span></p>`;
 
-export default function PostPage() {
-    const user = useUser();
+export default function PostPage({ user }) {
     return (
         <Layout user={user}>
             <div className="min-h bg-grey-200">
@@ -46,7 +45,7 @@ export default function PostPage() {
                 <MainContainer>
                     <div className="mt-6">
                         <h1 className="xs:text-4xl md:text-5xl xl:text-6xl text-center mb-10">
-                            Title
+                            {defaultTitle}
                         </h1>
                         <div dangerouslySetInnerHTML={{ __html: defaultHTML }} className={s.html} />
                     </div>

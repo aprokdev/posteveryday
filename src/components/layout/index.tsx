@@ -1,5 +1,6 @@
-import Footer from '../footer';
-import Header from '../header';
+import Router from 'next/router';
+import Footer from '@components/footer';
+import Header from '@components/header';
 
 function Layout({ user, children }) {
     return (

@@ -10,6 +10,14 @@ export type genPassword = {
     hash: string;
 };
 
+export interface IUser {
+    id: string;
+    email: string;
+    first_name: string;
+    last_name: string;
+    role: string;
+}
+
 export function genPassword(password: string): genPassword {
     const salt = crypto.randomBytes(32).toString('hex');
     const hash = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');

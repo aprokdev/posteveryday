@@ -37,7 +37,7 @@ export default function LoginForm(): JSX.Element {
             const response = await loginUser(data);
             if (response?.success) {
                 Router.push('/');
-            } else if (response?.message === 'Invalid email') {
+            } else if (response?.message === "User doesn't exist") {
                 setError('Email', { type: 'custom', message: "User doesn't exist" });
             } else if (response?.message === 'Invalid password') {
                 setError('Password', { type: 'custom', message: 'Invalid password' });
@@ -68,7 +68,7 @@ export default function LoginForm(): JSX.Element {
             <Button
                 type="submit"
                 disabled={isSubmitting}
-                className={`${isSubmitting ? ' opacity-80' : ''}mt-4`}
+                className={`${isSubmitting ? 'opacity-80 ' : ''}mt-4`}
             >
                 Login
             </Button>

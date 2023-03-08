@@ -1,4 +1,5 @@
-import { useUser } from '@frontend/hooks/useUser';
+import { getLoginSession } from '@backend/auth';
+import { prisma } from '@backend/index';
 import { yupResolver } from '@hookform/resolvers/yup';
 import React, { useState } from 'react';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
@@ -14,12 +15,23 @@ import PostPreview from '@components/post-preview';
 
 // import TinyEditor from '@components/tiny-editor';
 
-export async function getStaticProps(context) {
-    return {
-        props: {}, // will be passed to the page component as props
-    };
+export async function getServerSideProps({ req, res }) {
+    try {
+        res.setHeader('Cache-Control', 'public, s-maxage=10, stale-while-revalidate=59');
+        const session = await getLoginSession(req);
+        const user = await prisma.user.findUnique({ where: { email: session?.email } });
+        return {
+            props: { user }, // will be passed to the page component as props
+        };
+    } catch (error) {
+        return {
+            redirect: {
+                permanent: true,
+                destination: '/401',
+            },
+        };
+    }
 }
-
 export interface IFormInputs {
     Title: string;
     Image: object;
@@ -45,8 +57,7 @@ const schema = yup
     })
     .required();
 
-export default function AddPost() {
-    const user = useUser();
+export default function AddPost({ user }) {
     const editorRef = React.useRef<any>();
     const [preview, setPreview] = useState(null);
     const [previewMode, setPreviewMode] = useState(false);

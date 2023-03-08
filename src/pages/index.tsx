@@ -29,13 +29,13 @@ import Container from '@components/container';
 import Layout from '@components/layout';
 
 export async function getServerSideProps({ req }) {
-    const session = await getLoginSession(req);
-    if (session) {
+    try {
+        const session = await getLoginSession(req);
         const user = await prisma.user.findUnique({ where: { email: session?.email } });
         return {
             props: { user }, // will be passed to the page component as props
         };
-    } else {
+    } catch (error) {
         return {
             props: {}, // will be passed to the page component as props
         };
