@@ -1,24 +1,33 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { PhotoIcon } from '@heroicons/react/24/outline';
+import dayjs from 'dayjs';
+import 'dayjs/locale/es';
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
 import s from './style.module.scss';
 
-type StaticImageData = {
-    src: string;
-    height: number;
-    width: number;
-    placeholder?: string;
-};
+// load on demand
+
+dayjs.locale('es');
+
+// type StaticImageData = {
+//     src: string;
+//     height: number;
+//     width: number;
+//     placeholder?: string;
+// };
 
 interface ICardProps {
-    img?: StaticImageData;
+    // img?: StaticImageData;
+    image?: string;
     title?: string;
     html?: string;
-    createdAt?: string;
+    created?: string;
     animate?: boolean;
     id?: string;
+    author_firstname: string;
+    author_lastname: string;
 }
 
 const defaultTitle = 'Garlic bread with cheese: What the science tells us tells us tells us';
@@ -28,14 +37,16 @@ cheese to their children, with the food earning such an iconic status in our
 culture that kids will often dress up as warm, cheesy loaf for Halloween.`;
 const defaultIMG = '';
 
-export default function Card({
-    img,
-    title = defaultTitle,
-    html = defaultHTML,
-    createdAt,
-    animate,
-    id,
-}: ICardProps): JSX.Element {
+export default function Card(props: ICardProps): JSX.Element {
+    const {
+        image,
+        title = defaultTitle,
+        html = defaultHTML,
+        created,
+        animate,
+        author_firstname,
+        author_lastname,
+    } = props;
     const { ref, inView } = useInView({
         threshold: 0.005,
     });
@@ -53,7 +64,16 @@ export default function Card({
         animationClassName = `transition-top-opacity duration-500 ease-in ${changableClasses} `;
     }
 
-    console.log();
+    const date = React.useMemo(() => {
+        const date = new Date(created);
+        return date
+            .toLocaleDateString('en-EN', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+            })
+            .replace(/\//g, '.');
+    }, [created]);
 
     return (
         <Link href={`/posts/1`} className="hover:no-underline">
@@ -64,7 +84,7 @@ export default function Card({
                 <div className="w-full relative h-48 flex items-center justify-center bg-stone-200">
                     <PhotoIcon className="block w-24 h-24 text-stone-500" />
                     <Image
-                        src={img}
+                        src={`/${image}`}
                         alt="Picture of the author"
                         className="w-full h-40 object-cover object-center"
                         sizes="(min-width: 640px) 640px, (min-width: 768px) 768px,
@@ -75,12 +95,14 @@ export default function Card({
 
                 <div className="max-w-full p-4 lg:p-6 prose prose-sm prose-h1:font-semibold">
                     <div className="flex justify-between mb-3">
-                        <span className="text-xs">Anton Prokopenko</span>
-                        <span className="text-xs">{createdAt}</span>
+                        <span className="text-xs">
+                            {author_firstname} {author_lastname}
+                        </span>
+                        <span className="text-xs">{date}</span>
                     </div>
                     <h1 className={`text-2xl mb-2 ${s.linesClipHeader} ${s.boxOrient}`}>{title}</h1>
                     <p
-                        className={`${s.linesClipText} ${s.boxOrient} m-0`}
+                        className={`${s.linesClipText} ${s.boxOrient} m-0 ${s.removeInnerMargin}`}
                         dangerouslySetInnerHTML={{ __html: html }}
                     />
                 </div>

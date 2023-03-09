@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { getLoginSession } from '@backend/auth';
 import { prisma } from '@backend/index';
 import airport from '@public/airport.jpg';
@@ -39,30 +40,79 @@ import Card from '@components/card';
 import Container from '@components/container';
 import Layout from '@components/layout';
 
-export async function getServerSideProps({ req, res }) {
+export async function getServerSideProps({ req }) {
     try {
-        res.setHeader('Cache-Control', 'public, s-maxage=10, stale-while-revalidate=59');
         const session = await getLoginSession(req);
-        const user = await prisma.user.findUnique({ where: { email: session?.email } });
+        let user = null;
+        let posts = null;
+        const userId = Number(session?.id);
+        if (session) {
+            user = await prisma.user.findUnique({ where: { email: session?.email } });
+            posts = await prisma.post.findMany({
+                where: {
+                    author_id: userId,
+                },
+                orderBy: {
+                    created: 'desc',
+                },
+            });
+        }
+
+        const editedPosts =
+            Array.isArray(posts) &&
+            posts.map((data) => ({
+                ...data,
+                created: JSON.parse(JSON.stringify(data.created.toISOString())),
+            }));
+
         return {
-            props: { user }, // will be passed to the page component as props
+            props: {
+                user,
+                posts: editedPosts,
+            },
         };
     } catch (error) {
+        console.error(error);
         return {
-            redirect: {
-                permanent: true,
-                destination: '/401',
-            },
+            props: { error: error.message },
         };
     }
 }
 
-export default function MyPosts({ user }) {
-    return (
+export default function MyPosts({ user, posts = [], error = '' }) {
+    const [domLoaded, setDomLoaded] = React.useState(false);
+    React.useEffect(() => {
+        setDomLoaded(true);
+    }, []);
+    return domLoaded && !error ? (
         <Layout user={user}>
             <Container>
-                <div className="grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8 xl:gap-4">
-                    <Card img={airport} />
+                {posts?.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center h-96 w-full mt-20">
+                        <h1 className="block mb-5 text-center w-full text-4xl">
+                            There are no posts yet
+                        </h1>
+                        <p>
+                            You can {!user && <Link href="/login">log in</Link>} {!user && 'and'}{' '}
+                            create one ;D
+                        </p>
+                    </div>
+                ) : (
+                    <div className="grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8 xl:gap-4">
+                        {posts.map((data) => (
+                            <Card {...data} key={data.id} />
+                        ))}
+                    </div>
+                )}
+            </Container>
+        </Layout>
+    ) : (
+        <div>{error}</div>
+    );
+}
+
+{
+    /* <Card img={airport} />
                     <Card img={clearSky} />
                     <Card img={rainy} />
                     <Card img={cat} />
@@ -87,9 +137,5 @@ export default function MyPosts({ user }) {
                     <Card img={hromosome} />
                     <Card img={london} />
                     <Card img={ocean} />
-                    <Card img={shoe} />
-                </div>
-            </Container>
-        </Layout>
-    );
+                    <Card img={shoe} /> */
 }

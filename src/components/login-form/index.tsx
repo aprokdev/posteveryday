@@ -74,7 +74,7 @@ export default function LoginForm(): JSX.Element {
             </Button>
 
             <span className="block text-center mt-8">
-                Don't have an account? <Link href="/register">Sign up</Link>
+                Don't have an account? <Link href="/register">Register</Link>
             </span>
         </form>
     );

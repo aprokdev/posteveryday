@@ -20,23 +20,29 @@
 .linesClipText {
     /* autoprefixer: on */
     display: block;
-    height: 72px;
+    // height: 72px;
     display: -webkit-box;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .linesClipHeader {
-    height: 72px;
-    -webkit-line-clamp: 2;
+    // height: 72px;
+    -webkit-line-clamp: 1;
 }
 
 .linesClipText {
-    height: 81px;
-    -webkit-line-clamp: 3;
+    // height: 81px;
+    -webkit-line-clamp: 2;
 }
 
 .boxOrient {
     /* autoprefixer: off */
     -webkit-box-orient: vertical;
+}
+
+.removeInnerMargin {
+    p {
+        margin-top: 0;
+    }
 }

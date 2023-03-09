@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Router from 'next/router';
 import { registerUser } from '@frontend/api';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useCallback } from 'react';
@@ -37,6 +38,9 @@ export default function RegisterForm(): JSX.Element {
         async (data: IRegisterFormInputs) => {
             const response = await registerUser(data);
             console.log('onSubmit register', response);
+            if (response?.success) {
+                Router.push('/login');
+            }
         },
         [reset]
     );
@@ -68,7 +72,7 @@ export default function RegisterForm(): JSX.Element {
             </Button>
 
             <span className="block text-center mt-8">
-                Ulready have an account? <Link href="/login">Sign in</Link>
+                Ulready have an account? <Link href="/login">Log in</Link>
             </span>
         </form>
     );

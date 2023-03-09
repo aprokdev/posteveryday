@@ -10,7 +10,11 @@ function Profile() {
     }
     return (
         <Layout user={user}>
-            <Container>Welcome to Profile!</Container>
+            <Container>
+                <p>Email: {user.email}</p>
+                <p>First name: {user.first_name}</p>
+                <p>Last name: {user.last_name}</p>
+            </Container>
         </Layout>
     );
 }

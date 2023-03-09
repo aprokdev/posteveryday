@@ -24,6 +24,7 @@ export default async function handler({ body }: NextApiRequest, res: NextApiResp
                     hash,
                     salt,
                     role: 'user',
+                    image: '',
                 },
             });
             console.log('user', user);

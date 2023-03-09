@@ -1,5 +1,6 @@
 import { NextApiRequest } from 'next';
 import { IncomingForm } from 'formidable';
+import path from 'path';
 
 export interface IParseFromDataRes {
     fields: IncomingForm.Fields;
@@ -8,7 +9,12 @@ export interface IParseFromDataRes {
 
 export async function parseFormData(req: NextApiRequest): Promise<IParseFromDataRes> {
     return new Promise((res, rej) => {
-        new IncomingForm({ keepExtensions: true }).parse(req, (err, fields, files) => {
+        const localImages = `${path.join(process.cwd(), '/public')}`;
+
+        new IncomingForm({
+            keepExtensions: true,
+            uploadDir: localImages,
+        }).parse(req, (err, fields, files) => {
             if (err) {
                 rej(err);
             }

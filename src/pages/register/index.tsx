@@ -8,7 +8,7 @@ export async function getStaticProps(context) {
     };
 }
 
-export default function LoginPage(): JSX.Element {
+export default function RegisterPage(): JSX.Element {
     const user = useUser();
     if (user) {
         Router.push('/');
