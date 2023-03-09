@@ -40,35 +40,33 @@ import Card from '@components/card';
 import Container from '@components/container';
 import Layout from '@components/layout';
 
-export async function getServerSideProps({ req }) {
+export async function getServerSideProps({ req, res }) {
     try {
         const session = await getLoginSession(req);
         let user = null;
         let posts = null;
-        const userId = Number(session?.id);
         if (session) {
             user = await prisma.user.findUnique({ where: { email: session?.email } });
             posts = await prisma.post.findMany({
                 where: {
-                    author_id: userId,
+                    author_id: Number(session?.id),
                 },
                 orderBy: {
                     created: 'desc',
                 },
             });
+        } else {
+            res.writeHead(301, { Location: '/401' });
+            res.end();
         }
-
-        const editedPosts =
-            Array.isArray(posts) &&
-            posts.map((data) => ({
-                ...data,
-                created: JSON.parse(JSON.stringify(data.created.toISOString())),
-            }));
 
         return {
             props: {
                 user,
-                posts: editedPosts,
+                posts: posts.map((data) => ({
+                    ...data,
+                    created: JSON.parse(JSON.stringify(data.created.toISOString())),
+                })),
             },
         };
     } catch (error) {

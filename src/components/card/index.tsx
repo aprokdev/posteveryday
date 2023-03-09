@@ -39,6 +39,7 @@ const defaultIMG = '';
 
 export default function Card(props: ICardProps): JSX.Element {
     const {
+        id,
         image,
         title = defaultTitle,
         html = defaultHTML,
@@ -76,7 +77,7 @@ export default function Card(props: ICardProps): JSX.Element {
     }, [created]);
 
     return (
-        <Link href={`/posts/1`} className="hover:no-underline">
+        <Link href={`/posts/${id}`} className="hover:no-underline">
             <article
                 ref={ref}
                 className={`${animationClassName}relative shadow-lg border-2 border-stone-300 overflow-hidden bg-stone-100 rounded-md`}

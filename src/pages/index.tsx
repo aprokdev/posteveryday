@@ -37,12 +37,14 @@ export async function getServerSideProps({ req }) {
         if (session) {
             user = await prisma.user.findUnique({ where: { email: session?.email } });
         }
+
         const posts = await prisma.post.findMany({
             take: 10,
             orderBy: {
                 created: 'desc',
             },
         });
+
         return {
             props: {
                 user,
@@ -53,18 +55,19 @@ export async function getServerSideProps({ req }) {
             },
         };
     } catch (error) {
+        console.error(error);
         return {
-            props: {},
+            props: { error: error.message },
         };
     }
 }
 
-export default function Feed({ user, posts = [] }) {
+export default function Feed({ user, posts = [], error = '' }) {
     const [domLoaded, setDomLoaded] = React.useState(false);
     React.useEffect(() => {
         setDomLoaded(true);
     }, []);
-    return domLoaded ? (
+    return domLoaded && !error ? (
         <Layout user={user}>
             <Container>
                 {posts?.length === 0 ? (
@@ -86,7 +89,9 @@ export default function Feed({ user, posts = [] }) {
                 )}
             </Container>
         </Layout>
-    ) : null;
+    ) : (
+        <div>{error}</div>
+    );
 }
 
 {

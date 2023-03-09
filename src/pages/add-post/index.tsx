@@ -1,6 +1,8 @@
+import Router from 'next/router';
 import { getLoginSession } from '@backend/auth';
 import { prisma } from '@backend/index';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { defaultHTML } from 'pages/posts/plug';
 import React, { useState } from 'react';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { useForm } from 'react-hook-form';
@@ -11,9 +13,8 @@ import FileInput from '@components/form/file-input';
 import Input from '@components/form/input';
 import Layout from '@components/layout';
 import MainContainer from '@components/main-container';
-import PostPreview from '@components/post-preview';
-
-// import TinyEditor from '@components/tiny-editor';
+import Post from '@components/post';
+import TinyEditor from '@components/tiny-editor';
 
 export async function getServerSideProps({ req, res }) {
     try {
@@ -38,18 +39,6 @@ export interface IFormInputs {
 }
 
 const defaultTitle = 'What is Lorem Ipsum?';
-export const defaultHTML = `<p><span style="font-size: 14pt; font-family: terminal, monaco, monospace;"><em><span style="text-decoration: underline;"><strong>Lorem Ipsum</strong></span></em>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span></p>
-<p>&nbsp;</p>
-<p><span style="font-size: 14pt; font-family: terminal, monaco, monospace;"><em><span style="text-decoration: underline;"><strong>Lorem Ipsum</strong></span></em>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span></p>
-<p>&nbsp;</p>
-<p><span style="font-size: 14pt; font-family: terminal, monaco, monospace;"><em><span style="text-decoration: underline;"><strong>Lorem Ipsum</strong></span></em>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span></p>
-<p>&nbsp;</p>
-<p><span style="font-size: 14pt; font-family: terminal, monaco, monospace;"><em><span style="text-decoration: underline;"><strong>Lorem Ipsum</strong></span></em>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span></p>
-<p>&nbsp;</p>
-<p><span style="font-size: 14pt; font-family: terminal, monaco, monospace;"><em><span style="text-decoration: underline;"><strong>Lorem Ipsum</strong></span></em>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span></p>
-<p>&nbsp;</p>
-<p><span style="font-size: 14pt; font-family: terminal, monaco, monospace;"><em><span style="text-decoration: underline;"><strong>Lorem Ipsum</strong></span></em>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span></p>`;
-
 const schema = yup
     .object({
         Title: yup.string().required().min(20),
@@ -81,10 +70,57 @@ export default function AddPost({ user }) {
         document.documentElement.scrollTo(0, 0);
     };
 
+    const publishPost = async () => {
+        const formData = new FormData();
+        formData.append('image', preview?.image);
+        formData.append('title', preview?.title);
+        formData.append('html', preview?.html);
+
+        try {
+            const res = await fetch('/api/posts/create', {
+                method: 'POST',
+                body: formData,
+            });
+            const result = await res.json();
+            console.log('publishPost result: ', result);
+            if (result.success) {
+                Router.push('/my-posts');
+            }
+        } catch (error) {
+            console.error(`publishPost error: ${error.message}`);
+            return error;
+        }
+    };
+
+    const image = React.useMemo(
+        () => (preview ? URL.createObjectURL(preview?.image) : ''),
+        [preview]
+    );
+
     return (
         <Layout user={user}>
             {previewMode ? (
-                <PostPreview {...preview} backCallback={setPreviewMode} />
+                <>
+                    <Post
+                        {...preview}
+                        src={image}
+                        created={new Date()}
+                        author_firstname={user.first_name}
+                        author_lastname={user.last_name}
+                    />
+                    <div className="flex items-center justify-end py-10 min-w-375 max-w-5xl m-auto sm:px-6 lg:px-8 xs:px-4">
+                        <Button
+                            type="button"
+                            className="mr-4 bg-white border-black text-black border-2"
+                            onClick={() => setPreviewMode(false)}
+                        >
+                            Back
+                        </Button>
+                        <Button type="submit" className="" onClick={publishPost}>
+                            Publish
+                        </Button>
+                    </div>
+                </>
             ) : (
                 <div className="bg-gray-200 pt-8">
                     <MainContainer>
@@ -114,10 +150,7 @@ export default function AddPost({ user }) {
 
                             <span className="block">
                                 <span className="block text-gray-700 mb-1">Post body</span>
-                                {/* <TinyEditor
-                                    editorRef={editorRef}
-                                    initialValue={preview?.html || defaultHTML}
-                                /> */}
+                                <TinyEditor editorRef={editorRef} initialValue={preview?.html} />
                             </span>
 
                             <div className="flex items-center justify-end py-10">
