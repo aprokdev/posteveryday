@@ -2,7 +2,6 @@ import Link from 'next/link';
 import { useDropdown } from '@frontend/hooks/useDropdown';
 import { UserCircleIcon } from '@heroicons/react/24/outline';
 import React from 'react';
-import HeaderLink from '../header-link';
 
 export default function HeaderProfile({ userPic = '' }) {
     const { openBtnRef, popupRef, isVisible, setVisiability } = useDropdown();

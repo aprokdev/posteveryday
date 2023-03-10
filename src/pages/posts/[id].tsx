@@ -43,7 +43,7 @@ export default function PostPage({ user, data, error = '' }) {
 
     return data && !error ? (
         <Layout user={user}>
-            <Post {...data} />
+            <Post {...data} className="pb-24" />
         </Layout>
     ) : (
         <div>{error}</div>

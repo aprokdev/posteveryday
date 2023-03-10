@@ -65,7 +65,7 @@ export default function AddPost({ user }) {
             html = editorRef.current.getContent();
         }
         console.log('onSubmit res: ', { image: Image[0], title: Title, html });
-        setPreview({ image: Image[0], title: Title, html: defaultHTML });
+        setPreview({ image: Image[0], title: Title, html });
         setPreviewMode(true);
         document.documentElement.scrollTo(0, 0);
     };
@@ -92,21 +92,16 @@ export default function AddPost({ user }) {
         }
     };
 
-    const image = React.useMemo(
-        () => (preview ? URL.createObjectURL(preview?.image) : ''),
-        [preview]
-    );
-
     return (
         <Layout user={user}>
             {previewMode ? (
                 <>
                     <Post
                         {...preview}
-                        src={image}
                         created={new Date()}
                         author_firstname={user.first_name}
                         author_lastname={user.last_name}
+                        imageFile={preview?.image}
                     />
                     <div className="flex items-center justify-end py-10 min-w-375 max-w-5xl m-auto sm:px-6 lg:px-8 xs:px-4">
                         <Button

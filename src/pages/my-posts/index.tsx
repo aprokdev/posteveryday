@@ -51,6 +51,7 @@ export async function getServerSideProps({ req, res }) {
                 where: {
                     author_id: Number(session?.id),
                 },
+                take: 12,
                 orderBy: {
                     created: 'desc',
                 },

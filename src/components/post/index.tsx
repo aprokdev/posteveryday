@@ -11,8 +11,14 @@ export default function Post({
     created,
     author_firstname,
     author_lastname,
-    src,
+    imageFile,
+    className,
 }: IPostPreviewProps) {
+    const img = React.useMemo(
+        () => (imageFile ? URL.createObjectURL(imageFile) : null),
+        [imageFile]
+    );
+
     const date = React.useMemo(() => {
         const date = new Date(created);
         return date
@@ -25,10 +31,10 @@ export default function Post({
     }, [created]);
 
     return (
-        <div className="bg-grey-200">
+        <div className={`bg-grey-200${className ? ` ${className}` : ''}`}>
             <div className="w-full overflow-hidden relative h-72 flex items-center justify-center bg-stone-200">
-                {src ? (
-                    <img src={src} alt="" className="block w-full object-cover" />
+                {imageFile ? (
+                    <img src={img} alt="" className="block w-full object-cover" />
                 ) : (
                     <Image
                         src={`/${image}`}

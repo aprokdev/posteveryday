@@ -5,5 +5,6 @@ export interface IPostPreviewProps {
     created: string;
     author_firstname: string;
     author_lastname: string;
-    src: File;
+    imageFile: File;
+    className: string;
 }

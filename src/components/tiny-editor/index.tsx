@@ -1,8 +1,12 @@
 import { Editor } from '@tinymce/tinymce-react';
+import s from './style.module.scss';
 
 export default function TinyEditor({ editorRef, initialValue = '<p>Write your post here...</p>' }) {
     return (
-        <div className="bg-white min-h-500 shadow-inner" style={{ borderRadius: '10px' }}>
+        <div
+            className={`bg-white min-h-500 shadow-inner ${s.html}`}
+            style={{ borderRadius: '10px' }}
+        >
             <Editor
                 apiKey="8srmupem2vxdakc5vomuuu2hrn97ep4c78zupz4k5if90gjg"
                 onInit={(evt, editor) => (editorRef.current = editor)}
