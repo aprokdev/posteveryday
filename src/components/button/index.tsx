@@ -17,6 +17,7 @@ const baseClassName = `
     font-semibold 
     leading-5 
     text-white
+    w-20
 `;
 
 export default function Button(props: IButtonProps): JSX.Element {

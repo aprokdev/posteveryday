@@ -80,13 +80,15 @@ export async function getServerSideProps({ req, res }) {
 
 export default function MyPosts({ user, posts = [], error = '' }) {
     const [domLoaded, setDomLoaded] = React.useState(false);
+
     React.useEffect(() => {
         setDomLoaded(true);
     }, []);
+
     return domLoaded && !error ? (
         <Layout user={user}>
-            <Container>
-                {posts?.length === 0 ? (
+            <Container className="bg-gray-200">
+                {posts.length === 0 ? (
                     <div className="flex flex-col items-center justify-center h-96 w-full mt-20">
                         <h1 className="block mb-5 text-center w-full text-4xl">
                             There are no posts yet

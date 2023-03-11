@@ -24,12 +24,28 @@ const baseClassName = `
 
 export default React.forwardRef<Ref, IFileInput>(function FileInput<Ref, IFileInput>(props, ref) {
     const { file, placeholder } = props;
+    const onChangeHandler = (e) => {
+        console.log(e.target.files.length);
+        if (e.target.files.length) {
+            props.onChange && props.onChange(e);
+        } else {
+            e.target.files = null;
+            props.onChange && props.onChange(e);
+        }
+    };
     return (
         <div className="file-uploader">
             <label htmlFor="#fileupload" className={baseClassName}>
                 {file && file[0] ? `Attached: ${file[0].name}` : placeholder}
             </label>
-            <input type="file" {...props} ref={ref} id="#fileupload" className="hidden" />
+            <input
+                type="file"
+                {...props}
+                onChange={onChangeHandler}
+                ref={ref}
+                id="#fileupload"
+                className="hidden"
+            />
         </div>
     );
 });

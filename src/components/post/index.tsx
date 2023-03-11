@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
-import MainContainer from '@components/main-container';
+import SmallerContainer from '@components/smaller-container';
 import s from './style.module.scss';
 import { IPostPreviewProps } from './types';
 
@@ -46,7 +46,7 @@ export default function Post({
                     />
                 )}
             </div>
-            <MainContainer>
+            <SmallerContainer>
                 <div className="flex justify-between mb-3 mt-8">
                     <span className="text-md">
                         {author_firstname} {author_lastname}
@@ -59,7 +59,7 @@ export default function Post({
                     </h1>
                     <div dangerouslySetInnerHTML={{ __html: html }} className={s.html} />
                 </div>
-            </MainContainer>
+            </SmallerContainer>
         </div>
     );
 }

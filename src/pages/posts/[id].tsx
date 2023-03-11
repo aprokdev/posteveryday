@@ -1,9 +1,13 @@
 import Image from 'next/image';
+import Router from 'next/router';
 import { getLoginSession } from '@backend/auth';
 import { prisma } from '@backend/index';
-import React from 'react';
+import React, { useReducer, useState } from 'react';
+import Button from '@components/button';
 import Layout from '@components/layout';
 import Post from '@components/post';
+import PostForm from '@components/post-form';
+import SmallerContainer from '@components/smaller-container';
 
 export async function getServerSideProps(context) {
     try {
@@ -29,21 +33,125 @@ export async function getServerSideProps(context) {
     }
 }
 
+const actions = {
+    EDIT_MODE: 'EDIT_MODE',
+    READ_MODE: 'READ_MODE',
+    PREVIEW_MODE: 'PREVIEW_MODE',
+};
+
+const initialState = {
+    read: true,
+    preview: false,
+    edit: false,
+};
+
+const reducer = (state, action) => {
+    if (action === 'EDIT_MODE') {
+        return { read: false, preview: false, edit: true };
+    }
+    if (action === 'READ_MODE') {
+        return {
+            read: true,
+            preview: false,
+            edit: false,
+        };
+    }
+    if (action === 'PREVIEW_MODE') {
+        return {
+            read: false,
+            preview: true,
+            edit: false,
+        };
+    }
+    return state;
+};
+
 export default function PostPage({ user, data, error = '' }) {
-    const date = React.useMemo(() => {
-        const date = new Date(data.created);
-        return date
-            .toLocaleDateString('en-EN', {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-            })
-            .replace(/\//g, '.');
-    }, [data]);
+    const [mode, dispatch] = useReducer(reducer, initialState);
+    const [preview, setPreview] = useState(null);
+
+    const onSubmit = (data) => {
+        console.log(data);
+        setPreview(data);
+        dispatch(actions.PREVIEW_MODE);
+    };
+
+    const updatePost = async () => {
+        const formData = new FormData();
+        formData.append('image', preview?.image);
+        formData.append('title', preview?.title);
+        formData.append('html', preview?.html);
+        formData.append('id', data?.id);
+
+        try {
+            const res = await fetch(`/api/posts/update/`, {
+                method: 'POST',
+                body: formData,
+            });
+            const result = await res.json();
+            console.log('updatePost result: ', result);
+            if (result.success) {
+                // dispatch(actions.READ_MODE);
+                location.reload();
+                document.documentElement.scrollTo(0, 0);
+            }
+        } catch (error) {
+            console.error(`publishPost error: ${error.message}`);
+            return error;
+        }
+    };
 
     return data && !error ? (
         <Layout user={user}>
-            <Post {...data} className="pb-24" />
+            {mode.read && (
+                <>
+                    <Post {...data} className={`${user ? 'pb-10' : 'pb-20'}`} />
+                    {user && (
+                        <div className="flex items-center justify-end pb-10 min-w-375 max-w-5xl m-auto sm:px-6 lg:px-8 xs:px-4">
+                            <Button onClick={() => dispatch(actions.EDIT_MODE)}>Edit</Button>
+                        </div>
+                    )}
+                </>
+            )}
+
+            {mode.edit && (
+                <SmallerContainer className="bg-gray-200 pt-8">
+                    <PostForm {...data} onSubmit={onSubmit}>
+                        <Button
+                            type="button"
+                            className="mr-4 bg-gray-200 border-black text-black border-2"
+                            onClick={() => dispatch(actions.READ_MODE)}
+                        >
+                            Back
+                        </Button>
+                        <Button type="submit">Preview</Button>
+                    </PostForm>
+                </SmallerContainer>
+            )}
+
+            {mode.preview && (
+                <>
+                    <Post
+                        {...preview}
+                        created={new Date()}
+                        author_firstname={user.first_name}
+                        author_lastname={user.last_name}
+                        imageFile={preview?.image}
+                    />
+                    <div className="flex items-center justify-end py-10 min-w-375 max-w-5xl m-auto sm:px-6 lg:px-8 xs:px-4">
+                        <Button
+                            type="button"
+                            className="mr-4 bg-white border-black text-black border-2"
+                            onClick={() => dispatch(actions.EDIT_MODE)}
+                        >
+                            Back
+                        </Button>
+                        <Button type="submit" onClick={updatePost}>
+                            Update
+                        </Button>
+                    </div>
+                </>
+            )}
         </Layout>
     ) : (
         <div>{error}</div>
