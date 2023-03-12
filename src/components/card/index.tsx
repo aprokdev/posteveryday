@@ -102,7 +102,7 @@ export default function Card(props: ICardProps): JSX.Element {
                         <span className="text-xs">{date}</span>
                     </div>
                     <h1 className={`text-2xl mb-2 ${s.linesClipHeader} ${s.boxOrient}`}>{title}</h1>
-                    <p
+                    <div
                         className={`${s.linesClipText} ${s.boxOrient} m-0 ${s.removeInnerMargin}`}
                         dangerouslySetInnerHTML={{ __html: html }}
                     />

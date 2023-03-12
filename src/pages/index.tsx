@@ -12,6 +12,8 @@ export async function getServerSideProps({ req }) {
         let user = null;
         if (session) {
             user = await prisma.user.findUnique({ where: { email: session?.email } });
+            const { hash, salt, ...rest } = user;
+            user = rest;
         }
 
         const posts = await prisma.post.findMany({
@@ -27,6 +29,9 @@ export async function getServerSideProps({ req }) {
                 posts: posts.map((data) => ({
                     ...data,
                     created: JSON.parse(JSON.stringify(data.created.toISOString())),
+                    // to prevent render unnecessary symbols, that may set additional cookie like youtube,
+                    // if html contains youtube video, also for for faster rendering
+                    html: data.html.slice(0, 300),
                 })),
             },
         };
@@ -36,16 +41,13 @@ export async function getServerSideProps({ req }) {
             props: { error: error.message },
         };
     }
+    // return {
+    //     props: {},
+    // };
 }
 
 export default function Feed({ user, posts = [], error = '' }) {
-    const [domLoaded, setDomLoaded] = React.useState(false);
-
-    React.useEffect(() => {
-        setDomLoaded(true);
-    }, []);
-
-    return domLoaded && !error ? (
+    return !error ? (
         <Layout user={user}>
             <Container className="bg-gray-200">
                 {posts.length === 0 ? (

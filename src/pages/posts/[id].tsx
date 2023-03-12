@@ -108,7 +108,9 @@ export default function PostPage({ user, data, error = '' }) {
                     <Post {...data} className={`${user ? 'pb-10' : 'pb-20'}`} />
                     {user && (
                         <div className="flex items-center justify-end pb-10 min-w-375 max-w-5xl m-auto sm:px-6 lg:px-8 xs:px-4">
-                            <Button onClick={() => dispatch(actions.EDIT_MODE)}>Edit</Button>
+                            <Button onClick={() => dispatch(actions.EDIT_MODE)} className="w-20">
+                                Edit
+                            </Button>
                         </div>
                     )}
                 </>
@@ -119,12 +121,14 @@ export default function PostPage({ user, data, error = '' }) {
                     <PostForm {...data} onSubmit={onSubmit}>
                         <Button
                             type="button"
-                            className="mr-4 bg-gray-200 border-black text-black border-2"
+                            className="mr-4 border-black text-black border-2 !bg-gray-200 w-20"
                             onClick={() => dispatch(actions.READ_MODE)}
                         >
                             Back
                         </Button>
-                        <Button type="submit">Preview</Button>
+                        <Button type="submit" className="w-20">
+                            Preview
+                        </Button>
                     </PostForm>
                 </SmallerContainer>
             )}
@@ -141,12 +145,12 @@ export default function PostPage({ user, data, error = '' }) {
                     <div className="flex items-center justify-end py-10 min-w-375 max-w-5xl m-auto sm:px-6 lg:px-8 xs:px-4">
                         <Button
                             type="button"
-                            className="mr-4 bg-white border-black text-black border-2"
+                            className="mr-4 bg-white border-black text-black border-2 w-20"
                             onClick={() => dispatch(actions.EDIT_MODE)}
                         >
                             Back
                         </Button>
-                        <Button type="submit" onClick={updatePost}>
+                        <Button type="submit" className="w-20" onClick={updatePost}>
                             Update
                         </Button>
                     </div>

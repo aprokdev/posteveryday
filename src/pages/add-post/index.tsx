@@ -1,26 +1,17 @@
 import Router from 'next/router';
 import { getLoginSession } from '@backend/auth';
 import { prisma } from '@backend/index';
-import { yupResolver } from '@hookform/resolvers/yup';
-import defaultHTML from 'pages/posts/plug';
 import React, { useState } from 'react';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
 import Button from '@components/button';
-import FormError from '@components/form/error';
-import FileInput from '@components/form/file-input';
-import Input from '@components/form/input';
 import Layout from '@components/layout';
 import Post from '@components/post';
 import PostForm from '@components/post-form';
 import { IFormFields } from '@components/post-form/types';
 import SmallerContainer from '@components/smaller-container';
-import TinyEditor from '@components/tiny-editor';
 
-export async function getServerSideProps({ req, res }) {
+export async function getServerSideProps({ req }) {
     try {
-        res.setHeader('Cache-Control', 'public, s-maxage=10, stale-while-revalidate=59');
         const session = await getLoginSession(req);
         const user = await prisma.user.findUnique({ where: { email: session?.email } });
         return {
@@ -42,7 +33,6 @@ export default function AddPost({ user }) {
 
     const onSubmit = (formFields: IFormFields) => {
         console.log('!!!formFields', formFields);
-
         setPreview(formFields);
         setPreviewMode(true);
     };

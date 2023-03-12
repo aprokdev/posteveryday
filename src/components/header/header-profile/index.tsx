@@ -21,11 +21,13 @@ export default function HeaderProfile({ userPic = '' }) {
                 <span className="block relative h-10 w-10">
                     <>
                         <UserCircleIcon className="block w-full h-full text-stone-800" />
-                        <img
-                            className="absolute top-0 right-0 bottom-0 left-0 h-10 w-10 rounded-full"
-                            src={userPic}
-                            alt=""
-                        />
+                        {userPic && (
+                            <img
+                                className="absolute top-0 right-0 bottom-0 left-0 h-10 w-10 rounded-full"
+                                src={userPic}
+                                alt=""
+                            />
+                        )}
                     </>
                 </span>
             </button>

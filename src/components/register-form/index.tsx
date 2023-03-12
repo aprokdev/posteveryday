@@ -66,7 +66,7 @@ export default function RegisterForm(): JSX.Element {
             <Button
                 type="submit"
                 disabled={isSubmitting}
-                className={`${isSubmitting ? 'opacity-80 ' : ''}mt-4`}
+                className={`${isSubmitting ? 'opacity-80 ' : ''}mt-4 w-full`}
             >
                 Register
             </Button>

@@ -11,6 +11,8 @@ export async function getServerSideProps({ req, res }) {
         let user = null;
         if (session) {
             user = await prisma.user.findUnique({ where: { email: session?.email } });
+            const { hash, salt, ...rest } = user;
+            user = rest;
         } else {
             res.writeHead(301, { Location: '/401' });
             res.end();
