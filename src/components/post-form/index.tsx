@@ -33,7 +33,7 @@ function PostForm({
     onSubmit,
     children,
 }: IPostFormProps) {
-    console.log('PostForm props', { image, title, html });
+    // console.log('PostForm props', { image, title, html });
 
     const editorRef = useRef<any>();
 

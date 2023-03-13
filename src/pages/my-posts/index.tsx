@@ -67,9 +67,8 @@ export default function MyPosts({ user, posts = [], error = '' }): JSX.Element {
                     </div>
                 ) : (
                     <div className="grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8 xl:gap-4">
-                        {posts.map((data) => (
-                            <Card {...data} key={data.id} />
-                        ))}
+                        {Array.isArray(posts) &&
+                            posts.map((data) => <Card {...data} key={data.id} />)}
                     </div>
                 )}
             </Container>

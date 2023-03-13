@@ -1,4 +1,5 @@
 export const feedModel = {
+    id: true,
     title: true,
     html_preview: true,
     image: true,
