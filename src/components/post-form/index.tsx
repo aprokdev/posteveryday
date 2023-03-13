@@ -26,7 +26,13 @@ const schema = yup
 const defaultTitle = 'What is lorem ipsum dolor?';
 const defhtml = defaultHTML();
 
-function PostForm({ image = null, title, html, onSubmit, children }: IPostFormProps) {
+function PostForm({
+    image = null,
+    title = defaultTitle,
+    html = defhtml,
+    onSubmit,
+    children,
+}: IPostFormProps) {
     console.log('PostForm props', { image, title, html });
 
     const editorRef = useRef<any>();

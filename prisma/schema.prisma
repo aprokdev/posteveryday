@@ -29,6 +29,7 @@ model Post {
   title            String
   image            String
   html             String   @db.Text
+  html_preview     String   @db.Text
   created          DateTime @default(now())
   author_id        Int
   author_firstname String

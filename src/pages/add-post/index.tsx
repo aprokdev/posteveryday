@@ -13,15 +13,25 @@ import SmallerContainer from '@components/smaller-container';
 export async function getServerSideProps({ req }) {
     try {
         const session = await getLoginSession(req);
-        const user = await prisma.user.findUnique({ where: { email: session?.email } });
-        return {
-            props: { user }, // will be passed to the page component as props
-        };
+        let user = null;
+        if (session) {
+            user = await prisma.user.findUnique({ where: { email: session?.email } });
+            const { hash, salt, ...rest } = user;
+            user = rest;
+            return { props: { user } };
+        } else {
+            return {
+                redirect: {
+                    destination: '/401',
+                    permanent: true,
+                },
+            };
+        }
     } catch (error) {
         return {
             redirect: {
-                permanent: true,
                 destination: '/401',
+                permanent: true,
             },
         };
     }

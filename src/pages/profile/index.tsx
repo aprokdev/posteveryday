@@ -13,15 +13,15 @@ export async function getServerSideProps({ req, res }) {
             user = await prisma.user.findUnique({ where: { email: session?.email } });
             const { hash, salt, ...rest } = user;
             user = rest;
+            return { props: { user } };
         } else {
-            res.writeHead(301, { Location: '/401' });
-            res.end();
+            return {
+                redirect: {
+                    destination: '/401',
+                    permanent: true,
+                },
+            };
         }
-        return {
-            props: {
-                user,
-            },
-        };
     } catch (error) {
         console.error(error);
         return {

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getLoginSession } from '@backend/auth';
 import { prisma } from '@backend/index';
+import { feedModel } from '@backend/utils/data';
 import React from 'react';
 import Card from '@components/card';
 import Container from '@components/container';
@@ -18,9 +19,8 @@ export async function getServerSideProps({ req }) {
 
         const posts = await prisma.post.findMany({
             take: 12,
-            orderBy: {
-                created: 'desc',
-            },
+            orderBy: { created: 'desc' },
+            select: feedModel,
         });
 
         return {
@@ -29,9 +29,6 @@ export async function getServerSideProps({ req }) {
                 posts: posts.map((data) => ({
                     ...data,
                     created: JSON.parse(JSON.stringify(data.created.toISOString())),
-                    // to prevent render unnecessary symbols, that may set additional cookie like youtube,
-                    // if html contains youtube video, also for for faster rendering
-                    html: data.html.slice(0, 300),
                 })),
             },
         };
@@ -41,13 +38,12 @@ export async function getServerSideProps({ req }) {
             props: { error: error.message },
         };
     }
-    // return {
-    //     props: {},
-    // };
 }
 
-export default function Feed({ user, posts = [], error = '' }) {
-    return !error ? (
+export default function Feed({ user, posts = [], error = '' }): JSX.Element {
+    return error ? (
+        <div>{error}</div>
+    ) : (
         <Layout user={user}>
             <Container className="bg-gray-200">
                 {posts.length === 0 ? (
@@ -69,8 +65,6 @@ export default function Feed({ user, posts = [], error = '' }) {
                 )}
             </Container>
         </Layout>
-    ) : (
-        <div>{error}</div>
     );
 }
 

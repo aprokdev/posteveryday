@@ -36,7 +36,7 @@ export default function LoginForm(): JSX.Element {
         async (data: ILoginFormInputs) => {
             const response = await loginUser(data);
             if (response?.success) {
-                Router.push('/');
+                Router.push('/my-posts');
             } else if (response?.message === "User doesn't exist") {
                 setError('Email', { type: 'custom', message: "User doesn't exist" });
             } else if (response?.message === 'Invalid password') {

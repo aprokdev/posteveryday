@@ -9,7 +9,7 @@ export default function HeaderProfile({ userPic = '' }) {
         <div className="relative z-20 skrink-0">
             <button
                 type="button"
-                className="flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-stone-900"
+                className="flex rounded-full text-sm "
                 id="user-menu-button"
                 aria-expanded="false"
                 aria-haspopup="true"
@@ -45,7 +45,7 @@ export default function HeaderProfile({ userPic = '' }) {
                         href="profile"
                         className="hover:text-stone-500 transition block px-4 py-2 text-sm text-stone-700 hover:no-underline"
                         role="menuitem"
-                        tabIndex={-1}
+                        // tabIndex={-1}
                         id="user-menu-item-0"
                     >
                         Your Profile
@@ -54,7 +54,7 @@ export default function HeaderProfile({ userPic = '' }) {
                         href="/api/users/logout"
                         className="hover:text-stone-500 transition block px-4 py-2 text-sm text-stone-700 hover:no-underline"
                         role="menuitem"
-                        tabIndex={-1}
+                        // tabIndex={-1}
                         id="user-menu-item-2"
                     >
                         Log out

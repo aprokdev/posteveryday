@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getLoginSession } from '@backend/auth';
 import { prisma } from '@backend/index';
+import { feedModel } from '@backend/utils/data';
 import React from 'react';
 import Card from '@components/card';
 import Container from '@components/container';
@@ -15,29 +16,31 @@ export async function getServerSideProps({ req, res }) {
             user = await prisma.user.findUnique({ where: { email: session?.email } });
             const { hash, salt, ...rest } = user;
             user = rest;
-            posts = await prisma.post.findMany({
-                where: {
-                    author_id: Number(session?.id),
-                },
-                take: 12,
-                orderBy: {
-                    created: 'desc',
-                },
-            });
-        } else {
-            res.writeHead(301, { Location: '/401' });
-            res.end();
-        }
 
-        return {
-            props: {
-                user,
-                posts: posts.map((data) => ({
-                    ...data,
-                    created: JSON.parse(JSON.stringify(data.created.toISOString())),
-                })),
-            },
-        };
+            posts = await prisma.post.findMany({
+                take: 12,
+                where: { author_id: Number(session?.id) },
+                orderBy: { created: 'desc' },
+                select: feedModel,
+            });
+            return {
+                props: {
+                    user,
+                    posts: posts.map((data) => ({
+                        ...data,
+                        // prisma returns Date onjects, so we need additionally stringify it
+                        created: JSON.parse(JSON.stringify(data.created.toISOString())),
+                    })),
+                },
+            };
+        } else {
+            return {
+                redirect: {
+                    destination: '/401',
+                    permanent: true,
+                },
+            };
+        }
     } catch (error) {
         console.error(error);
         return {
@@ -46,8 +49,10 @@ export async function getServerSideProps({ req, res }) {
     }
 }
 
-export default function MyPosts({ user, posts = [], error = '' }) {
-    return !error ? (
+export default function MyPosts({ user, posts = [], error = '' }): JSX.Element {
+    return error ? (
+        <div>{error}</div>
+    ) : (
         <Layout user={user}>
             <Container className="bg-gray-200">
                 {posts.length === 0 ? (
@@ -69,8 +74,6 @@ export default function MyPosts({ user, posts = [], error = '' }) {
                 )}
             </Container>
         </Layout>
-    ) : (
-        <div>{error}</div>
     );
 }
 

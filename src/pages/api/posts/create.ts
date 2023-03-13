@@ -38,7 +38,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         // await promises.rm(files.image.filepath);
         res.status(200).json({ success: true });
     } catch (error) {
-        res.status(400).json({ sucess: false, message: error.message });
+        res.status(500).json({ sucess: false, message: error.message });
     }
 }
 
