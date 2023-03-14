@@ -37,7 +37,7 @@ function Profile({ user }) {
     }
     return (
         <Layout user={user}>
-            <Container>
+            <Container className="min-h-mch">
                 <p>Email: {user.email}</p>
                 <p>First name: {user.first_name}</p>
                 <p>Last name: {user.last_name}</p>

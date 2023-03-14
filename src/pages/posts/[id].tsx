@@ -106,11 +106,25 @@ export default function PostPage({ user, data, error = '' }) {
             {mode.read && (
                 <>
                     <Post {...data} className={`${user ? 'pb-10' : 'pb-20'}`} />
+
                     {user && (
                         <div className="flex items-center justify-end pb-10 min-w-375 max-w-5xl m-auto sm:px-6 lg:px-8 xs:px-4">
-                            <Button onClick={() => dispatch(actions.EDIT_MODE)} className="w-20">
-                                Edit
-                            </Button>
+                            {user.role === 'admin' && (
+                                <Button
+                                    // onClick={() => dispatch(actions.EDIT_MODE)}
+                                    className="mr-4 bg-white border-black text-black border-2 w-20"
+                                >
+                                    Delete
+                                </Button>
+                            )}
+                            {user.role === 'admin' || user.id === data.author_id ? (
+                                <Button
+                                    onClick={() => dispatch(actions.EDIT_MODE)}
+                                    className="w-20"
+                                >
+                                    Edit
+                                </Button>
+                            ) : null}
                         </div>
                     )}
                 </>

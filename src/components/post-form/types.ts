@@ -10,4 +10,5 @@ export interface IPostFormProps {
     html: string;
     onSubmit: (IFormFields) => void;
     children?: React.ReactNode;
+    strongImageValidation?: boolean;
 }

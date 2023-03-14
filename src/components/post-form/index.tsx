@@ -1,8 +1,9 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import defaultHTML from 'pages/posts/plug';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { FormProvider, useController, useForm } from 'react-hook-form';
 import * as yup from 'yup';
+import Button from '@components/button';
 import FormError from '@components/form/error';
 import ImageInput from '@components/form/file-input';
 import Input from '@components/form/input';
@@ -32,14 +33,21 @@ function PostForm({
     html = defhtml,
     onSubmit,
     children,
+    strongImageValidation,
 }: IPostFormProps) {
-    // console.log('PostForm props', { image, title, html });
-
     const editorRef = useRef<any>();
 
     const methods = useForm<IFormInputs>({
-        resolver: yupResolver(schema),
-        defaultValues: { Title: title, Image: image, Body: html },
+        resolver: yupResolver(
+            yup
+                .object({
+                    Title: yup.string().required().min(20),
+                    Image: strongImageValidation ? yup.mixed().required() : yup.mixed(),
+                    Body: yup.string().required().min(20),
+                })
+                .required()
+        ),
+        defaultValues: { Title: title, Image: null, Body: html },
     });
     const { register, handleSubmit, formState, watch, setError } = methods;
 
@@ -51,13 +59,21 @@ function PostForm({
         if (editorRef.current) {
             html = editorRef.current.getContent();
         }
-        if (!Image || !Image[0]) {
+        if ((!Image || !Image[0]) && strongImageValidation) {
             setError('Image', { type: 'custom', message: 'Image is a required field' });
             return;
         }
-        console.log('onSubmit res: ', { image: Image[0], title: Title, html: Body });
+        console.log('onSubmit res: ', {
+            image: strongImageValidation ? Image[0] : Image ? Image[0] : null,
+            title: Title,
+            html: Body,
+        });
         document.documentElement.scrollTo(0, 0);
-        onSubmit({ image: Image[0], title: Title, html: Body });
+        onSubmit({
+            image: strongImageValidation ? Image[0] : Image ? Image[0] : null,
+            title: Title,
+            html: Body,
+        });
     };
 
     return (

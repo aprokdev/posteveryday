@@ -96,7 +96,7 @@ export default function AddPost({ user }) {
             ) : (
                 <div className="bg-gray-200 pt-8">
                     <SmallerContainer>
-                        <PostForm {...preview} onSubmit={onSubmit}>
+                        <PostForm {...preview} onSubmit={onSubmit} strongImageValidation>
                             <Button type="submit">Preview</Button>
                         </PostForm>
                     </SmallerContainer>

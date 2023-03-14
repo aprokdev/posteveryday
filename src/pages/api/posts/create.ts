@@ -22,12 +22,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         // const result = await uploadS3Image(buffer, files.image.originalFilename);
         // console.log('result: ', result);
 
-        console.log(files?.image);
+        // console.log(files?.image);
+
+        console.log('html', html);
+        console.log('html_preview', html.slice(0, 340));
 
         const result = await prisma.post.create({
             data: {
                 title,
                 html,
+                html_preview: html.slice(0, 340),
                 image: files.image.newFilename,
                 author_id: session.id,
                 author_firstname: session.first_name,

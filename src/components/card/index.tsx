@@ -1,15 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { PhotoIcon } from '@heroicons/react/24/outline';
-import dayjs from 'dayjs';
-import 'dayjs/locale/es';
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
 import s from './style.module.scss';
-
-// load on demand
-
-dayjs.locale('es');
 
 // type StaticImageData = {
 //     src: string;
@@ -22,7 +16,7 @@ interface ICardProps {
     // img?: StaticImageData;
     image?: string;
     title?: string;
-    html?: string;
+    html_preview?: string;
     created?: string;
     animate?: boolean;
     id?: string;
@@ -42,7 +36,7 @@ export default function Card(props: ICardProps): JSX.Element {
         id,
         image,
         title = defaultTitle,
-        html = defaultHTML,
+        html_preview = defaultHTML,
         created,
         animate,
         author_firstname,
@@ -77,10 +71,10 @@ export default function Card(props: ICardProps): JSX.Element {
     }, [created]);
 
     return (
-        <Link href={`/posts/${id}`} className="hover:no-underline">
+        <Link href={`/posts/${id}`} className="hover:no-underline flex">
             <article
                 ref={ref}
-                className={`${animationClassName}relative shadow-lg border-2 border-stone-300 overflow-hidden bg-stone-100 rounded-md`}
+                className={`${animationClassName}relative w-full shadow-lg border-2 border-stone-300 overflow-hidden bg-stone-100 rounded-md`}
             >
                 <div className="w-full relative h-48 flex items-center justify-center bg-stone-200">
                     <PhotoIcon className="block w-24 h-24 text-stone-500" />
@@ -104,7 +98,7 @@ export default function Card(props: ICardProps): JSX.Element {
                     <h1 className={`text-2xl mb-2 ${s.linesClipHeader} ${s.boxOrient}`}>{title}</h1>
                     <div
                         className={`${s.linesClipText} ${s.boxOrient} m-0 ${s.removeInnerMargin}`}
-                        dangerouslySetInnerHTML={{ __html: html }}
+                        dangerouslySetInnerHTML={{ __html: html_preview }}
                     />
                 </div>
             </article>

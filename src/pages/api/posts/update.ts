@@ -24,6 +24,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             data: {
                 title,
                 html,
+                html_preview: html.slice(0, 340),
                 image: files.image.newFilename,
             },
         });

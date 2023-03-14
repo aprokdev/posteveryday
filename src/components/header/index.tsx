@@ -95,7 +95,7 @@ export default function Header({ user }) {
                     </div>
                     {user ? (
                         <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:pr-0">
-                            <HeaderProfile userPic={user.image} />
+                            <HeaderProfile user={user} />
                         </div>
                     ) : (
                         <HeaderLink href="/login">Log In</HeaderLink>
