@@ -1,6 +1,7 @@
 import Router from 'next/router';
 import { getLoginSession } from '@backend/auth';
 import { prisma } from '@backend/index';
+import { createPost } from '@frontend/api';
 import React, { useState } from 'react';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import Button from '@components/button';
@@ -41,31 +42,15 @@ export default function AddPost({ user }) {
     const [preview, setPreview] = useState(null);
     const [previewMode, setPreviewMode] = useState(false);
 
-    const onSubmit = (formFields: IFormFields) => {
-        console.log('!!!formFields', formFields);
+    const goToPreview = (formFields: IFormFields) => {
         setPreview(formFields);
         setPreviewMode(true);
     };
 
     const publishPost = async () => {
-        const formData = new FormData();
-        formData.append('image', preview?.image);
-        formData.append('title', preview?.title);
-        formData.append('html', preview?.html);
-
-        try {
-            const res = await fetch('/api/posts/create', {
-                method: 'POST',
-                body: formData,
-            });
-            const result = await res.json();
-            console.log('publishPost result: ', result);
-            if (result.success) {
-                Router.push('/my-posts');
-            }
-        } catch (error) {
-            console.error(`publishPost error: ${error.message}`);
-            return error;
+        const result = await createPost(preview);
+        if (result.success) {
+            Router.push('/my-posts');
         }
     };
 
@@ -96,7 +81,7 @@ export default function AddPost({ user }) {
             ) : (
                 <div className="bg-gray-200 pt-8">
                     <SmallerContainer className="min-h-mch">
-                        <PostForm {...preview} onSubmit={onSubmit} strongImageValidation>
+                        <PostForm {...preview} onSubmit={goToPreview} imageValidation>
                             <Button type="submit">Preview</Button>
                         </PostForm>
                     </SmallerContainer>

@@ -27,14 +27,7 @@ const schema = yup
 const defaultTitle = 'What is lorem ipsum dolor?';
 const defhtml = defaultHTML();
 
-function PostForm({
-    image = null,
-    title = defaultTitle,
-    html = defhtml,
-    onSubmit,
-    children,
-    strongImageValidation,
-}: IPostFormProps) {
+function PostForm({ title, html, onSubmit, children, imageValidation }: IPostFormProps) {
     const editorRef = useRef<any>();
 
     const methods = useForm<IFormInputs>({
@@ -42,7 +35,7 @@ function PostForm({
             yup
                 .object({
                     Title: yup.string().required().min(20),
-                    Image: strongImageValidation ? yup.mixed().required() : yup.mixed(),
+                    Image: imageValidation ? yup.mixed().required() : yup.mixed(),
                     Body: yup.string().required().min(20),
                 })
                 .required()
@@ -59,21 +52,18 @@ function PostForm({
         if (editorRef.current) {
             html = editorRef.current.getContent();
         }
-        if ((!Image || !Image[0]) && strongImageValidation) {
-            setError('Image', { type: 'custom', message: 'Image is a required field' });
-            return;
-        }
-        console.log('onSubmit res: ', {
-            image: strongImageValidation ? Image[0] : Image ? Image[0] : null,
+        // if ((!Image || !Image[0]) && strongImageValidation) {
+        //     setError('Image', { type: 'custom', message: 'Image is a required field' });
+        //     return;
+        // }
+        const submitData = {
+            image: imageValidation ? Image[0] : Image ? Image[0] : null,
             title: Title,
             html: Body,
-        });
+        };
+        console.log('onSubmit submitData: ', submitData);
         document.documentElement.scrollTo(0, 0);
-        onSubmit({
-            image: strongImageValidation ? Image[0] : Image ? Image[0] : null,
-            title: Title,
-            html: Body,
-        });
+        onSubmit(submitData);
     };
 
     return (
@@ -104,8 +94,7 @@ function PostForm({
 
                 <label className="block">
                     <span className="block text-gray-700 mb-1">Post body</span>
-                    {/* <TinyEditor editorRef={editorRef} initialValue={html} {...register('HTML')} /> */}
-                    {/* <TinyEditor {...register('Body')} initialValue={html} /> */}
+                    <TinyEditor {...register('Body')} initialValue={html} />
                     <FormError>{errors['Body']?.message}</FormError>
                 </label>
 

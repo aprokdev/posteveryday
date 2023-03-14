@@ -1,8 +1,8 @@
-import Image from 'next/image';
 import Router from 'next/router';
 import { getLoginSession } from '@backend/auth';
 import { prisma } from '@backend/index';
-import React, { useReducer, useState } from 'react';
+import { deletePost, updatePost } from '@frontend/api';
+import React, { useEffect, useReducer, useState } from 'react';
 import Button from '@components/button';
 import Layout from '@components/layout';
 import Post from '@components/post';
@@ -21,6 +21,7 @@ export async function getServerSideProps(context) {
                 id: Number(context.params.id),
             },
         });
+
         data.created = JSON.parse(JSON.stringify(data.created.toISOString()));
         return {
             props: { user, data },
@@ -68,36 +69,37 @@ const reducer = (state, action) => {
 
 export default function PostPage({ user, data, error = '' }) {
     const [mode, dispatch] = useReducer(reducer, initialState);
+    useEffect(() => document.documentElement.scrollTo(0, 0), [mode]);
+
     const [preview, setPreview] = useState(null);
 
+    // to have ability make step back and dont loose changes
+    const [updatedData, setUpdatedData] = useState(data);
+
+    const onDelete = async () => {
+        const result = await deletePost(data?.id);
+        if (result.success) {
+            Router.push('/my-posts');
+        }
+    };
+
     const onSubmit = (data) => {
-        console.log(data);
+        setUpdatedData(data);
         setPreview(data);
         dispatch(actions.PREVIEW_MODE);
     };
 
-    const updatePost = async () => {
-        const formData = new FormData();
-        formData.append('image', preview?.image);
-        formData.append('title', preview?.title);
-        formData.append('html', preview?.html);
-        formData.append('id', data?.id);
+    const onPreviewBackClick = React.useCallback(() => {
+        setUpdatedData(data);
+        dispatch(actions.READ_MODE);
+    }, []);
 
-        try {
-            const res = await fetch(`/api/posts/update/`, {
-                method: 'POST',
-                body: formData,
-            });
-            const result = await res.json();
-            console.log('updatePost result: ', result);
-            if (result.success) {
-                // dispatch(actions.READ_MODE);
-                location.reload();
-                document.documentElement.scrollTo(0, 0);
-            }
-        } catch (error) {
-            console.error(`publishPost error: ${error.message}`);
-            return error;
+    const publishUpdatedPost = async () => {
+        const result = await updatePost({ ...preview, id: data?.id });
+        if (result.success) {
+            setUpdatedData(result?.data);
+            dispatch(actions.READ_MODE);
+            document.documentElement.scrollTo(0, 0);
         }
     };
 
@@ -105,13 +107,13 @@ export default function PostPage({ user, data, error = '' }) {
         <Layout user={user}>
             {mode.read && (
                 <>
-                    <Post {...data} className={`${user ? 'pb-10' : 'pb-20'}`} />
+                    <Post {...updatedData} className={`${user ? 'pb-10' : 'pb-20'}`} />
 
                     {user && (
                         <div className="flex items-center justify-end pb-10 min-w-375 max-w-5xl m-auto sm:px-6 lg:px-8 xs:px-4">
                             {user.role === 'admin' && (
                                 <Button
-                                    // onClick={() => dispatch(actions.EDIT_MODE)}
+                                    onClick={onDelete}
                                     className="mr-4 bg-white border-black text-black border-2 w-20"
                                 >
                                     Delete
@@ -131,20 +133,22 @@ export default function PostPage({ user, data, error = '' }) {
             )}
 
             {mode.edit && (
-                <SmallerContainer className="bg-gray-200 pt-8 min-h-mch">
-                    <PostForm {...data} onSubmit={onSubmit}>
-                        <Button
-                            type="button"
-                            className="mr-4 border-black text-black border-2 !bg-gray-200 w-20"
-                            onClick={() => dispatch(actions.READ_MODE)}
-                        >
-                            Back
-                        </Button>
-                        <Button type="submit" className="w-20">
-                            Preview
-                        </Button>
-                    </PostForm>
-                </SmallerContainer>
+                <div className="bg-gray-200 pt-8 min-h-mch">
+                    <SmallerContainer>
+                        <PostForm {...updatedData} onSubmit={onSubmit}>
+                            <Button
+                                type="button"
+                                className="mr-4 border-black text-black border-2 !bg-gray-200 w-20"
+                                onClick={onPreviewBackClick}
+                            >
+                                Back
+                            </Button>
+                            <Button type="submit" className="w-20">
+                                Preview
+                            </Button>
+                        </PostForm>
+                    </SmallerContainer>
+                </div>
             )}
 
             {mode.preview && (
@@ -155,6 +159,7 @@ export default function PostPage({ user, data, error = '' }) {
                         author_firstname={user.first_name}
                         author_lastname={user.last_name}
                         imageFile={preview?.image}
+                        image={data.image && !preview?.image && data.image}
                     />
                     <div className="flex items-center justify-end py-10 min-w-375 max-w-5xl m-auto sm:px-6 lg:px-8 xs:px-4">
                         <Button
@@ -164,7 +169,7 @@ export default function PostPage({ user, data, error = '' }) {
                         >
                             Back
                         </Button>
-                        <Button type="submit" className="w-20" onClick={updatePost}>
+                        <Button type="submit" className="w-20" onClick={publishUpdatedPost}>
                             Update
                         </Button>
                     </div>

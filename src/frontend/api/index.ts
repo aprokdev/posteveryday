@@ -2,7 +2,7 @@ import makeReqBody from '@utils/make-request-body';
 import { ILoginFormInputs } from '@components/login-form';
 import { IRegisterFormInputs } from '@components/register-form';
 import { API_PATHS } from './paths';
-import { IAPIResponse } from './types';
+import { IAPIPostResponse, IAPIResponse, IPostData } from './types';
 
 export async function post(path: string, data, options?: { headers: Headers }) {
     const headers = options?.headers || {};
@@ -29,4 +29,47 @@ export async function loginUser(data: ILoginFormInputs): Promise<IAPIResponse> {
 
 export async function registerUser(data: IRegisterFormInputs): Promise<IAPIResponse> {
     return await post(API_PATHS.register, data);
+}
+
+export async function createPost(data: IPostData): Promise<IAPIPostResponse> {
+    try {
+        const formData = new FormData();
+        formData.append('image', data?.image);
+        formData.append('title', data?.title);
+        formData.append('html', data?.html);
+
+        const res = await fetch(API_PATHS.createPost, {
+            method: 'POST',
+            body: formData,
+        });
+        return await res.json();
+    } catch (error) {
+        console.error(`createPost error: ${error.message}`);
+        return error;
+    }
+}
+
+export async function updatePost(data: IPostData): Promise<IAPIPostResponse> {
+    try {
+        const formData = new FormData();
+        if (data?.image) {
+            formData.append('image', data?.image);
+        }
+        formData.append('title', data?.title);
+        formData.append('html', data?.html);
+        formData.append('id', data?.id);
+
+        const res = await fetch(API_PATHS.updatePost, {
+            method: 'POST',
+            body: formData,
+        });
+        return await res.json();
+    } catch (error) {
+        console.error(`updatePost error: ${error.message}`);
+        return error;
+    }
+}
+
+export async function deletePost(id: string): Promise<IAPIPostResponse> {
+    return await post(API_PATHS.deletePost, { id });
 }

@@ -6,11 +6,9 @@ import { createReadStream, promises } from 'fs';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
-        const session = await getLoginSession(req);
-
         const { fields, files } = await parseFormData(req);
 
-        const buffer = createReadStream(files.image.filepath);
+        // const buffer = createReadStream(files.image.filepath);
 
         const { title, html, id } = fields;
 
@@ -25,7 +23,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 title,
                 html,
                 html_preview: html.slice(0, 340),
-                image: files.image.newFilename,
+                image: files.image ? files.image.newFilename : undefined,
             },
         });
 
