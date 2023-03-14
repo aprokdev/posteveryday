@@ -105,7 +105,7 @@ function PostForm({
                 <label className="block">
                     <span className="block text-gray-700 mb-1">Post body</span>
                     {/* <TinyEditor editorRef={editorRef} initialValue={html} {...register('HTML')} /> */}
-                    <TinyEditor {...register('Body')} initialValue={html} />
+                    {/* <TinyEditor {...register('Body')} initialValue={html} /> */}
                     <FormError>{errors['Body']?.message}</FormError>
                 </label>
 

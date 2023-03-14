@@ -24,9 +24,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         // console.log(files?.image);
 
-        console.log('html', html);
-        console.log('html_preview', html.slice(0, 340));
-
         const result = await prisma.post.create({
             data: {
                 title,

@@ -131,7 +131,7 @@ export default function PostPage({ user, data, error = '' }) {
             )}
 
             {mode.edit && (
-                <SmallerContainer className="bg-gray-200 pt-8">
+                <SmallerContainer className="bg-gray-200 pt-8 min-h-mch">
                     <PostForm {...data} onSubmit={onSubmit}>
                         <Button
                             type="button"

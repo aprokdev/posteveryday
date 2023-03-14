@@ -46,14 +46,14 @@ export default function Post({
                     />
                 )}
             </div>
-            <SmallerContainer>
-                <div className="flex justify-between mb-3 mt-8">
+            <SmallerContainer className="min-h-post">
+                <div className="flex justify-between pt-8 mb-6">
                     <span className="text-md">
                         {author_firstname} {author_lastname}
                     </span>
                     <span className="text-md">{date}</span>
                 </div>
-                <div className="mt-6">
+                <div>
                     <h1 className="xs:text-4xl md:text-5xl xl:text-6xl text-center mb-10">
                         {title}
                     </h1>

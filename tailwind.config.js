@@ -39,6 +39,7 @@ module.exports = {
         },
         minHeight: {
             mch: 'calc(100vh - 72px)',
+            post: 'calc(100vh - 72px - 324px)',
         },
     },
     plugins: [require('@tailwindcss/typography')],
