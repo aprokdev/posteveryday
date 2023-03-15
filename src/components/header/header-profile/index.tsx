@@ -19,7 +19,7 @@ export default function HeaderProfile({ user }): JSX.Element {
                 <span className="sr-only">Open user menu</span>
 
                 <span className="flex items-center relative ">
-                    <span className="font-medium mr-3">
+                    <span className="font-medium mr-3 xs:hidden sm:block">
                         {user.first_name} {user.last_name.slice(0, 1)}.
                     </span>
                     <div>

@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import Router from 'next/router';
 import { getLoginSession } from '@backend/auth';
 import { prisma } from '@backend/index';
@@ -56,6 +57,9 @@ export default function AddPost({ user }) {
 
     return (
         <Layout user={user}>
+            <Head>
+                <title>POSTEVERYDAY - ADD POST</title>
+            </Head>
             {previewMode ? (
                 <>
                     <Post

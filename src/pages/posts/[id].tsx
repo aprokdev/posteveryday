@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import Router from 'next/router';
 import { getLoginSession } from '@backend/auth';
 import { prisma } from '@backend/index';
@@ -5,6 +6,7 @@ import { deletePost, updatePost } from '@frontend/api';
 import React, { useEffect, useReducer, useState } from 'react';
 import Button from '@components/button';
 import Layout from '@components/layout';
+import Modal from '@components/modal';
 import Post from '@components/post';
 import PostForm from '@components/post-form';
 import SmallerContainer from '@components/smaller-container';
@@ -73,13 +75,22 @@ export default function PostPage({ user, data, error = '' }) {
 
     const [preview, setPreview] = useState(null);
 
+    const [isLoading, setIsLoading] = useState(false);
+
+    const [isModal, setIsModal] = useState(false);
+
     // to have ability make step back and dont loose changes
     const [updatedData, setUpdatedData] = useState(data);
 
     const onDelete = async () => {
-        const result = await deletePost(data?.id);
-        if (result.success) {
-            Router.push('/my-posts');
+        setIsLoading(true);
+        try {
+            const result = await deletePost(data?.id);
+            if (result.success) {
+                Router.push('/my-posts');
+            }
+        } catch (error) {
+            setIsLoading(false);
         }
     };
 
@@ -105,6 +116,26 @@ export default function PostPage({ user, data, error = '' }) {
 
     return data && !error ? (
         <Layout user={user}>
+            <Head>
+                <title>{updatedData.title}</title>
+            </Head>
+            {isModal && (
+                <Modal onClose={() => setIsModal(false)}>
+                    <span className="block text-2xl text-center mb-12">Are you sure?</span>
+                    <div className="flex items-center justify-center">
+                        <Button
+                            onClick={() => setIsModal(false)}
+                            disabled={isLoading}
+                            className="mr-4 bg-white border-black text-black border-2 w-20"
+                        >
+                            No
+                        </Button>
+                        <Button onClick={onDelete} disabled={isLoading} className="w-20">
+                            Yes
+                        </Button>
+                    </div>
+                </Modal>
+            )}
             {mode.read && (
                 <>
                     <Post {...updatedData} className={`${user ? 'pb-10' : 'pb-20'}`} />
@@ -113,7 +144,7 @@ export default function PostPage({ user, data, error = '' }) {
                         <div className="flex items-center justify-end pb-10 min-w-375 max-w-5xl m-auto sm:px-6 lg:px-8 xs:px-4">
                             {user.role === 'admin' && (
                                 <Button
-                                    onClick={onDelete}
+                                    onClick={() => setIsModal(true)}
                                     className="mr-4 bg-white border-black text-black border-2 w-20"
                                 >
                                     Delete

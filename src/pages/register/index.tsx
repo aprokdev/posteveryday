@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import Router from 'next/router';
 import { useUser } from '@frontend/hooks/useUser';
 import RegisterForm from '@components/register-form';
@@ -16,6 +17,9 @@ export default function RegisterPage(): JSX.Element {
     }
     return (
         <div className="flex items-center justify-center min-h">
+            <Head>
+                <title>REGISTER USER</title>
+            </Head>
             <RegisterForm />
         </div>
     );

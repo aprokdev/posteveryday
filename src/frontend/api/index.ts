@@ -23,6 +23,25 @@ export async function post(path: string, data, options?: { headers: Headers }) {
     }
 }
 
+export async function get(path: string, data, options?: { headers: Headers }) {
+    const headers = options?.headers || {};
+    try {
+        const body = makeReqBody(data);
+        const res = await fetch(path, {
+            method: 'GET',
+            body,
+            headers: new Headers({
+                'Content-Type': 'application/json;charset=utf-8',
+                ...headers,
+            }),
+        });
+        return res.json();
+    } catch (error) {
+        console.error(`get() error: ${error.message}`);
+        return error;
+    }
+}
+
 export async function loginUser(data: ILoginFormInputs): Promise<IAPIResponse> {
     return await post(API_PATHS.login, data);
 }

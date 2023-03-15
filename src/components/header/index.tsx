@@ -43,6 +43,7 @@ export default function Header({ user }) {
             className="w-screen lg:w-full min-w-375 bg-stone-100 z-20 shadow-xl ease-in duration-500 transition-top"
             style={style}
             ref={headerRef}
+            id="#header"
         >
             <div className="relative mx-auto px-2 sm:px-6 lg:px-8">
                 <div className="w-screen lg:w-full right-0 left-0 h-full flex absolute justify-center sm:hidden z-10">

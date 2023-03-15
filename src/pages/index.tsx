@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import Link from 'next/link';
 import { getLoginSession } from '@backend/auth';
 import { prisma } from '@backend/index';
@@ -45,6 +46,9 @@ export default function Feed({ user, posts = [], error = '' }): JSX.Element {
         <div>{error}</div>
     ) : (
         <Layout user={user}>
+            <Head>
+                <title>POSTEVERYDAY</title>
+            </Head>
             <Container className="bg-gray-200">
                 {posts.length === 0 ? (
                     <div className="flex flex-col items-center justify-center h-96 w-full mt-20">
