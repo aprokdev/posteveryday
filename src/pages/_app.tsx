@@ -14,7 +14,7 @@ export default function MyApp({ Component, pageProps }) {
                 <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png" />
                 <link rel="icon" type="image/png" sizes="96x96" href="icons/favicon-96.png" />
             </Head>
-            <Component {...pageProps} />;
+            <Component {...pageProps} />
         </>
     );
 }

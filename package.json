@@ -4,7 +4,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prettify": "npx prettier --write ."
+    "prettify": "npx prettier --write .",
+    "vercel-build": "npm run prisma:migrate && next build",
+    "prisma:migrate": "DATABASE_URL=\"$MIGRATE_DATABASE_URL\" prisma migrate deploy"
   },
   "dependencies": {
     "@hapi/iron": "^7.0.1",

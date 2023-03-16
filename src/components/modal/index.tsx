@@ -21,7 +21,6 @@ function Modal({
         document.body.style.paddingRight = `${scrollBarWidth}px`;
 
         const compStyles = window.getComputedStyle(headerEl);
-        console.log(headerEl.style.position);
 
         if (compStyles.getPropertyValue('position') === 'fixed') {
             headerEl.style.paddingRight = `${scrollBarWidth}px`;
