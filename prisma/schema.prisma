@@ -7,7 +7,7 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL")
+  url      = "prisma://aws-us-east-1.prisma-data.com/?api_key=Dohee5q_SbAYgOhArFW9qvt2JGyspgUI62XYIWhh53XZ7cEwwTCwDq_nL1fINoYi"
 }
 
 model User {

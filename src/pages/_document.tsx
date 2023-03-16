@@ -3,7 +3,7 @@ import { Head, Html, Main, NextScript } from 'next/document';
 export default function Document() {
     return (
         <Html>
-            <Head>
+            {/* <Head>
                 <title>POSTEVERYDAY</title>
                 <meta
                     name="viewport"
@@ -12,7 +12,8 @@ export default function Document() {
                 <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16.png" />
                 <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png" />
                 <link rel="icon" type="image/png" sizes="96x96" href="icons/favicon-96.png" />
-            </Head>
+            </Head> */}
+            <Head />
             <body>
                 <Main />
                 <div id="portal"></div>
