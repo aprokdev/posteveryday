@@ -4,16 +4,9 @@ import SmallerContainer from '@components/smaller-container';
 import s from './style.module.scss';
 import { IPostPreviewProps } from './types';
 
-export default function Post({
-    image,
-    title,
-    html,
-    created,
-    author_firstname,
-    author_lastname,
-    imageFile,
-    className,
-}: IPostPreviewProps) {
+export default function Post(props: IPostPreviewProps) {
+    const { image, title, html, created, author_firstname, author_lastname, imageFile, className } =
+        props;
     const img = React.useMemo(
         () => (imageFile ? URL.createObjectURL(imageFile) : null),
         [imageFile]

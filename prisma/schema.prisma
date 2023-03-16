@@ -7,7 +7,7 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = "mysql://root:9001@localhost:3306/posteveryday"
+  url      = env("DATABASE_URL")
 }
 
 model User {
