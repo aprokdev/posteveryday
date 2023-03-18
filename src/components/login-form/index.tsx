@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Router from 'next/router';
 import { loginUser } from '@frontend/api';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import Button from '@components/button';
@@ -65,12 +65,8 @@ export default function LoginForm(): JSX.Element {
                 </label>
             ))}
 
-            <Button
-                type="submit"
-                disabled={isSubmitting}
-                className={`${isSubmitting ? 'opacity-80 ' : ''}mt-4 w-full`}
-            >
-                Login
+            <Button type="submit" disabled={isSubmitting} className="mt-4 w-full">
+                {isSubmitting ? 'Loading...' : 'Login'}
             </Button>
 
             <span className="block text-center mt-8">

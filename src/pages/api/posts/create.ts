@@ -21,6 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         // const result = await uploadS3Image(buffer, files.image.originalFilename);
         // console.log('result: ', result);
+        // await promises.rm(files.image.filepath);
 
         // console.log(files?.image);
 
@@ -36,7 +37,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             },
         });
 
-        // await promises.rm(files.image.filepath);
         res.status(200).json({ success: true, data: result });
     } catch (error) {
         res.status(500).json({ sucess: false, message: error.message });

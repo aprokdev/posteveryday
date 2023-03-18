@@ -37,22 +37,21 @@ export default function HeaderProfile({ user }): JSX.Element {
 
             {isVisible && (
                 <div
-                    className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                    className="absolute right-0 z-10 mt-2 w-52 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                     role="menu"
                     aria-orientation="vertical"
                     aria-labelledby="user-menu-button"
                     tabIndex={-1}
                     ref={popupRef}
                 >
-                    {/* <Link
-                        href="/profile"
-                        className="hover:text-stone-500 transition block px-4 py-2 text-sm text-stone-700 hover:no-underline"
+                    <span
+                        // href="/profile"
+                        className="block opacity-50 cursor-default transition px-4 py-2 text-sm text-stone-700 hover:no-underline"
                         role="menuitem"
-                        // tabIndex={-1}
                         id="user-menu-item-0"
                     >
-                        Your Profile
-                    </Link> */}
+                        My profile (In development)
+                    </span>
                     <Link
                         href="/api/users/logout"
                         className="hover:text-stone-500 transition block px-4 py-2 text-sm text-stone-700 hover:no-underline"

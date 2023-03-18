@@ -1,6 +1,5 @@
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { useEffect } from 'react';
-import { createPortal } from 'react-dom';
 import Portal from '@components/portal';
 import { IModalProps } from './types';
 
