@@ -70,18 +70,23 @@ function PostForm({ title, html, onSubmit, children, imageValidation }: IPostFor
         <FormProvider {...methods}>
             <form onSubmit={handleSubmit(onSubmitHandler)}>
                 <label className="block">
-                    <span className="text-gray-700">Post title</span>
+                    <span className="text-gray-700">
+                        Post title<span className="text-red ml-1">*</span>
+                    </span>
                     <Input
                         {...register('Title')}
                         disabled={isSubmitting}
                         aria-invalid={errors['Title'] ? 'true' : 'false'}
                         autoFocus
+                        placeholder="Enter your title..."
                     />
                     <FormError>{errors['Title']?.message}</FormError>
                 </label>
 
                 <label className="block">
-                    <span className="text-gray-700">Post image</span>
+                    <span className="text-gray-700">
+                        Post image<span className="text-red ml-1">*</span>
+                    </span>
                     <ImageInput
                         {...register('Image')}
                         file={watch('Image')}
@@ -93,7 +98,9 @@ function PostForm({ title, html, onSubmit, children, imageValidation }: IPostFor
                 </label>
 
                 <label className="block">
-                    <span className="block text-gray-700 mb-1">Post body</span>
+                    <span className="block text-gray-700 mb-1">
+                        Post body<span className="text-red ml-1">*</span>
+                    </span>
                     <TinyEditor {...register('Body')} initialValue={html} />
                     <FormError>{errors['Body']?.message}</FormError>
                 </label>

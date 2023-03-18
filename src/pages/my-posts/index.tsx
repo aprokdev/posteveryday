@@ -6,6 +6,7 @@ import { feedModel } from '@backend/utils/data';
 import React from 'react';
 import Card from '@components/card';
 import Container from '@components/container';
+import EmptyPosts from '@components/empty-posts';
 import Layout from '@components/layout';
 
 export async function getServerSideProps({ req, res }) {
@@ -58,24 +59,18 @@ export default function MyPosts({ user, posts = [], error = '' }): JSX.Element {
             <Head>
                 <title>POSTEVERYDAY - MY POSTS</title>
             </Head>
-            <Container className="bg-gray-200">
+            <div className="bg-gray-200">
                 {posts.length === 0 ? (
-                    <div className="flex flex-col items-center justify-center h-96 w-full mt-20">
-                        <h1 className="block mb-5 text-center w-full text-4xl">
-                            There are no posts yet
-                        </h1>
-                        <p>
-                            You can {!user && <Link href="/login">log in</Link>} {!user && 'and'}{' '}
-                            create one ;D
-                        </p>
-                    </div>
+                    <EmptyPosts user={user} />
                 ) : (
-                    <div className="grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8 xl:gap-4">
-                        {Array.isArray(posts) &&
-                            posts.map((data) => <Card {...data} key={data.id} />)}
-                    </div>
+                    <Container className="min-h-mainMin">
+                        <div className="grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8 xl:gap-4">
+                            {Array.isArray(posts) &&
+                                posts.map((data) => <Card {...data} key={data.id} />)}
+                        </div>
+                    </Container>
                 )}
-            </Container>
+            </div>
         </Layout>
     );
 }

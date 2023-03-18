@@ -89,6 +89,7 @@ export default function PostPage({ user, data, error = '' }) {
             if (result.success) {
                 Router.push('/my-posts');
             }
+            setIsLoading(false);
         } catch (error) {
             setIsLoading(false);
         }
@@ -106,12 +107,14 @@ export default function PostPage({ user, data, error = '' }) {
     }, []);
 
     const publishUpdatedPost = async () => {
+        setIsLoading(true);
         const result = await updatePost({ ...preview, id: data?.id });
         if (result.success) {
             setUpdatedData(result?.data);
             dispatch(actions.READ_MODE);
             document.documentElement.scrollTo(0, 0);
         }
+        setIsLoading(false);
     };
 
     return data && !error ? (
@@ -140,31 +143,24 @@ export default function PostPage({ user, data, error = '' }) {
                 <>
                     <Post {...updatedData} className={`${user ? 'pb-10' : 'pb-20'}`} />
 
-                    {user && (
+                    {user && user.id === data.author_id && (
                         <div className="flex items-center justify-end pb-10 min-w-375 max-w-5xl m-auto sm:px-6 lg:px-8 xs:px-4">
-                            {user.role === 'admin' && (
-                                <Button
-                                    onClick={() => setIsModal(true)}
-                                    className="mr-4 bg-white border-black text-black border-2 w-20"
-                                >
-                                    Delete
-                                </Button>
-                            )}
-                            {user.role === 'admin' || user.id === data.author_id ? (
-                                <Button
-                                    onClick={() => dispatch(actions.EDIT_MODE)}
-                                    className="w-20"
-                                >
-                                    Edit
-                                </Button>
-                            ) : null}
+                            <Button
+                                onClick={() => setIsModal(true)}
+                                className="mr-4 bg-white border-black text-black border-2 w-20"
+                            >
+                                Delete
+                            </Button>
+                            <Button onClick={() => dispatch(actions.EDIT_MODE)} className="w-20">
+                                Edit
+                            </Button>
                         </div>
                     )}
                 </>
             )}
 
             {mode.edit && (
-                <div className="bg-gray-200 pt-8 min-h-mch">
+                <div className="bg-gray-200 pt-8 min-h-mainMin">
                     <SmallerContainer>
                         <PostForm {...updatedData} onSubmit={onSubmit}>
                             <Button
@@ -195,12 +191,18 @@ export default function PostPage({ user, data, error = '' }) {
                     <div className="flex items-center justify-end py-10 min-w-375 max-w-5xl m-auto sm:px-6 lg:px-8 xs:px-4">
                         <Button
                             type="button"
+                            disabled={isLoading}
                             className="mr-4 bg-white border-black text-black border-2 w-20"
                             onClick={() => dispatch(actions.EDIT_MODE)}
                         >
                             Back
                         </Button>
-                        <Button type="submit" className="w-20" onClick={publishUpdatedPost}>
+                        <Button
+                            type="submit"
+                            disabled={isLoading}
+                            className="w-20"
+                            onClick={publishUpdatedPost}
+                        >
                             Update
                         </Button>
                     </div>

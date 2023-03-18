@@ -1,4 +1,3 @@
-import Router from 'next/router';
 import Footer from '@components/footer';
 import Header from '@components/header';
 

@@ -42,6 +42,7 @@ export async function getServerSideProps({ req }) {
 export default function AddPost({ user }) {
     const [preview, setPreview] = useState(null);
     const [previewMode, setPreviewMode] = useState(false);
+    const [isLoding, setIsLoading] = useState(false);
 
     const goToPreview = (formFields: IFormFields) => {
         setPreview(formFields);
@@ -49,10 +50,12 @@ export default function AddPost({ user }) {
     };
 
     const publishPost = async () => {
+        setIsLoading(true);
         const result = await createPost(preview);
         if (result.success) {
             Router.push('/my-posts');
         }
+        setIsLoading(false);
     };
 
     return (
@@ -72,19 +75,20 @@ export default function AddPost({ user }) {
                     <div className="flex items-center justify-end py-10 min-w-375 max-w-5xl m-auto sm:px-6 lg:px-8 xs:px-4">
                         <Button
                             type="button"
+                            disabled={isLoding}
                             className="mr-4 bg-white border-black text-black border-2"
                             onClick={() => setPreviewMode(false)}
                         >
                             Back
                         </Button>
-                        <Button type="submit" onClick={publishPost}>
-                            Publish
+                        <Button type="submit" disabled={isLoding} onClick={publishPost}>
+                            {isLoding ? 'Publishing...' : 'Publish'}
                         </Button>
                     </div>
                 </>
             ) : (
                 <div className="bg-gray-200 pt-8">
-                    <SmallerContainer className="min-h-mch">
+                    <SmallerContainer className="min-h-mainMin">
                         <PostForm {...preview} onSubmit={goToPreview} imageValidation>
                             <Button type="submit">Preview</Button>
                         </PostForm>

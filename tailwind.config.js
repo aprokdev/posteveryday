@@ -38,7 +38,7 @@ module.exports = {
             // => @media (min-width: 1536px) { ... }
         },
         minHeight: {
-            mch: 'calc(100vh - 72px)',
+            mainMin: 'calc(100vh - 72px)',
             post: 'calc(100vh - 72px - 324px)',
         },
     },
