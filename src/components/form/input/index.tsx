@@ -10,9 +10,13 @@ const baseClassName = `
     block
     w-full
     rounded-md
-    bg-gray-100
+    bg-white
     border-transparent
-    focus:border-gray-500 focus:bg-white focus:ring-0s
+    border-2
+    border-gray-400
+    focus:border-black
+    focus-visible:border-black
+    outline-none
 `;
 
 export default React.forwardRef<Ref, IInputProps>(function Input<Ref, IInputProps>(

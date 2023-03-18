@@ -51,7 +51,7 @@ export default function Header({ user }) {
                         <Logo />
                     </Link>
                 </div>
-                <div className="relative flex h-16 items-center justify-end">
+                <div className="relative z-10 flex h-16 items-center justify-end">
                     {user && (
                         <div className="absolute inset-y-0 left-0 flex items-center sm:hidden z-20">
                             <button

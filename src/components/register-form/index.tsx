@@ -46,14 +46,17 @@ export default function RegisterForm(): JSX.Element {
     );
 
     return (
-        <form className="w-96 rounded-lg px-8 grid grid-cols-1" onSubmit={handleSubmit(onSubmit)}>
+        <form className="w-96 rounded-lg p-8 grid grid-cols-1" onSubmit={handleSubmit(onSubmit)}>
             <Link href="/" className="w-32 m-auto mb-6">
                 <Logo />
             </Link>
 
             {Object.entries(defaultValues).map(([key]: [Key, string]) => (
                 <label className="block" key={key}>
-                    <span className="text-gray-700">{key}</span>
+                    <span className="text-gray-700">
+                        {key}
+                        <span className="text-red ml-1">*</span>
+                    </span>
                     <Input
                         {...register(key)}
                         disabled={isSubmitting}
