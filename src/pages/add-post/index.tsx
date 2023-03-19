@@ -90,7 +90,9 @@ export default function AddPost({ user }) {
                 <div className="bg-gray-200 pt-8">
                     <SmallerContainer className="min-h-mainMin">
                         <PostForm {...preview} onSubmit={goToPreview} imageValidation>
-                            <Button type="submit">Preview</Button>
+                            <Button type="submit" className="w-24">
+                                Preview
+                            </Button>
                         </PostForm>
                     </SmallerContainer>
                 </div>

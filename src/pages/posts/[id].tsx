@@ -129,11 +129,11 @@ export default function PostPage({ user, data, error = '' }) {
                         <Button
                             onClick={() => setIsModal(false)}
                             disabled={isLoading}
-                            className="mr-4 bg-white border-black text-black border-2 w-20"
+                            className="mr-4 bg-white border-black text-black border-2 w-28"
                         >
                             No
                         </Button>
-                        <Button onClick={onDelete} disabled={isLoading} className="w-20">
+                        <Button onClick={onDelete} disabled={isLoading} className="w-28">
                             Yes
                         </Button>
                     </div>
@@ -147,11 +147,11 @@ export default function PostPage({ user, data, error = '' }) {
                         <div className="flex items-center justify-end pb-10 min-w-375 max-w-5xl m-auto sm:px-6 lg:px-8 xs:px-4">
                             <Button
                                 onClick={() => setIsModal(true)}
-                                className="mr-4 bg-white border-black text-black border-2 w-20"
+                                className="mr-4 bg-white border-black text-black border-2 w-28"
                             >
                                 Delete
                             </Button>
-                            <Button onClick={() => dispatch(actions.EDIT_MODE)} className="w-20">
+                            <Button onClick={() => dispatch(actions.EDIT_MODE)} className="w-28">
                                 Edit
                             </Button>
                         </div>
@@ -165,12 +165,12 @@ export default function PostPage({ user, data, error = '' }) {
                         <PostForm {...updatedData} onSubmit={onSubmit}>
                             <Button
                                 type="button"
-                                className="mr-4 border-black text-black border-2 !bg-gray-200 w-20"
+                                className="mr-4 border-black text-black border-2 !bg-gray-200 w-28"
                                 onClick={onPreviewBackClick}
                             >
                                 Back
                             </Button>
-                            <Button type="submit" className="w-20">
+                            <Button type="submit" className="w-28">
                                 Preview
                             </Button>
                         </PostForm>
@@ -192,7 +192,7 @@ export default function PostPage({ user, data, error = '' }) {
                         <Button
                             type="button"
                             disabled={isLoading}
-                            className="mr-4 bg-white border-black text-black border-2 w-20"
+                            className="mr-4 bg-white border-black text-black border-2 w-28"
                             onClick={() => dispatch(actions.EDIT_MODE)}
                         >
                             Back
@@ -200,10 +200,10 @@ export default function PostPage({ user, data, error = '' }) {
                         <Button
                             type="submit"
                             disabled={isLoading}
-                            className="w-20"
+                            className="w-28"
                             onClick={publishUpdatedPost}
                         >
-                            Update
+                            {isLoading ? 'Updating...' : 'Update'}
                         </Button>
                     </div>
                 </>

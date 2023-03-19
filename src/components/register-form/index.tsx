@@ -60,6 +60,7 @@ export default function RegisterForm(): JSX.Element {
                     <Input
                         {...register(key)}
                         disabled={isSubmitting}
+                        type={key === 'Password' ? 'password' : null}
                         aria-invalid={errors[key] ? 'true' : 'false'}
                     />
                     <FormError>{errors[key]?.message}</FormError>
