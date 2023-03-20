@@ -6,6 +6,14 @@ import { createReadStream, promises } from 'fs';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
+        if (req.method !== 'POST') {
+            res.setHeader('Allow', 'POST');
+            res.status(405).json({
+                data: null,
+                error: 'Method Not Allowed',
+            });
+            return;
+        }
         const { fields, files } = await parseFormData(req);
 
         // const buffer = createReadStream(files.image.filepath);

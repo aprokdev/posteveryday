@@ -4,6 +4,14 @@ import { feedModel } from '@backend/utils/data';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
+        if (req.method !== 'GET') {
+            res.setHeader('Allow', 'GET');
+            res.status(405).json({
+                data: null,
+                error: 'Method Not Allowed',
+            });
+            return;
+        }
         const { offset, limit, author_id, order, order_field, select } = req.body;
 
         const posts = await prisma.post.findMany({

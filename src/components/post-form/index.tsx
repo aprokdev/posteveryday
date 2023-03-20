@@ -25,9 +25,15 @@ const schema = yup
     .required();
 
 const defaultTitle = 'What is lorem ipsum dolor?';
-const defhtml = defaultHTML();
+const defhtml = defaultHTML().slice(0, 300);
 
-function PostForm({ title, html, onSubmit, children, imageValidation }: IPostFormProps) {
+function PostForm({
+    title = defaultTitle,
+    html = defhtml,
+    onSubmit,
+    children,
+    imageValidation,
+}: IPostFormProps) {
     const editorRef = useRef<any>();
 
     const methods = useForm<IFormInputs>({

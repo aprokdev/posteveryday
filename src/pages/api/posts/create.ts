@@ -1,7 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getLoginSession } from '@backend/auth';
-import { prisma } from '@backend/index';
+import { prisma, s3 } from '@backend/index';
 import { parseFormData } from '@utils/parseFormData';
+import busboy from 'busboy';
 // import { uploadS3Image } from '@utils/uploadToS3';
 import { createReadStream, promises } from 'fs';
 
@@ -9,35 +10,91 @@ import { createReadStream, promises } from 'fs';
 // import TYPES from 'backend/inversify-types';
 // import { IDatabase } from 'backend/services/database/types';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    try {
-        const session = await getLoginSession(req);
+export interface IBBPromiseResponse {
+    title: string;
+    html: string;
+    imageURL?: string;
+}
 
-        const { fields, files } = await parseFormData(req);
+function BusBoyPromise(req): Promise<IBBPromiseResponse> {
+    return new Promise((res, rej) => {
+        const bb = busboy({ headers: req.headers });
 
-        const buffer = createReadStream(files.image.filepath);
+        let title, html, imageURL, fileUploadingFinished, fieldsParsingFinised;
 
-        const { title, html } = fields;
+        bb.on('file', (name, file, info) => {
+            const { filename, mimeType } = info;
+            const upload = s3.upload({
+                Bucket: `${process.env.S3_BUCKET_NAME_AWS}/images`,
+                Key: filename,
+                Body: file,
+                ContentType: mimeType,
+                // ACL: 'public-read',
+            });
 
-        // const result = await uploadS3Image(buffer, files.image.originalFilename);
-        // console.log('result: ', result);
-        // await promises.rm(files.image.filepath);
-
-        // console.log(files?.image);
-
-        const result = await prisma.post.create({
-            data: {
-                title,
-                html,
-                html_preview: html.slice(0, 340),
-                image: files.image.newFilename,
-                author_id: session.id,
-                author_firstname: session.first_name,
-                author_lastname: session.last_name,
-            },
+            upload.send((err, data) => {
+                fileUploadingFinished = true;
+                if (err) {
+                    rej(err);
+                }
+                imageURL = data.Location;
+                if (title && html && imageURL && fileUploadingFinished && fieldsParsingFinised) {
+                    res({ title, html, imageURL });
+                }
+            });
         });
 
-        res.status(200).json({ success: true, data: result });
+        bb.on('field', (name, val, info) => {
+            if (name === 'title') {
+                title = val;
+            }
+            if (name === 'html') {
+                html = val;
+            }
+        });
+
+        bb.on('finish', (val) => {
+            console.log('Done parsing form!');
+            fieldsParsingFinised = true;
+            if (title && html && imageURL && fileUploadingFinished && fieldsParsingFinised) {
+                res({ title, html, imageURL });
+            }
+        });
+
+        req.pipe(bb);
+    });
+}
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+    try {
+        if (req.method !== 'POST') {
+            res.setHeader('Allow', 'POST');
+            res.status(405).json({
+                data: null,
+                error: 'Method Not Allowed',
+            });
+            return;
+        }
+        const session = await getLoginSession(req);
+
+        const response = await BusBoyPromise(req);
+        if (response) {
+            const { title, html, imageURL } = response;
+            const result = await prisma.post.create({
+                data: {
+                    title,
+                    html,
+                    html_preview: html.slice(0, 340),
+                    image: imageURL,
+                    author_id: session.id,
+                    author_firstname: session.first_name,
+                    author_lastname: session.last_name,
+                },
+            });
+            res.status(200).json({ success: true, data: result });
+        } else {
+            throw new Error('something went wrong');
+        }
     } catch (error) {
         res.status(500).json({ sucess: false, message: error.message });
     }

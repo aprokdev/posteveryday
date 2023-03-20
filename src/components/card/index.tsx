@@ -1,4 +1,4 @@
-import Image from 'next/image';
+// import Image from 'next/image';
 import Link from 'next/link';
 import { PhotoIcon } from '@heroicons/react/24/outline';
 import React from 'react';
@@ -62,7 +62,7 @@ export default function Card(props: ICardProps): JSX.Element {
     const date = React.useMemo(() => {
         const date = new Date(created);
         return date
-            .toLocaleDateString('en-US', {
+            .toLocaleDateString('en-EN', {
                 year: 'numeric',
                 month: '2-digit',
                 day: '2-digit',
@@ -78,13 +78,18 @@ export default function Card(props: ICardProps): JSX.Element {
             >
                 <div className="w-full relative h-48 flex items-center justify-center bg-stone-200">
                     <PhotoIcon className="block w-24 h-24 text-stone-500" />
-                    <Image
+                    {/* <Image
                         src={`/${image}`}
                         alt="Picture of the author"
                         className="w-full h-40 object-cover object-center"
                         sizes="(min-width: 640px) 640px, (min-width: 768px) 768px,
                     (min-width: 1024px) 1024px, (max-width: 1200px) 1200px"
                         fill
+                    /> */}
+                    <img
+                        src={image}
+                        alt="Picture of the author"
+                        className="absolute top-0 right-0 bottom-0 left-0 w-full h-full object-cover object-center"
                     />
                 </div>
 

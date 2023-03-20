@@ -76,12 +76,17 @@ export default function AddPost({ user }) {
                         <Button
                             type="button"
                             disabled={isLoding}
-                            className="mr-4 bg-white border-black text-black border-2"
+                            className="w-24 mr-4 bg-white border-black text-black border-2"
                             onClick={() => setPreviewMode(false)}
                         >
                             Back
                         </Button>
-                        <Button type="submit" disabled={isLoding} onClick={publishPost}>
+                        <Button
+                            type="submit"
+                            disabled={isLoding}
+                            className="w-24"
+                            onClick={publishPost}
+                        >
                             {isLoding ? 'Publishing...' : 'Publish'}
                         </Button>
                     </div>

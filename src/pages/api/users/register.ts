@@ -2,9 +2,17 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '@backend/index';
 import { genPassword } from '@utils/user-entity';
 
-export default async function handler({ body }: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
-        const { email, first_name, last_name, password } = body;
+        if (req.method !== 'POST') {
+            res.setHeader('Allow', 'POST');
+            res.status(405).json({
+                data: null,
+                error: 'Method Not Allowed',
+            });
+            return;
+        }
+        const { email, first_name, last_name, password } = req.body;
         const existedUser = await prisma.user.findUnique({ where: { email } });
 
         if (existedUser) {
