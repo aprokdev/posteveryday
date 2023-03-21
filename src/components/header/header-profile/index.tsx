@@ -50,7 +50,7 @@ export default function HeaderProfile({ user }): JSX.Element {
                         role="menuitem"
                         id="user-menu-item-0"
                     >
-                        My profile (In development)
+                        My profile (in development)
                     </span>
                     <Link
                         href="/api/users/logout"

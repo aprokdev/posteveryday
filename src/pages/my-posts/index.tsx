@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import Link from 'next/link';
 import { getLoginSession } from '@backend/auth';
 import { prisma } from '@backend/index';
 import { feedModel } from '@backend/utils/data';
@@ -73,33 +72,4 @@ export default function MyPosts({ user, posts = [], error = '' }): JSX.Element {
             </div>
         </Layout>
     );
-}
-
-{
-    /* <Card img={airport} />
-                    <Card img={clearSky} />
-                    <Card img={rainy} />
-                    <Card img={cat} />
-                    <Card img={city} />
-                    <Card img={cancer} />
-                    <Card img={room} />
-                    <Card img={night} />
-                    <Card img={woman} />
-                    <Card img={kitchen} />
-                    <Card img={skyscrapper} />
-                    <Card img={figures} />
-                    <Card img={canada} />
-                    <Card img={train} />
-                    <Card img={money} />
-                    <Card img={chemistry} />
-                    <Card img={medicine} />
-                    <Card img={sign} />
-                    <Card img={sunset} />
-                    <Card img={t} />
-                    <Card img={rel} />
-                    <Card img={phone} />
-                    <Card img={hromosome} />
-                    <Card img={london} />
-                    <Card img={ocean} />
-                    <Card img={shoe} /> */
 }

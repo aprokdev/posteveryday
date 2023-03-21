@@ -1,19 +1,11 @@
-// import Image from 'next/image';
+import Image from 'next/image';
 import Link from 'next/link';
 import { PhotoIcon } from '@heroicons/react/24/outline';
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
 import s from './style.module.scss';
 
-// type StaticImageData = {
-//     src: string;
-//     height: number;
-//     width: number;
-//     placeholder?: string;
-// };
-
 interface ICardProps {
-    // img?: StaticImageData;
     image?: string;
     title?: string;
     html_preview?: string;
@@ -24,24 +16,9 @@ interface ICardProps {
     author_lastname: string;
 }
 
-const defaultTitle = 'Garlic bread with cheese: What the science tells us tells us tells us';
-const defaultHTML = `For years parents have espoused the health benefits 
-of eating garlic bread with
-cheese to their children, with the food earning such an iconic status in our
-culture that kids will often dress up as warm, cheesy loaf for Halloween.`;
-const defaultIMG = '';
-
 export default function Card(props: ICardProps): JSX.Element {
-    const {
-        id,
-        image,
-        title = defaultTitle,
-        html_preview = defaultHTML,
-        created,
-        animate,
-        author_firstname,
-        author_lastname,
-    } = props;
+    const { id, image, title, html_preview, created, animate, author_firstname, author_lastname } =
+        props;
     const { ref, inView } = useInView({
         threshold: 0.005,
     });
@@ -78,18 +55,13 @@ export default function Card(props: ICardProps): JSX.Element {
             >
                 <div className="w-full relative h-48 flex items-center justify-center bg-stone-200">
                     <PhotoIcon className="block w-24 h-24 text-stone-500" />
-                    {/* <Image
-                        src={`/${image}`}
+                    <Image
+                        src={image}
                         alt="Picture of the author"
                         className="w-full h-40 object-cover object-center"
                         sizes="(min-width: 640px) 640px, (min-width: 768px) 768px,
                     (min-width: 1024px) 1024px, (max-width: 1200px) 1200px"
                         fill
-                    /> */}
-                    <img
-                        src={image}
-                        alt="Picture of the author"
-                        className="absolute top-0 right-0 bottom-0 left-0 w-full h-full object-cover object-center"
                     />
                 </div>
 

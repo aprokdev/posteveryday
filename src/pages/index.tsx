@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import Link from 'next/link';
 import { getLoginSession } from '@backend/auth';
 import { prisma } from '@backend/index';
 import { feedModel } from '@backend/utils/data';
@@ -55,7 +54,7 @@ export default function Feed({ user, posts = [], error = '' }): JSX.Element {
                     <EmptyPosts user={user} />
                 ) : (
                     <Container className="min-h-mainMin">
-                        <div className="grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8 xl:gap-4">
+                        <div className="grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8 xl:gap-4">
                             {Array.isArray(posts) &&
                                 posts.map((data) => <Card {...data} key={data.id} />)}
                         </div>
@@ -64,27 +63,4 @@ export default function Feed({ user, posts = [], error = '' }): JSX.Element {
             </div>
         </Layout>
     );
-}
-
-{
-    /* <Card img={money} />
-        <Card img={chemistry} />
-        <Card img={medicine} />
-        <Card img={sign} />
-        <Card img={train} />
-        <Card img={sunset} />
-        <Card img={plant} />
-        <Card img={t} />
-        <Card img={rel} />
-        <Card img={phone} />
-        <Card img={train2} />
-        <Card img={hromosome} />
-        <Card img={room} />
-        <Card img={london} />
-        <Card img={canada} />
-        <Card img={ocean} />
-        <Card img={shoe} />
-        <Card img={skyscrapper} />
-        <Card img={kitchen} />
-        <Card img={airport} /> */
 }

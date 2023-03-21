@@ -1,6 +1,8 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import React from 'react';
+import image from '../../../public/icons/favicon-96.png';
 import { Logo } from '../../icons';
 import HeaderLink from './header-link';
 import HeaderProfile from './header-profile';
@@ -9,6 +11,8 @@ export default function Header({ user }) {
     const [isMobileMenuIsOpened, setMobileMenuIsOpened] = React.useState<boolean>(false);
 
     const headerRef = React.useRef<HTMLElement>();
+
+    const [isPensil, setIsPensil] = React.useState(false);
 
     const [isHeaderAttached, setAttached] = React.useState<boolean>(false);
 
@@ -40,20 +44,15 @@ export default function Header({ user }) {
 
     return (
         <nav
-            className="w-screen lg:w-full min-w-375 bg-stone-100 z-20 shadow-xl ease-in duration-500 transition-top"
+            className="w-full lg:w-full min-w-375 bg-stone-100 z-20 shadow-xl ease-in duration-500 transition-top"
             style={style}
             ref={headerRef}
             id="#header"
         >
             <div className="relative mx-auto px-2 sm:px-6 lg:px-8">
-                <div className="w-screen lg:w-full right-0 left-0 h-full flex absolute justify-center sm:hidden z-10">
-                    <Link href="/" className="w-24 flex items-stretch">
-                        <Logo />
-                    </Link>
-                </div>
-                <div className="relative z-10 flex h-16 items-center justify-end">
+                <div className="relative flex h-16 items-center justify-between">
                     {user && (
-                        <div className="absolute inset-y-0 left-0 flex items-center sm:hidden z-20">
+                        <div className="absolute inset-y-0 left-0 flex items-center md:hidden z-20">
                             <button
                                 type="button"
                                 className="block h-10 w-10 rounded-md p-2 text-white hover:text-white focus:outline-none"
@@ -73,33 +72,46 @@ export default function Header({ user }) {
 
                     <div
                         className={`absolute top-0 left-0 right-0 flex flex-1 items-center justify-center h-full sm:items-stretch ${
-                            user ? 'sm:justify-start' : 'sm:justify-center'
+                            user ? 'md:justify-start' : 'sm:justify-center'
                         }`}
                     >
-                        <div className="hidden sm:block xl:grow">
+                        <div className="sm:block xl:grow">
                             <div className="flex space-x-4 relative w-full h-full">
                                 <div className="xl:top-0 h-full xl:w-full flex xl:absolute top-1 justify-center">
-                                    <Link href="/" className="w-24 flex center">
+                                    <Link
+                                        href="/"
+                                        className="w-24 flex center relative"
+                                        onClick={() => setIsPensil(!isPensil)}
+                                    >
+                                        {isPensil && (
+                                            <Image
+                                                src={image}
+                                                alt="logo-icon"
+                                                className="absolute -left-9 top-5 w-7 h-7 xs:hidden xl:block"
+                                            />
+                                        )}
                                         <Logo />
                                     </Link>
                                 </div>
 
                                 {user && (
-                                    <>
+                                    <div className="hidden md:flex space-x-4">
                                         <HeaderLink href="/">Feed</HeaderLink>
                                         <HeaderLink href="/my-posts">My posts</HeaderLink>
                                         <HeaderLink href="/add-post">Add post</HeaderLink>
-                                    </>
+                                    </div>
                                 )}
                             </div>
                         </div>
                     </div>
                     {user ? (
-                        <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:pr-0">
+                        <div className="absolute z-20 inset-y-0 right-0 flex items-center pr-2 sm:pr-0">
                             <HeaderProfile user={user} />
                         </div>
                     ) : (
-                        <HeaderLink href="/login">Log In</HeaderLink>
+                        <div className="absolute z-20 right-0">
+                            <HeaderLink href="/login">Log In</HeaderLink>
+                        </div>
                     )}
                 </div>
             </div>
