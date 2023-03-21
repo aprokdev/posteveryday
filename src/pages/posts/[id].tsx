@@ -10,7 +10,6 @@ import Modal from '@components/modal';
 import Post from '@components/post';
 import PostForm from '@components/post-form';
 import SmallerContainer from '@components/smaller-container';
-import { actions, initialState, reducer } from './reducer';
 
 export async function getServerSideProps(context) {
     try {
@@ -35,6 +34,39 @@ export async function getServerSideProps(context) {
             props: { error: error.message },
         };
     }
+}
+
+export const actions = {
+    EDIT_MODE: 'EDIT_MODE',
+    READ_MODE: 'READ_MODE',
+    PREVIEW_MODE: 'PREVIEW_MODE',
+};
+
+export const initialState = {
+    read: true,
+    preview: false,
+    edit: false,
+};
+
+export function reducer(state, action) {
+    if (action === 'EDIT_MODE') {
+        return { read: false, preview: false, edit: true };
+    }
+    if (action === 'READ_MODE') {
+        return {
+            read: true,
+            preview: false,
+            edit: false,
+        };
+    }
+    if (action === 'PREVIEW_MODE') {
+        return {
+            read: false,
+            preview: true,
+            edit: false,
+        };
+    }
+    return state;
 }
 
 export default function PostPage({ user, data, error = '' }) {
