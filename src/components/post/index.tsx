@@ -29,6 +29,7 @@ export default function Post(props: IPostPreviewProps) {
                 {imageFile ? (
                     <img src={img} alt="" className="block w-full object-cover" />
                 ) : (
+                    // <img src={image} alt="" className="block w-full object-cover" />
                     <Image
                         src={`/${image}`}
                         alt="Picture of the author"

@@ -2,7 +2,7 @@ import makeReqBody from '@utils/make-request-body';
 import { ILoginFormInputs } from '@components/login-form';
 import { IRegisterFormInputs } from '@components/register-form';
 import { API_PATHS } from './paths';
-import { IAPIPostResponse, IAPIResponse, IPostData } from './types';
+import { IAPIPostResponse, IAPIResponse, IDeleteParams, IPostData } from './types';
 
 export async function post(path: string, data, options?: { headers: Headers }) {
     const headers = options?.headers || {};
@@ -89,6 +89,6 @@ export async function updatePost(data: IPostData): Promise<IAPIPostResponse> {
     }
 }
 
-export async function deletePost(id: string): Promise<IAPIPostResponse> {
-    return await post(API_PATHS.deletePost, { id });
+export async function deletePost({ id, image }: IDeleteParams): Promise<IAPIPostResponse> {
+    return await post(API_PATHS.deletePost, { id, image });
 }

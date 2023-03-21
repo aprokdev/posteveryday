@@ -20,3 +20,8 @@ export interface IAPIPostResponse {
     data?: IPostData;
     message?: string;
 }
+
+export interface IDeleteParams {
+    id: string;
+    image: string;
+}

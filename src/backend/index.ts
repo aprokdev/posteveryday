@@ -2,8 +2,8 @@ import { PrismaClient } from '@prisma/client';
 import { S3 } from 'aws-sdk';
 
 export const s3 = new S3({
-    accessKeyId: process.env.ACCESS_KEY_AWS,
-    secretAccessKey: process.env.SECRET_KEY_AWS,
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
 });
 
 let prisma: PrismaClient;
