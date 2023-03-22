@@ -37,7 +37,13 @@ export async function getServerSideProps({ req }) {
                 posts: posts.map((data) => {
                     return {
                         ...data,
-                        created: data.created.toISOString(),
+                        created: new Date(data.created.toISOString())
+                            .toLocaleDateString('en-EN', {
+                                year: 'numeric',
+                                month: '2-digit',
+                                day: '2-digit',
+                            })
+                            .replace(/\//g, '.'),
                     };
                 }),
             },

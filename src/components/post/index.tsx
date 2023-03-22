@@ -12,16 +12,6 @@ export default function Post(props: IPostPreviewProps) {
         [imageFile]
     );
 
-    const date = React.useMemo(() => {
-        return new Date(created)
-            .toLocaleDateString('en-EN', {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-            })
-            .replace(/\//g, '.');
-    }, [created]);
-
     return (
         <div className={`bg-grey-200${className ? ` ${className}` : ''}`}>
             <div className="w-full overflow-hidden relative h-72 flex items-center justify-center bg-stone-200">
@@ -39,7 +29,7 @@ export default function Post(props: IPostPreviewProps) {
                     <span className="text-md">
                         {author_firstname} {author_lastname}
                     </span>
-                    <span className="text-md">{date}</span>
+                    <span className="text-md">{created}</span>
                 </div>
                 <div>
                     <h1 className="xs:text-4xl md:text-5xl xl:text-6xl text-center mb-10">

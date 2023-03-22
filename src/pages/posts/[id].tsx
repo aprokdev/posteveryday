@@ -24,8 +24,16 @@ export async function getServerSideProps(context) {
             },
         });
 
+        const formattedDateString = new Date(data.created.toISOString())
+            .toLocaleDateString('en-EN', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+            })
+            .replace(/\//g, '.');
+
         return {
-            props: { user, data: { ...data, created: data.created.toISOString() } },
+            props: { user, data: { ...data, created: formattedDateString } },
         };
     } catch (error) {
         console.error(error);
