@@ -80,7 +80,7 @@ export default function Header({ user }) {
                                 <div className="xl:top-0 h-full xl:w-full flex xl:absolute top-1 justify-center">
                                     <Link
                                         href="/"
-                                        className="w-24 flex center relative"
+                                        className="w-24 flex center relative text-zero"
                                         onClick={() => setIsPensil(!isPensil)}
                                     >
                                         {isPensil && (
@@ -90,6 +90,7 @@ export default function Header({ user }) {
                                                 className="absolute -left-9 top-5 w-7 h-7 xs:hidden xl:block"
                                             />
                                         )}
+                                        Header Logo
                                         <Logo />
                                     </Link>
                                 </div>

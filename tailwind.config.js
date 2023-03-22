@@ -22,6 +22,13 @@ module.exports = {
             colors: {
                 red: 'red',
             },
+            fontSize: {
+                zero: '0',
+            },
+            minHeight: {
+                mainMin: 'calc(100vh - 72px)',
+                post: 'calc(100vh - 72px - 324px)',
+            },
         },
         screens: {
             xs: '0px',
@@ -36,10 +43,6 @@ module.exports = {
             // => @media (min-width: 1280px) { ... }
             // '2xl': '1536px',
             // => @media (min-width: 1536px) { ... }
-        },
-        minHeight: {
-            mainMin: 'calc(100vh - 72px)',
-            post: 'calc(100vh - 72px - 324px)',
         },
     },
     plugins: [require('@tailwindcss/typography')],

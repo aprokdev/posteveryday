@@ -35,16 +35,9 @@ export async function getServerSideProps({ req }) {
             props: {
                 user,
                 posts: posts.map((data) => {
-                    const dateString = new Date(data.created.toISOString())
-                        .toLocaleDateString('en-EN', {
-                            year: 'numeric',
-                            month: '2-digit',
-                            day: '2-digit',
-                        })
-                        .replace(/\//g, '.');
                     return {
                         ...data,
-                        created: dateString,
+                        created: data.created.toISOString(),
                     };
                 }),
             },

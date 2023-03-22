@@ -13,9 +13,8 @@ export default function Post(props: IPostPreviewProps) {
     );
 
     const date = React.useMemo(() => {
-        const date = new Date(created);
-        return date
-            .toLocaleDateString('en-US', {
+        return new Date(created)
+            .toLocaleDateString('en-EN', {
                 year: 'numeric',
                 month: '2-digit',
                 day: '2-digit',

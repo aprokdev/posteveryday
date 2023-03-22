@@ -27,11 +27,12 @@ export async function getServerSideProps({ req, res }) {
             return {
                 props: {
                     user,
-                    posts: posts.map((data) => ({
-                        ...data,
-                        // prisma returns Date onjects, so we need additionally stringify it
-                        created: JSON.parse(JSON.stringify(data.created.toISOString())),
-                    })),
+                    posts: posts.map((data) => {
+                        return {
+                            ...data,
+                            created: data.created.toISOString(),
+                        };
+                    }),
                 },
             };
         } else {

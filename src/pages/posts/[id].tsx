@@ -24,9 +24,8 @@ export async function getServerSideProps(context) {
             },
         });
 
-        data.created = JSON.parse(JSON.stringify(data.created.toISOString()));
         return {
-            props: { user, data },
+            props: { user, data: { ...data, created: data.created.toISOString() } },
         };
     } catch (error) {
         console.error(error);
