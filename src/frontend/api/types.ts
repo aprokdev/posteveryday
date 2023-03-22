@@ -1,6 +1,7 @@
 export interface IAPIResponse {
     success: boolean;
     message?: string;
+    data?: any;
 }
 
 export interface IPostData {
@@ -10,9 +11,12 @@ export interface IPostData {
     id: string;
     html_preview?: string;
     created: string;
-    author_id?: number;
     author_firstname: string;
     author_lastname: string;
+}
+
+export interface IFullPostData extends IPostData {
+    author_id?: number;
 }
 
 export interface ICreatePostParams {
@@ -37,4 +41,13 @@ export interface IAPIPostResponse {
 export interface IDeleteParams {
     id: string;
     image: string;
+}
+
+export interface IGetPostsParams {
+    offset: number;
+    limit: number;
+    author_id?: number;
+    order?: string;
+    order_field?: string;
+    select?: IFullPostData;
 }

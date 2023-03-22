@@ -6,25 +6,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     try {
         if (req.method !== 'GET') {
             res.setHeader('Allow', 'GET');
-            res.status(405).json({
-                data: null,
-                error: 'Method Not Allowed',
-            });
+            res.status(405).json({ sucess: false, message: 'Method Not Allowed' });
             return;
         }
-        const { offset, limit, author_id, order, order_field, select } = req.body;
+
+        const { offset, limit, author_id, order, order_field } = req.query;
 
         const posts = await prisma.post.findMany({
-            take: limit || 0,
-            skip: offset || 0,
-            where: author_id ? { author_id } : undefined,
+            take: Number(limit) || 0,
+            skip: Number(offset) || 0,
+            where: author_id ? { author_id: Number(author_id) } : undefined,
             orderBy: {
-                [order_field || 'created']: order || 'desc', // most recent by default
+                [order_field ? `${order_field}` : 'created']: order || 'desc', // most recent by default
             },
-            select: select || feedModel,
+            select: feedModel,
         });
 
-        res.status(200).json({ success: true, list: posts });
+        res.status(200).json({ success: true, data: { list: posts } });
     } catch (error) {
         res.status(500).json({ sucess: false, message: error.message });
     }

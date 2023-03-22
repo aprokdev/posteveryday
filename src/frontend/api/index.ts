@@ -7,6 +7,7 @@ import {
     IAPIResponse,
     ICreatePostParams,
     IDeleteParams,
+    IGetPostsParams,
     IUpdatePostParams,
 } from './types';
 
@@ -29,13 +30,12 @@ export async function post(path: string, data, options?: { headers: Headers }) {
     }
 }
 
-export async function get(path: string, data, options?: { headers: Headers }) {
+export async function get(path: string, params: any, options?: { headers: Headers }) {
     const headers = options?.headers || {};
+    const paramsStr = new URLSearchParams(params).toString();
     try {
-        const body = makeReqBody(data);
-        const res = await fetch(path, {
+        const res = await fetch(`${path}?${paramsStr}`, {
             method: 'GET',
-            body,
             headers: new Headers({
                 'Content-Type': 'application/json;charset=utf-8',
                 ...headers,
@@ -46,6 +46,10 @@ export async function get(path: string, data, options?: { headers: Headers }) {
         console.error(`get() error: ${error.message}`);
         return error;
     }
+}
+
+export async function getPosts(params): Promise<IAPIResponse> {
+    return await get(API_PATHS.posts, params);
 }
 
 export async function loginUser(data: ILoginFormInputs): Promise<IAPIResponse> {

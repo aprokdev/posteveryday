@@ -15,11 +15,21 @@ interface ICardProps {
     id?: string;
     author_firstname: string;
     author_lastname: string;
+    index: number;
 }
 
 export default function Card(props: ICardProps): JSX.Element {
-    const { id, image, title, html_preview, created, animate, author_firstname, author_lastname } =
-        props;
+    const {
+        id,
+        image,
+        title,
+        html_preview,
+        created,
+        animate,
+        author_firstname,
+        author_lastname,
+        index,
+    } = props;
     const { ref, inView } = useInView({
         threshold: 0.005,
     });
@@ -60,7 +70,9 @@ export default function Card(props: ICardProps): JSX.Element {
                             src={ImagePlug}
                             alt="Picture of the author"
                             className="w-10 h-10 object-cover object-center text-stone-500"
+                            sizes="(min-width: 640px) 640px"
                             fill
+                            loading="eager"
                         />
                     </div>
 
@@ -71,6 +83,7 @@ export default function Card(props: ICardProps): JSX.Element {
                         sizes="(min-width: 640px) 640px, (min-width: 768px) 768px,
                     (min-width: 1024px) 1024px, (max-width: 1200px) 1200px"
                         fill
+                        loading={index > 8 ? 'lazy' : 'eager'}
                     />
                 </div>
 
