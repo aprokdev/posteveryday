@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { prisma, s3 } from '@backend/index';
 import { IAPIResponse } from '@frontend/api/types';
 
-function deleteS3File(key): Promise<IAPIResponse> {
+export function deleteS3File(key): Promise<IAPIResponse> {
     return new Promise((res, rej) => {
         s3.deleteObject({ Bucket: 'posteveryday', Key: key }, function (err, data) {
             if (err) {
@@ -18,10 +18,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     try {
         if (req.method !== 'POST') {
             res.setHeader('Allow', 'POST');
-            res.status(405).json({
-                data: null,
-                error: 'Method Not Allowed',
-            });
+            res.status(405).json({ sucess: false, message: 'Method Not Allowed' });
+            return;
+        }
+
+        if (req?.body?.image === undefined) {
+            res.status(405).json({ sucess: false, message: 'image field is required' });
             return;
         }
 

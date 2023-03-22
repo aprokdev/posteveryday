@@ -186,7 +186,7 @@ export default function PostPage({ user, data, error = '' }) {
                         author_firstname={user.first_name}
                         author_lastname={user.last_name}
                         imageFile={preview?.image}
-                        image={data.image && !preview?.image && data.image}
+                        image={data.image}
                     />
                     <div className="flex items-center justify-end py-10 min-w-375 max-w-5xl m-auto sm:px-6 lg:px-8 xs:px-4">
                         <Button

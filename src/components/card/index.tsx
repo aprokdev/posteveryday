@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { PhotoIcon } from '@heroicons/react/24/outline';
+import ImagePlug from '@public/images/image-plug.svg';
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
 import s from './style.module.scss';
@@ -54,7 +55,15 @@ export default function Card(props: ICardProps): JSX.Element {
                 className={`${animationClassName}relative w-full shadow-lg border-2 border-stone-300 overflow-hidden bg-stone-100 rounded-md`}
             >
                 <div className="w-full relative h-48 flex items-center justify-center bg-stone-200">
-                    <PhotoIcon className="block w-24 h-24 text-stone-500" />
+                    <div className="relative w-24 h-24">
+                        <Image
+                            src={ImagePlug}
+                            alt="Picture of the author"
+                            className="w-10 h-10 object-cover object-center text-stone-500"
+                            fill
+                        />
+                    </div>
+
                     <Image
                         src={image}
                         alt="Picture of the author"

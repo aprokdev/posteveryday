@@ -1,43 +1,55 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { getLoginSession } from '@backend/auth';
 import { prisma } from '@backend/index';
-import { parseFormData } from '@utils/parseFormData';
-import { createReadStream, promises } from 'fs';
+import { ParseFieldsAndS3Upload } from '@utils/ParseFieldsAndS3Upload';
+import { deleteS3File } from './delete';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
         if (req.method !== 'POST') {
             res.setHeader('Allow', 'POST');
-            res.status(405).json({
-                data: null,
-                error: 'Method Not Allowed',
-            });
+            res.status(405).json({ sucess: false, message: 'Method Not Allowed' });
             return;
         }
-        // const { fields, files } = await parseFormData(req);
 
-        // const buffer = createReadStream(files.image.filepath);
+        const { title, html, imageURL, id } = await ParseFieldsAndS3Upload(req);
 
-        // const { title, html, id } = fields;
+        // ==== id field required in request! These 2 checks prevent undesirable behaviour
+        // if image file was sent, it will be put in s3 anyways,
+        // so after check we should remove it from bucket:
+        if (id === 'undefined' && imageURL) {
+            const url = new URL(imageURL);
+            const key = url.pathname.slice(1); // key: '/images/filename.jpg' => 'images/filename.jpg'
+            await deleteS3File(key);
+            res.status(405).json({ sucess: false, message: 'id field is required' });
+            return;
+        }
+        if (id === 'undefined' && !imageURL) {
+            res.status(405).json({ sucess: false, message: 'id field is required' });
+            return;
+        }
+        // ====
 
-        // const result = await uploadS3Image(buffer, files.image.originalFilename);
-        // console.log('result: ', result);
+        // Don't forget to remove previous image from S3 bucket, if it had been passed
+        if (id !== 'undefined' && imageURL) {
+            const previousPost = await prisma.post.findFirst({ where: { id: Number(id) } });
+            const url = new URL(previousPost.image);
+            const key = url.pathname.slice(1); // key: '/images/filename.jpg' => 'images/filename.jpg'
+            await deleteS3File(key);
+        }
 
-        // const result = await prisma.post.update({
-        //     where: {
-        //         id: Number(id),
-        //     },
-        //     data: {
-        //         title,
-        //         html,
-        //         html_preview: html.slice(0, 340),
-        //         image: files.image ? files.image.newFilename : undefined,
-        //     },
-        // });
+        const result = await prisma.post.update({
+            where: {
+                id: Number(id),
+            },
+            data: {
+                title,
+                html,
+                html_preview: html.slice(0, 340),
+                image: imageURL,
+            },
+        });
 
-        // await promises.rm(files.image.filepath);
-        // res.status(200).json({ success: true, data: result });
-        res.status(500).json({ success: false, message: "Doesn't work temporary" });
+        res.status(200).json({ success: true, data: result });
     } catch (error) {
         res.status(500).json({ sucess: false, message: error.message });
     }

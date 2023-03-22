@@ -2,7 +2,13 @@ import makeReqBody from '@utils/make-request-body';
 import { ILoginFormInputs } from '@components/login-form';
 import { IRegisterFormInputs } from '@components/register-form';
 import { API_PATHS } from './paths';
-import { IAPIPostResponse, IAPIResponse, IDeleteParams, IPostData } from './types';
+import {
+    IAPIPostResponse,
+    IAPIResponse,
+    ICreatePostParams,
+    IDeleteParams,
+    IUpdatePostParams,
+} from './types';
 
 export async function post(path: string, data, options?: { headers: Headers }) {
     const headers = options?.headers || {};
@@ -50,7 +56,7 @@ export async function registerUser(data: IRegisterFormInputs): Promise<IAPIRespo
     return await post(API_PATHS.register, data);
 }
 
-export async function createPost(data: IPostData): Promise<IAPIPostResponse> {
+export async function createPost(data: ICreatePostParams): Promise<IAPIPostResponse> {
     try {
         const formData = new FormData();
         formData.append('image', data?.image);
@@ -68,7 +74,7 @@ export async function createPost(data: IPostData): Promise<IAPIPostResponse> {
     }
 }
 
-export async function updatePost(data: IPostData): Promise<IAPIPostResponse> {
+export async function updatePost(data: IUpdatePostParams): Promise<IAPIPostResponse> {
     try {
         const formData = new FormData();
         if (data?.image) {

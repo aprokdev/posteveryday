@@ -1,9 +1,8 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import defaultHTML from 'pages/posts/plug';
-import { useRef, useState } from 'react';
-import { FormProvider, useController, useForm } from 'react-hook-form';
+import { useRef } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 import * as yup from 'yup';
-import Button from '@components/button';
 import FormError from '@components/form/error';
 import ImageInput from '@components/form/file-input';
 import Input from '@components/form/input';
@@ -58,10 +57,6 @@ function PostForm({
         if (editorRef.current) {
             html = editorRef.current.getContent();
         }
-        // if ((!Image || !Image[0]) && strongImageValidation) {
-        //     setError('Image', { type: 'custom', message: 'Image is a required field' });
-        //     return;
-        // }
         const submitData = {
             image: imageValidation ? Image[0] : Image ? Image[0] : null,
             title: Title,

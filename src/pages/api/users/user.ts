@@ -5,10 +5,7 @@ export default async function user(req, res) {
     try {
         if (req.method !== 'POST') {
             res.setHeader('Allow', 'POST');
-            res.status(405).json({
-                data: null,
-                error: 'Method Not Allowed',
-            });
+            res.status(405).json({ sucess: false, message: 'Method Not Allowed' });
             return;
         }
         const session = await getLoginSession(req);

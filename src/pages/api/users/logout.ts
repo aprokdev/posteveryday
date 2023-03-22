@@ -3,10 +3,7 @@ import { cleanTokenCookie } from '@backend/auth';
 export default async function logout(req, res) {
     if (req.method !== 'GET') {
         res.setHeader('Allow', 'GET');
-        res.status(405).json({
-            data: null,
-            error: 'Method Not Allowed',
-        });
+        res.status(405).json({ sucess: false, message: 'Method Not Allowed' });
         return;
     }
     cleanTokenCookie(res);

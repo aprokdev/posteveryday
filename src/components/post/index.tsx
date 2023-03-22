@@ -8,7 +8,7 @@ export default function Post(props: IPostPreviewProps) {
     const { image, title, html, created, author_firstname, author_lastname, imageFile, className } =
         props;
     const img = React.useMemo(
-        () => (imageFile ? URL.createObjectURL(imageFile) : null),
+        () => (imageFile ? URL.createObjectURL(imageFile) : image),
         [imageFile]
     );
 
@@ -26,19 +26,14 @@ export default function Post(props: IPostPreviewProps) {
     return (
         <div className={`bg-grey-200${className ? ` ${className}` : ''}`}>
             <div className="w-full overflow-hidden relative h-72 flex items-center justify-center bg-stone-200">
-                {imageFile ? (
-                    <img src={img} alt="" className="block w-full object-cover" />
-                ) : (
-                    // <img src={image} alt="" className="block w-full object-cover" />
-                    <Image
-                        src={`/${image}`}
-                        alt="Picture of the author"
-                        className="w-full h-40 object-cover object-center"
-                        sizes="(min-width: 640px) 640px, (min-width: 768px) 768px,
+                <Image
+                    src={img}
+                    alt="Picture of the author"
+                    className="w-full h-40 object-cover object-center"
+                    sizes="(min-width: 640px) 640px, (min-width: 768px) 768px,
                     (min-width: 1024px) 1024px, (max-width: 1200px) 1200px"
-                        fill
-                    />
-                )}
+                    fill
+                />
             </div>
             <SmallerContainer className="min-h-post">
                 <div className="flex justify-between pt-8 mb-6">

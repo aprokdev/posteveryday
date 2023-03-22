@@ -1,80 +1,18 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getLoginSession } from '@backend/auth';
-import { prisma, s3 } from '@backend/index';
-import { parseFormData } from '@utils/parseFormData';
-import busboy from 'busboy';
-// import { uploadS3Image } from '@utils/uploadToS3';
-import { createReadStream, promises } from 'fs';
-
-// import InversifyContainer from 'backend/inversify-config';
-// import TYPES from 'backend/inversify-types';
-// import { IDatabase } from 'backend/services/database/types';
-
-export interface IBBPromiseResponse {
-    title: string;
-    html: string;
-    imageURL?: string;
-}
-
-function S3uploadAndParseFields(req): Promise<IBBPromiseResponse> {
-    return new Promise((res, rej) => {
-        const bb = busboy({ headers: req.headers });
-
-        let title, html, imageURL;
-
-        bb.on('file', (name, file, info) => {
-            const { filename, mimeType } = info;
-            const upload = s3.upload({
-                Bucket: `${process.env.AWS_S3_BUCKET_NAME}/images`,
-                Key: filename,
-                Body: file,
-                ContentType: mimeType,
-            });
-
-            upload.send((err, data) => {
-                if (err) {
-                    rej(err);
-                }
-                imageURL = data.Location;
-                if (title && html && imageURL) {
-                    res({ title, html, imageURL });
-                }
-            });
-        });
-
-        bb.on('field', (name, val, info) => {
-            if (name === 'title') {
-                title = val;
-            }
-            if (name === 'html') {
-                html = val;
-            }
-        });
-
-        bb.on('finish', (val) => {
-            if (title && html && imageURL) {
-                res({ title, html, imageURL });
-            }
-        });
-
-        req.pipe(bb);
-    });
-}
+import { prisma } from '@backend/index';
+import { ParseFieldsAndS3Upload } from '@utils/ParseFieldsAndS3Upload';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
         if (req.method !== 'POST') {
             res.setHeader('Allow', 'POST');
-            res.status(405).json({
-                data: null,
-                error: 'Method Not Allowed',
-            });
+            res.status(405).json({ sucess: false, message: 'Method Not Allowed' });
             return;
         }
         const session = await getLoginSession(req);
 
-        const response = await S3uploadAndParseFields(req);
-        const { title, html, imageURL } = response;
+        const { title, html, imageURL } = await ParseFieldsAndS3Upload(req);
         const result = await prisma.post.create({
             data: {
                 title,
