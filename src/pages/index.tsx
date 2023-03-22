@@ -34,10 +34,19 @@ export async function getServerSideProps({ req }) {
         return {
             props: {
                 user,
-                posts: posts.map((data) => ({
-                    ...data,
-                    created: JSON.parse(JSON.stringify(data.created.toISOString())),
-                })),
+                posts: posts.map((data) => {
+                    const dateString = new Date(data.created.toISOString())
+                        .toLocaleDateString('en-EN', {
+                            year: 'numeric',
+                            month: '2-digit',
+                            day: '2-digit',
+                        })
+                        .replace(/\//g, '.');
+                    return {
+                        ...data,
+                        created: dateString,
+                    };
+                }),
             },
         };
     } catch (error) {

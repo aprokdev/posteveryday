@@ -47,16 +47,16 @@ export default function Card(props: ICardProps): JSX.Element {
         animationClassName = `transition-top-opacity duration-500 ease-in ${changableClasses} `;
     }
 
-    const date = React.useMemo(() => {
-        const date = new Date(created);
-        return date
-            .toLocaleDateString('en-EN', {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-            })
-            .replace(/\//g, '.');
-    }, [created]);
+    // const date = React.useMemo(() => {
+    //     const date = new Date(created);
+    //     return date
+    //         .toLocaleDateString('en-EN', {
+    //             year: 'numeric',
+    //             month: '2-digit',
+    //             day: '2-digit',
+    //         })
+    //         .replace(/\//g, '.');
+    // }, [created]);
 
     return (
         <Link href={`/posts/${id}`} className="hover:no-underline flex">
@@ -92,7 +92,7 @@ export default function Card(props: ICardProps): JSX.Element {
                         <span className="text-xs">
                             {author_firstname} {author_lastname}
                         </span>
-                        <span className="text-xs">{date}</span>
+                        <span className="text-xs">{created}</span>
                     </div>
                     <h1 className={`text-2xl mb-2 ${s.linesClipHeader} ${s.boxOrient}`}>{title}</h1>
                     <div
