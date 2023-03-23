@@ -67,7 +67,13 @@ export default function AddPost({ user }) {
                 <>
                     <Post
                         {...preview}
-                        created={new Date()}
+                        created={new Date()
+                            .toLocaleDateString('en-EN', {
+                                year: 'numeric',
+                                month: '2-digit',
+                                day: '2-digit',
+                            })
+                            .replace(/\//g, '.')}
                         author_firstname={user.first_name}
                         author_lastname={user.last_name}
                         imageFile={preview?.image}

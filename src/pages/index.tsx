@@ -3,8 +3,11 @@ import { getLoginSession } from '@backend/auth';
 import { prisma } from '@backend/index';
 import { feedModel } from '@backend/utils/data';
 import { getPosts } from '@frontend/api';
+import { InfoIcon } from '@icons';
+import { makeCorrectPostsList } from '@utils/makeCorrectPostsList';
 import React from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
+import { toast } from 'react-toastify';
 import Card from '@components/card';
 import Container from '@components/container';
 import EmptyPosts from '@components/empty-posts';
@@ -73,15 +76,31 @@ export default function Feed({ user, posts = [], error = '' }): JSX.Element {
         if (isLoading) return;
         setIsLoading(true);
         try {
-            const { limit, offset } = state;
+            const { limit, offset, list } = state;
             const result = await getPosts({ limit, offset });
             let hasMore = true;
+            // for resolving possible issues, read makeCorrectPostsList description:
+            const { correctListPosts, additionalOffset } = makeCorrectPostsList(
+                list,
+                result?.data?.list
+            );
+
+            if (additionalOffset) {
+                toast.info(
+                    <span>
+                        There are fresh posts! <br />
+                        You can update the page and see them!
+                    </span>,
+                    { icon: <InfoIcon /> }
+                );
+            }
             if (result?.data?.list?.length < cardsAmountToLoad) {
                 hasMore = false;
             }
+
             setState({
-                list: state.list.concat(result?.data?.list),
-                offset: state.offset + cardsAmountToLoad,
+                list: correctListPosts,
+                offset: state.offset + cardsAmountToLoad + additionalOffset,
                 limit: cardsAmountToLoad,
                 hasMore,
                 errorMessage: '',

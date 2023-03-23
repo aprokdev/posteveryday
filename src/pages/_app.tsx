@@ -1,4 +1,7 @@
 import Head from 'next/head';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import ToastClose from '@components/toast-close';
 import '../styles/globals.css';
 
 export default function MyApp({ Component, pageProps }) {
@@ -16,6 +19,7 @@ export default function MyApp({ Component, pageProps }) {
                 <link rel="icon" type="image/png" sizes="96x96" href="icons/favicon-96.png" />
             </Head>
             <Component {...pageProps} />
+            <ToastContainer autoClose={6000} closeButton={ToastClose} />
         </>
     );
 }

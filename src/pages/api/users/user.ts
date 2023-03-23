@@ -3,8 +3,8 @@ import { prisma } from '@backend/index';
 
 export default async function user(req, res) {
     try {
-        if (req.method !== 'POST') {
-            res.setHeader('Allow', 'POST');
+        if (req.method !== 'GET') {
+            res.setHeader('Allow', 'GET');
             res.status(405).json({ sucess: false, message: 'Method Not Allowed' });
             return;
         }
