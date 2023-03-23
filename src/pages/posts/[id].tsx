@@ -3,6 +3,7 @@ import Router from 'next/router';
 import { getLoginSession } from '@backend/auth';
 import { prisma } from '@backend/index';
 import { deletePost, updatePost } from '@frontend/api';
+import formatDateString from '@utils/formateDateString';
 import React, { useEffect, useReducer, useState } from 'react';
 import Button from '@components/button';
 import Layout from '@components/layout';
@@ -24,16 +25,11 @@ export async function getServerSideProps(context) {
             },
         });
 
-        const formattedDateString = new Date(data.created.toISOString())
-            .toLocaleDateString('en-EN', {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-            })
-            .replace(/\//g, '.');
-
         return {
-            props: { user, data: { ...data, created: formattedDateString } },
+            props: {
+                user,
+                data: { ...data, created: formatDateString(data.created.toISOString()) },
+            },
         };
     } catch (error) {
         console.error(error);
