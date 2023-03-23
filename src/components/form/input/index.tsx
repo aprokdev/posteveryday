@@ -11,7 +11,6 @@ const baseClassName = `
     w-full
     rounded-md
     bg-white
-    border-transparent
     border-2
     border-gray-400
     focus:border-black
