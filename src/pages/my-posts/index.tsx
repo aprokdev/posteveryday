@@ -79,7 +79,7 @@ export default function MyPosts({ user, posts = [], error = '' }): JSX.Element {
                         amount={cardsAmountToLoad}
                     />
                 )}
-                <UpButton />
+                {/* <UpButton /> */}
             </div>
             <ToastContainer autoClose={6000} closeButton={ToastClose} />
         </Layout>

@@ -1,0 +1,9 @@
+.checkbox {
+    input:checked + label {
+        border-color: black;
+        background-color: black;
+    }
+    input:checked + label > svg {
+        display: block;
+    }
+}

@@ -74,7 +74,13 @@ export default function LoginForm(): JSX.Element {
             </Button>
 
             <span className="block text-center mt-8">
-                Don't have an account? <Link href="/register">Register</Link>
+                Don't have an account?{' '}
+                <Link
+                    href="/register"
+                    className="text-black underline underline-offset-2 transition-opacity hover:opacity-50"
+                >
+                    Register
+                </Link>
             </span>
         </form>
     );

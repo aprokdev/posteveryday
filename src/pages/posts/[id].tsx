@@ -120,6 +120,8 @@ export default function PostPage({ user, data, error = '' }) {
         setIsLoading(false);
     };
 
+    const isActionsVisible = user ? user.id === data.author_id || user.role === 'admin' : false;
+
     return data && !error ? (
         <Layout user={user}>
             <Head>
@@ -146,23 +148,19 @@ export default function PostPage({ user, data, error = '' }) {
                 <>
                     <Post {...updatedData} className={`${user ? 'pb-10' : 'pb-20'}`} />
 
-                    {(user && user.id === data.author_id) ||
-                        (user.role === 'admin' && (
-                            <div className="flex items-center justify-end pb-10 min-w-375 max-w-5xl m-auto sm:px-6 lg:px-8 xs:px-4">
-                                <Button
-                                    onClick={() => setIsModal(true)}
-                                    className="mr-4 bg-white border-black text-black border-2 w-28"
-                                >
-                                    Delete
-                                </Button>
-                                <Button
-                                    onClick={() => dispatch(actions.EDIT_MODE)}
-                                    className="w-28"
-                                >
-                                    Edit
-                                </Button>
-                            </div>
-                        ))}
+                    {isActionsVisible && (
+                        <div className="flex items-center justify-end pb-10 min-w-375 max-w-5xl m-auto sm:px-6 lg:px-8 xs:px-4">
+                            <Button
+                                onClick={() => setIsModal(true)}
+                                className="mr-4 bg-white border-black text-black border-2 w-28"
+                            >
+                                Delete
+                            </Button>
+                            <Button onClick={() => dispatch(actions.EDIT_MODE)} className="w-28">
+                                Edit
+                            </Button>
+                        </div>
+                    )}
                 </>
             )}
 
