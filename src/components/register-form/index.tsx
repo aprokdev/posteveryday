@@ -33,20 +33,23 @@ const schema = yup
     .required();
 
 export default function RegisterForm(): JSX.Element {
-    const { reset, register, handleSubmit, formState } = useForm<IRegisterFormInputs>({
+    const { reset, register, setError, handleSubmit, formState } = useForm<IRegisterFormInputs>({
         resolver: yupResolver(schema),
         defaultValues: { Email: '', 'First name': '', 'Last name': '', Password: '', Terms: false },
     });
     const { errors, isSubmitting, defaultValues } = formState;
     const onSubmit = useCallback(
         async (data: IRegisterFormInputs) => {
-            console.log(data);
-
-            // const response = await registerUser(data);
-            // console.log('onSubmit register', response);
-            // if (response?.success) {
-            //     Router.push('/login');
-            // }
+            const response = await registerUser(data);
+            console.log('onSubmit register', response);
+            if (response?.success) {
+                Router.push('/login');
+            } else if (response?.message === 'User with provided email is already exist') {
+                setError('Email', {
+                    type: 'custom',
+                    message: 'User with provided email is already exist',
+                });
+            }
         },
         [reset]
     );

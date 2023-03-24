@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '@backend/index';
 import { feedModel } from '@backend/utils/data';
+import formatDateString from '@utils/formateDateString';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
@@ -22,7 +23,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             select: feedModel,
         });
 
-        res.status(200).json({ success: true, data: { list: posts } });
+        const list = posts.map((post) => ({
+            ...post,
+            created: formatDateString(post.created.toISOString()),
+        }));
+
+        res.status(200).json({ success: true, data: { list } });
     } catch (error) {
         res.status(500).json({ sucess: false, message: error.message });
     }

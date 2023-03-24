@@ -28,6 +28,7 @@ module.exports = {
             minHeight: {
                 mainMin: 'calc(100vh - 72px)',
                 post: 'calc(100vh - 72px - 324px)',
+                500: '500px',
             },
         },
         screens: {

@@ -21,7 +21,9 @@ export default function PostsLoader({ cardsLoader, initialPosts, amount }) {
     const [isLoading, setIsLoading] = React.useState(false);
 
     const loadPosts = React.useCallback(async () => {
-        if (isLoading) return;
+        if (isLoading || errorMessage) return;
+        console.log(isLoading, errorMessage);
+
         setIsLoading(true);
         try {
             const { limit, offset, list } = state;
@@ -32,6 +34,8 @@ export default function PostsLoader({ cardsLoader, initialPosts, amount }) {
                 list,
                 result?.data?.list
             );
+
+            console.log(additionalOffset);
 
             if (additionalOffset) {
                 toast.info(
@@ -73,9 +77,9 @@ export default function PostsLoader({ cardsLoader, initialPosts, amount }) {
                     <InfiniteScroll
                         loadMore={loadPosts}
                         hasMore={hasMore}
-                        loader={<FeedLoading key="feed-loading" />}
+                        loader={!errorMessage && <FeedLoading key="feed-loading" />}
                         initialLoad={false}
-                        threshold={500}
+                        threshold={700}
                     >
                         <FeedCardsContainer>
                             {list.map((data, i) => (
@@ -83,7 +87,6 @@ export default function PostsLoader({ cardsLoader, initialPosts, amount }) {
                             ))}
                         </FeedCardsContainer>
                     </InfiniteScroll>
-
                     {errorMessage && <FeedError message={errorMessage} />}
                 </Container>
             )}

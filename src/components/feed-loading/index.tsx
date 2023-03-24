@@ -17,8 +17,8 @@ export default function FeedLoading() {
     }, [state]);
 
     return (
-        <div className="text-center py-6" key={0}>
-            <div className="flex justify-center">
+        <div className="text-center py-10" key={0}>
+            <div className="flex justify-center text-xl">
                 Loading
                 <span className="relative">
                     <span className="absolute left-0 right-auto">

@@ -62,8 +62,8 @@ export default function Feed({ user, posts = [], error = '' }): JSX.Element {
             </Head>
             <div className="bg-gray-200">
                 {error && <PageError message={error} />}
-                {posts.length === 0 && <EmptyPosts user={user} />}
-                {posts.length > 0 && (
+                {!error && posts.length === 0 && <EmptyPosts user={user} />}
+                {!error && posts.length > 0 && (
                     <PostsLoader
                         cardsLoader={cardsLoader}
                         initialPosts={posts}
