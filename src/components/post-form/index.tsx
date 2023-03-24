@@ -1,5 +1,4 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import defaultHTML from 'pages/posts/plug';
 import { useRef } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -23,16 +22,7 @@ const schema = yup
     })
     .required();
 
-const defaultTitle = 'What is lorem ipsum dolor?';
-const defhtml = defaultHTML().slice(0, 300);
-
-function PostForm({
-    title = defaultTitle,
-    html = defhtml,
-    onSubmit,
-    children,
-    imageValidation,
-}: IPostFormProps) {
+function PostForm({ title, html, onSubmit, children, imageValidation }: IPostFormProps) {
     const editorRef = useRef<any>();
 
     const methods = useForm<IFormInputs>({

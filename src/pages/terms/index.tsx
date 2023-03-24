@@ -28,7 +28,6 @@ export default function TermsOfUsePage(): JSX.Element {
 
                 <p className="mb-6">
                     <span className="block font-semibold underline">Intellectual Property</span>
-                    <br />
                     All content published and made available on our Site is the property of Anton
                     Prokopenko. This includes, but is not limited to images, text, logos, documents,
                     downloadable files and anything that contributes to the composition of our Site.
@@ -36,7 +35,6 @@ export default function TermsOfUsePage(): JSX.Element {
 
                 <p className="mb-6">
                     <span className="block font-semibold underline">Age Restrictions</span>
-                    <br />
                     The minimum age to use our Site is 13 years old. By using this Site, users agree
                     that they are over 13 years old. We do not assume any legal responsibility for
                     false statements about age.
@@ -44,7 +42,6 @@ export default function TermsOfUsePage(): JSX.Element {
 
                 <p className="mb-6">
                     <span className="block font-semibold underline">User Contributions</span>
-                    <br />
                     Users may post the following information on our Site:
                 </p>
 
@@ -67,7 +64,6 @@ export default function TermsOfUsePage(): JSX.Element {
 
                 <p className="mb-6">
                     <span className="block font-semibold underline">Accounts</span>
-                    <br />
                     When you create an account on our Site, you agree to the following:
                 </p>
 
@@ -94,26 +90,13 @@ export default function TermsOfUsePage(): JSX.Element {
                 </p>
 
                 <p className="mb-6">
-                    <span className="block font-semibold underline">User Goods and Services</span>
-                    <br />
-                    Our Site allows users to sell goods and services. We do not assume any
-                    responsibility for the goods and services users sell on our Site. We cannot
-                    guarantee the quality or accuracy of any goods and services sold by users on our
-                    Site. However, if we are made aware that a user is violating these Terms and
-                    Conditions, we reserve the right to suspend or prohibit the user from selling
-                    goods and services on our Site.
-                </p>
-
-                <p className="mb-6">
                     <span className="block font-semibold underline">Limitation of Liability</span>
-                    <br />
                     Anton Prokopenko will not be liable for any actions, claims, losses, damages,
                     liabilities and expenses including legal fees from your use of the Site.
                 </p>
 
                 <p className="mb-6">
                     <span className="block font-semibold underline">Indemnity</span>
-                    <br />
                     Except where prohibited by law, by using this Site you indemnify and hold
                     harmless Anton Prokopenko from any actions, claims, losses, damages, liabilities
                     and expenses including legal fees arising out of your use of our Site or your
@@ -122,13 +105,11 @@ export default function TermsOfUsePage(): JSX.Element {
 
                 <p className="mb-6">
                     <span className="block font-semibold underline">Applicable Law</span>
-                    <br />
                     These Terms and Conditions are governed by the laws of the Province of Alberta.
                 </p>
 
                 <p className="mb-6">
                     <span className="block font-semibold underline">Severability</span>
-                    <br />
                     If at any time any of the provisions set forth in these Terms and Conditions are
                     found to be inconsistent or invalid under applicable laws, those provisions will
                     be deemed void and will be removed from these Terms and Conditions. All other
@@ -138,7 +119,6 @@ export default function TermsOfUsePage(): JSX.Element {
 
                 <p className="mb-6">
                     <span className="block font-semibold underline">Changes</span>
-                    <br />
                     These Terms and Conditions may be amended from time to time in order to maintain
                     compliance with the law and to reflect any changes to the way we operate our
                     Site and the way we expect users to behave on our Site. We will notify users by
@@ -147,7 +127,6 @@ export default function TermsOfUsePage(): JSX.Element {
 
                 <p className="mb-6">
                     <span className="block font-semibold underline">Contact Details</span>
-                    <br />
                     Please contact us if you have any questions or concerns. Our contact details are
                     as follows:
                     <br />

@@ -21,7 +21,7 @@ export default function PostsLoader({ cardsLoader, initialPosts, amount }) {
     const [isLoading, setIsLoading] = React.useState(false);
 
     const loadPosts = React.useCallback(async () => {
-        if (isLoading || errorMessage) return;
+        if (isLoading || errorMessage || initialPosts < amount) return;
         console.log(isLoading, errorMessage);
 
         setIsLoading(true);
@@ -77,7 +77,10 @@ export default function PostsLoader({ cardsLoader, initialPosts, amount }) {
                     <InfiniteScroll
                         loadMore={loadPosts}
                         hasMore={hasMore}
-                        loader={!errorMessage && <FeedLoading key="feed-loading" />}
+                        loader={
+                            !errorMessage &&
+                            initialPosts >= amount && <FeedLoading key="feed-loading" />
+                        }
                         initialLoad={false}
                         threshold={700}
                     >
