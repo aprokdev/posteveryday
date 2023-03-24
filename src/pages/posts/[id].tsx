@@ -187,7 +187,6 @@ export default function PostPage({ user, data, error = '' }) {
                 <>
                     <Post
                         {...preview}
-                        created={new Date()}
                         author_firstname={user.first_name}
                         author_lastname={user.last_name}
                         imageFile={preview?.image}

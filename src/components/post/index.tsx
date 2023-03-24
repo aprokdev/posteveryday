@@ -7,6 +7,9 @@ import { IPostPreviewProps } from './types';
 export default function Post(props: IPostPreviewProps) {
     const { image, title, html, created, author_firstname, author_lastname, imageFile, className } =
         props;
+
+    console.log(props);
+
     const img = React.useMemo(
         () => (imageFile ? URL.createObjectURL(imageFile) : image),
         [imageFile]
