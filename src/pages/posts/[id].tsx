@@ -7,6 +7,7 @@ import formatDateString from '@utils/formateDateString';
 import React, { useEffect, useReducer, useState } from 'react';
 import Button from '@components/button';
 import Layout from '@components/layout';
+import Loading from '@components/loading';
 import Modal from '@components/modal';
 import Post from '@components/post';
 import PostForm from '@components/post-form';
@@ -92,6 +93,7 @@ export default function PostPage({ user, data, error = '' }) {
             if (result.success) {
                 Router.push('/my-posts');
             }
+            setIsModal(false);
             setIsLoading(false);
         } catch (error) {
             setIsLoading(false);
@@ -130,17 +132,25 @@ export default function PostPage({ user, data, error = '' }) {
             {isModal && (
                 <Modal onClose={() => setIsModal(false)}>
                     <span className="block text-2xl text-center mb-12">Are you sure?</span>
-                    <div className="flex items-center justify-center">
-                        <Button
-                            onClick={() => setIsModal(false)}
-                            disabled={isLoading}
-                            className="mr-4 bg-white border-black text-black border-2 w-28"
-                        >
-                            No
-                        </Button>
-                        <Button onClick={onDelete} disabled={isLoading} className="w-28">
-                            Yes
-                        </Button>
+                    <div className="flex items-center justify-center h-14">
+                        {isLoading ? (
+                            <div className="">
+                                <Loading text="Deleting" dotsMargin={1} />
+                            </div>
+                        ) : (
+                            <>
+                                <Button
+                                    onClick={() => setIsModal(false)}
+                                    disabled={isLoading}
+                                    className="mr-4 bg-white border-black text-black border-2 w-28"
+                                >
+                                    No
+                                </Button>
+                                <Button onClick={onDelete} disabled={isLoading} className="w-28">
+                                    Yes
+                                </Button>
+                            </>
+                        )}
                     </div>
                 </Modal>
             )}
@@ -187,6 +197,7 @@ export default function PostPage({ user, data, error = '' }) {
                 <>
                     <Post
                         {...preview}
+                        created={formatDateString(data.created)}
                         author_firstname={user.first_name}
                         author_lastname={user.last_name}
                         imageFile={preview?.image}
@@ -207,7 +218,7 @@ export default function PostPage({ user, data, error = '' }) {
                             className="w-28"
                             onClick={publishUpdatedPost}
                         >
-                            {isLoading ? 'Updating...' : 'Update'}
+                            {isLoading ? <Loading text="Updating" /> : 'Update'}
                         </Button>
                     </div>
                 </>

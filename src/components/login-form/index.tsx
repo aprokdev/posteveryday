@@ -37,11 +37,11 @@ export default function LoginForm(): JSX.Element {
             const response = await loginUser(data);
             if (response?.success) {
                 Router.push('/my-posts');
-            } else if (response?.message === "User doesn't exist") {
-                setError('Email', { type: 'custom', message: "User doesn't exist" });
-            } else if (response?.message === 'Invalid password') {
-                setError('Password', { type: 'custom', message: 'Invalid password' });
+            } else if (response?.message === 'Provided credentials are invalid') {
+                setError('Email', { type: 'custom', message: response?.message });
+                setError('Password', { type: 'custom', message: response?.message });
             }
+
             console.log('onSubmit res: ', response);
         },
         [reset, setError]

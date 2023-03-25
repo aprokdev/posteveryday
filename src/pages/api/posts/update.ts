@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '@backend/index';
 import { ParseFieldsAndS3Upload } from '@utils/ParseFieldsAndS3Upload';
+import formatDateString from '@utils/formateDateString';
 import { deleteS3File } from './delete';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -49,7 +50,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             },
         });
 
-        res.status(200).json({ success: true, data: result });
+        res.status(200).json({
+            success: true,
+            data: { ...result, created: formatDateString(result.created.toISOString()) },
+        });
     } catch (error) {
         res.status(500).json({ sucess: false, message: error.message });
     }

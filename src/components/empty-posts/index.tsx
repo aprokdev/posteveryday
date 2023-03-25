@@ -6,8 +6,15 @@ function EmptyPosts({ user }) {
             <h1 className="block mb-5 text-center w-full xs:text-2xl md:text-4xl">
                 There are no posts yet
             </h1>
-            <p>
-                You can {!user && <Link href="/login">log in</Link>} {!user && 'and'} create one ;D
+            <p className="xs:text-xl">
+                You can {!user && <Link href="/login">log in</Link>} {!user && 'and'}{' '}
+                <Link
+                    href="/add-post"
+                    className="text-black underline underline-offset-2 transition-opacity hover:opacity-50"
+                >
+                    create
+                </Link>{' '}
+                one ;D
             </p>
         </div>
     );

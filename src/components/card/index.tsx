@@ -59,7 +59,7 @@ export default function Card(props: ICardProps): JSX.Element {
                             src={ImagePlug}
                             alt="Picture of the author"
                             className="w-10 h-10 object-cover object-center text-stone-500"
-                            sizes="(min-width: 640px) 640px"
+                            sizes="(min-width: 640px) 640px, 33vw"
                             fill
                             loading="eager"
                         />

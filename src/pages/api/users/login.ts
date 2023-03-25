@@ -31,6 +31,12 @@ export default nextConnect()
             res.setHeader('Set-Cookie', sessionCookie);
             res.status(200).send({ success: true });
         } catch (error) {
+            // if (error.message === "User doesn't exist" || error.message === 'Invalid password') {
+            if (error.message === 'Provided credentials are invalid') {
+                console.log();
+                res.status(422).json({ success: false, message: error.message });
+                return;
+            }
             res.status(500).json({ success: false, message: error.message });
         }
     });

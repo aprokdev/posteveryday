@@ -10,7 +10,7 @@ const baseClassName = `
     text-center
     rounded-md
     border-2
-    border-black
+    border-zinc-400
     uppercase 
     hover:opacity-80 
     active:opacity-100 
@@ -18,8 +18,8 @@ const baseClassName = `
     mt-1
     text-[0.8125rem] 
     font-semibold 
-    leading-5 
-    text-black
+    leading-5
+    text-zinc-500
 `;
 
 export default React.forwardRef<Ref, IFileInput>(function FileInput<Ref, IFileInput>(props, ref) {
@@ -35,7 +35,10 @@ export default React.forwardRef<Ref, IFileInput>(function FileInput<Ref, IFileIn
     };
     return (
         <div className="file-uploader">
-            <label htmlFor="#fileupload" className={baseClassName}>
+            <label
+                htmlFor="#fileupload"
+                className={`${baseClassName} ${file && file[0] ? '!border-black !text-black' : ''}`}
+            >
                 {file && file[0] ? `Attached: ${file[0].name}` : placeholder}
             </label>
             <input

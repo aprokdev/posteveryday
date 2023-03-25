@@ -3,10 +3,12 @@ import Router from 'next/router';
 import { getLoginSession } from '@backend/auth';
 import { prisma } from '@backend/index';
 import { createPost } from '@frontend/api';
+import formatDateString from '@utils/formateDateString';
 import React, { useState } from 'react';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import Button from '@components/button';
 import Layout from '@components/layout';
+import Loading from '@components/loading';
 import Post from '@components/post';
 import PostForm from '@components/post-form';
 import { IFormFields } from '@components/post-form/types';
@@ -67,13 +69,7 @@ export default function AddPost({ user }) {
                 <>
                     <Post
                         {...preview}
-                        created={new Date()
-                            .toLocaleDateString('en-EN', {
-                                year: 'numeric',
-                                month: '2-digit',
-                                day: '2-digit',
-                            })
-                            .replace(/\//g, '.')}
+                        created={formatDateString(new Date().toISOString())}
                         author_firstname={user.first_name}
                         author_lastname={user.last_name}
                         imageFile={preview?.image}
@@ -82,7 +78,7 @@ export default function AddPost({ user }) {
                         <Button
                             type="button"
                             disabled={isLoding}
-                            className="w-24 mr-4 bg-white border-black text-black border-2"
+                            className="w-32 mr-4 bg-white border-black text-black border-2"
                             onClick={() => setPreviewMode(false)}
                         >
                             Back
@@ -90,10 +86,10 @@ export default function AddPost({ user }) {
                         <Button
                             type="submit"
                             disabled={isLoding}
-                            className="w-24"
+                            className="w-32"
                             onClick={publishPost}
                         >
-                            {isLoding ? 'Publishing...' : 'Publish'}
+                            {isLoding ? <Loading text="Publishing" /> : 'Publish'}
                         </Button>
                     </div>
                 </>
@@ -101,7 +97,7 @@ export default function AddPost({ user }) {
                 <div className="bg-gray-200 pt-8">
                     <SmallerContainer className="min-h-mainMin">
                         <PostForm {...preview} onSubmit={goToPreview} imageValidation>
-                            <Button type="submit" className="w-24">
+                            <Button type="submit" className="w-32">
                                 Preview
                             </Button>
                         </PostForm>

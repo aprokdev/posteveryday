@@ -38,7 +38,10 @@ export default function Post(props: IPostPreviewProps) {
                     <h1 className="xs:text-4xl md:text-5xl xl:text-6xl text-center mb-10">
                         {title}
                     </h1>
-                    <div dangerouslySetInnerHTML={{ __html: html }} className={s.html} />
+                    <div
+                        dangerouslySetInnerHTML={{ __html: html }}
+                        className={`mce-content-body ${s.html}`}
+                    />
                 </div>
             </SmallerContainer>
         </div>
