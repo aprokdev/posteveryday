@@ -8,8 +8,13 @@ import Container from '@components/container';
 import FeedCardsContainer from '@components/feed-cards-container';
 import FeedError from '@components/feed-error';
 import FeedLoading from '@components/feed-loading';
+import { IPostsLoaderProps } from './types';
 
-export default function PostsLoader({ cardsLoader, initialPosts, amount }) {
+export default function PostsLoader({
+    cardsLoader,
+    initialPosts,
+    amount,
+}: IPostsLoaderProps): JSX.Element {
     const [state, setState] = React.useState({
         list: initialPosts,
         offset: amount,
@@ -21,7 +26,7 @@ export default function PostsLoader({ cardsLoader, initialPosts, amount }) {
     const [isLoading, setIsLoading] = React.useState(false);
 
     const loadPosts = React.useCallback(async () => {
-        if (isLoading || errorMessage || initialPosts < amount) return;
+        if (isLoading || errorMessage || initialPosts.length < amount) return;
         console.log(isLoading, errorMessage);
 
         setIsLoading(true);
@@ -35,7 +40,7 @@ export default function PostsLoader({ cardsLoader, initialPosts, amount }) {
                 result?.data?.list
             );
 
-            console.log(additionalOffset);
+            additionalOffset && console.log(additionalOffset);
 
             if (additionalOffset) {
                 toast.info(
@@ -79,7 +84,7 @@ export default function PostsLoader({ cardsLoader, initialPosts, amount }) {
                         hasMore={hasMore}
                         loader={
                             !errorMessage &&
-                            initialPosts >= amount && <FeedLoading key="feed-loading" />
+                            initialPosts.length >= amount && <FeedLoading key="feed-loading" />
                         }
                         initialLoad={false}
                         threshold={700}
