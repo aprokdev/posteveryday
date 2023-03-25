@@ -10,6 +10,7 @@ import EmptyPosts from '@components/empty-posts';
 import Layout from '@components/layout';
 import PageError from '@components/page-error';
 import PostsLoader from '@components/posts-loader';
+import { CardsLoaderParams } from '@components/posts-loader/types';
 import ToastClose from '@components/toast-close';
 import UpButton from '@components/up-button';
 
@@ -60,7 +61,7 @@ export async function getServerSideProps({ req, res }) {
 }
 
 export default function MyPosts({ user, posts = [], error = '' }): JSX.Element {
-    const cardsLoader = async ({ limit, offset }) => {
+    const cardsLoader = async ({ limit, offset }: CardsLoaderParams) => {
         return await getPosts({ limit, offset, author_id: user.id });
     };
 
