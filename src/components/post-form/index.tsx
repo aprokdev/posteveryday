@@ -52,7 +52,7 @@ function PostForm({ title, html, onSubmit, children, imageValidation }: IPostFor
             title: Title,
             html: Body,
         };
-        console.log('onSubmit submitData: ', submitData);
+        // console.log('onSubmit submitData: ', submitData);
         document.documentElement.scrollTo(0, 0);
         onSubmit(submitData);
     };

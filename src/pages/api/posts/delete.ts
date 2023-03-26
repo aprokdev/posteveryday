@@ -1,18 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { prisma, s3 } from '@backend/index';
-import { IAPIResponse } from '@frontend/api/types';
-
-export function deleteS3File(key): Promise<IAPIResponse> {
-    return new Promise((res, rej) => {
-        s3.deleteObject({ Bucket: 'posteveryday', Key: key }, function (err, data) {
-            if (err) {
-                rej(err);
-            } else {
-                res({ success: true });
-            }
-        });
-    });
-}
+import { prisma } from '@backend/index';
+import { deleteS3File } from '@utils/deleteS3File';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
@@ -30,7 +18,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         // delete image from S3 bucket before deleting post:
         const imageURL = new URL(req?.body?.image);
         const key = imageURL.pathname.slice(1); // key: '/images/filename.jpg' => 'images/filename.jpg'
-        await deleteS3File(key);
+        const { success } = await deleteS3File(key);
+        console.log('success', success);
 
         await prisma.post.delete({ where: { id: Number(req?.body?.id) } });
 

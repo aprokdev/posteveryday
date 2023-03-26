@@ -8,8 +8,6 @@ export default function Post(props: IPostPreviewProps) {
     const { image, title, html, created, author_firstname, author_lastname, imageFile, className } =
         props;
 
-    console.log(props);
-
     const img = React.useMemo(
         () => (imageFile ? URL.createObjectURL(imageFile) : image),
         [imageFile]
@@ -27,7 +25,7 @@ export default function Post(props: IPostPreviewProps) {
                     fill
                 />
             </div>
-            <SmallerContainer className="min-h-post">
+            <SmallerContainer>
                 <div className="flex justify-between pt-8 mb-6">
                     <span className="text-md">
                         {author_firstname} {author_lastname}

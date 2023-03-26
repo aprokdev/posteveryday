@@ -155,11 +155,11 @@ export default function PostPage({ user, data, error = '' }) {
                 </Modal>
             )}
             {mode.read && (
-                <>
-                    <Post {...updatedData} className={`${user ? 'pb-10' : 'pb-20'}`} />
+                <div className="min-h-post">
+                    <Post {...updatedData} className={`${isActionsVisible ? '' : 'pb-20'}`} />
 
                     {isActionsVisible && (
-                        <div className="flex items-center justify-end pb-10 min-w-375 max-w-5xl m-auto sm:px-6 lg:px-8 xs:px-4">
+                        <SmallerContainer className="flex items-center justify-end py-10">
                             <Button
                                 onClick={() => setIsModal(true)}
                                 className="mr-4 bg-white border-black text-black border-2 w-28"
@@ -169,9 +169,9 @@ export default function PostPage({ user, data, error = '' }) {
                             <Button onClick={() => dispatch(actions.EDIT_MODE)} className="w-28">
                                 Edit
                             </Button>
-                        </div>
+                        </SmallerContainer>
                     )}
-                </>
+                </div>
             )}
 
             {mode.edit && (

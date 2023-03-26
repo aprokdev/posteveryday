@@ -27,7 +27,7 @@ export function ParseFieldsAndS3Upload(req: NextApiRequest): Promise<IParseUploa
             const { filename, mimeType } = info;
             const upload = s3.upload({
                 Bucket: `${process.env.AWS_S3_BUCKET_NAME}/images`,
-                Key: filename,
+                Key: `${new Date().toISOString().replace(/\.|\:|-/g, '')}-${filename}`,
                 Body: file,
                 ContentType: mimeType,
             });

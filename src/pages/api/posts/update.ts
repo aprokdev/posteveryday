@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '@backend/index';
 import { ParseFieldsAndS3Upload } from '@utils/ParseFieldsAndS3Upload';
+import { deleteS3File } from '@utils/deleteS3File';
 import formatDateString from '@utils/formateDateString';
-import { deleteS3File } from './delete';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
@@ -20,7 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         if (id === 'undefined' && imageURL) {
             const url = new URL(imageURL);
             const key = url.pathname.slice(1); // key: '/images/filename.jpg' => 'images/filename.jpg'
-            await deleteS3File(key);
+            const { success } = await deleteS3File(key);
             res.status(405).json({ sucess: false, message: 'id field is required' });
             return;
         }
@@ -35,7 +35,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             const previousPost = await prisma.post.findFirst({ where: { id: Number(id) } });
             const url = new URL(previousPost.image);
             const key = url.pathname.slice(1); // key: '/images/filename.jpg' => 'images/filename.jpg'
-            await deleteS3File(key);
+            const { success } = await deleteS3File(key);
         }
 
         const result = await prisma.post.update({
