@@ -1,0 +1,50 @@
+// .nthChild {
+//     @media (min-width: 768px) {
+//         margin-right: 4%;
+//         &:nth-child(2n) {
+//             margin-right: 0;
+//         }
+//     }
+//     @media (min-width: 1280px) {
+//         margin-right: 2%;
+//         &:nth-child(2n) {
+//             margin-right: 2%;
+//         }
+//         &:nth-child(3n) {
+//             margin-right: 0;
+//         }
+//     }
+// }
+
+.linesClipHeader,
+.linesClipText {
+    /* autoprefixer: on */
+    display: block;
+    // height: 72px;
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.linesClipHeader {
+    // height: 72px;
+    -webkit-line-clamp: 1;
+}
+
+.linesClipText {
+    // height: 81px;
+    height: 62px;
+    -webkit-line-clamp: 2;
+
+}
+
+.boxOrient {
+    /* autoprefixer: off */
+    -webkit-box-orient: vertical;
+}
+
+.removeInnerMargin {
+    p, h1, h2, h3, h4, h5, h6 {
+        margin-top: 0;
+    }
+}

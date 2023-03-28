@@ -4,11 +4,27 @@ import React from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import { toast } from 'react-toastify';
 import Card from '@components/card';
+import CardSkeleton from '@components/card-skeleton';
 import Container from '@components/container';
-import FeedCardsContainer from '@components/feed-cards-container';
 import FeedError from '@components/feed-error';
-import FeedLoading from '@components/feed-loading';
+import UpButton from '@components/up-button';
 import { IPostsLoaderProps } from './types';
+
+function SkeletonLoader({ amount }: { amount: number }) {
+    return (
+        <React.Fragment>
+            {Array(amount)
+                .fill('')
+                .map((item, i) => i)
+                .map((item) => (
+                    <CardSkeleton key={item} />
+                ))}
+        </React.Fragment>
+    );
+}
+
+const className =
+    'grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8 xl:gap-4';
 
 export default function PostsLoader({
     cardsLoader,
@@ -23,11 +39,17 @@ export default function PostsLoader({
         errorMessage: '',
     });
 
+    const isMobile = React.useMemo(() => {
+        if (typeof window !== 'undefined') {
+            return window.innerWidth < 640;
+        }
+        return false;
+    }, []);
+
     const [isLoading, setIsLoading] = React.useState(false);
 
     const loadPosts = React.useCallback(async () => {
         if (isLoading || errorMessage || initialPosts.length < amount) return;
-        console.log(isLoading, errorMessage);
 
         setIsLoading(true);
         try {
@@ -73,31 +95,37 @@ export default function PostsLoader({
         }
     }, [isLoading, state]);
 
+    React.useEffect(() => document.documentElement.scrollTo(0, 0), []);
+
     const { list, hasMore, errorMessage } = state;
 
     return (
-        <>
-            {list.length > 0 && (
-                <Container className="min-h-mainMin">
-                    <InfiniteScroll
-                        loadMore={loadPosts}
-                        hasMore={hasMore}
-                        loader={
-                            !errorMessage &&
-                            initialPosts.length >= amount && <FeedLoading key="feed-loading" />
-                        }
-                        initialLoad={false}
-                        threshold={700}
-                    >
-                        <FeedCardsContainer>
-                            {list.map((data, i) => (
-                                <Card {...data} key={data.id} index={i} />
-                            ))}
-                        </FeedCardsContainer>
-                    </InfiniteScroll>
+        list.length > 0 && (
+            <Container className="min-h-mainMin">
+                <InfiniteScroll
+                    loadMore={loadPosts}
+                    hasMore={hasMore}
+                    loader={
+                        !errorMessage &&
+                        initialPosts.length >= amount && (
+                            <SkeletonLoader amount={amount} key="123" />
+                        )
+                    }
+                    initialLoad={false}
+                    threshold={isMobile ? 4500 : 1200}
+                    className={className}
+                >
+                    {/* <div id="wrap">
+                        <SkeletonLoader amount={amount} />
+                    </div> */}
+
+                    {list.map((data, i) => (
+                        <Card {...data} key={data.id} index={i} />
+                    ))}
                     {errorMessage && <FeedError message={errorMessage} />}
-                </Container>
-            )}
-        </>
+                </InfiniteScroll>
+                {isMobile && <UpButton />}
+            </Container>
+        )
     );
 }

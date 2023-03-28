@@ -68,9 +68,9 @@ export default function Card(props: ICardProps): JSX.Element {
                     <Image
                         src={image}
                         alt="Picture of the author"
-                        className="w-full h-40 object-cover object-center"
+                        className="absolute w-full h-full object-cover object-center"
                         sizes="(min-width: 640px) 640px, (min-width: 768px) 768px,
-                    (min-width: 1024px) 1024px, (max-width: 1200px) 1200px"
+                        (min-width: 1024px) 1024px, (max-width: 1200px) 1200px"
                         fill
                         loading={index > 8 ? 'lazy' : 'eager'}
                     />
