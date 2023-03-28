@@ -9,7 +9,7 @@ export default function MyApp({ Component, pageProps }) {
                 <title>POSTEVERYDAY</title>
                 <meta
                     name="viewport"
-                    content="width=device-width, initial-scale=1, user-scalable=0"
+                    content="width=device-width, initial-scale=1, user-scalable=1"
                 />
                 <meta name="description" content="Just pet-project for practice" />
                 <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16.png" />
