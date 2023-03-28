@@ -1,16 +1,13 @@
+import { DeleteObjectCommand } from '@aws-sdk/client-s3';
 import { s3 } from '@backend/index';
 import { IAPIResponse } from '@frontend/api/types';
 
-export function deleteS3File(key): Promise<IAPIResponse> {
-    return new Promise((res, rej) => {
-        s3.deleteObject({ Bucket: 'posteveryday', Key: key }, function (err, data) {
-            if (err) {
-                console.log('deleteS3File err');
-                rej(err);
-            } else {
-                console.log('deleteS3File success');
-                res({ success: true });
-            }
-        });
-    });
+export async function deleteS3File(key): Promise<IAPIResponse> {
+    const command = new DeleteObjectCommand({ Bucket: process.env.AWS_S3_BUCKET_NAME, Key: key });
+    try {
+        await s3.send(command);
+        return { success: true };
+    } catch (error) {
+        return error;
+    }
 }

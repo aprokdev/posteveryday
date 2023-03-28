@@ -1,4 +1,6 @@
 import { NextApiRequest } from 'next';
+import { PutObjectCommand } from '@aws-sdk/client-s3';
+import { Upload } from '@aws-sdk/lib-storage';
 import { s3 } from '@backend/index';
 import busboy from 'busboy';
 
@@ -21,24 +23,24 @@ export function ParseFieldsAndS3Upload(req: NextApiRequest): Promise<IParseUploa
 
         const fields = {};
 
-        bb.on('file', (name, file, info) => {
+        bb.on('file', async (name, file, info) => {
             isFile = true;
 
             const { filename, mimeType } = info;
-            const upload = s3.upload({
-                Bucket: `${process.env.AWS_S3_BUCKET_NAME}/images`,
-                Key: `${new Date().toISOString().replace(/\.|\:|-/g, '')}-${filename}`,
-                Body: file,
-                ContentType: mimeType,
-            });
 
-            upload.send((err, data) => {
-                if (err) {
-                    rej(err);
-                }
-                imageURL = data.Location;
-                res({ imageURL, ...fields });
-            });
+            try {
+                const params = {
+                    Bucket: process.env.AWS_S3_BUCKET_NAME,
+                    Key: `images/${new Date().toISOString().replace(/\.|\:|-/g, '')}-${filename}`,
+                    Body: file,
+                };
+
+                const upload = new Upload({ client: s3, params });
+                const { Location }: any = await upload.done();
+                res({ imageURL: Location, ...fields });
+            } catch (error) {
+                rej(error);
+            }
         });
 
         bb.on('field', (name, val, info) => {
