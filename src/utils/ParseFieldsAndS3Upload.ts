@@ -1,5 +1,4 @@
 import { NextApiRequest } from 'next';
-import { PutObjectCommand } from '@aws-sdk/client-s3';
 import { Upload } from '@aws-sdk/lib-storage';
 import { s3 } from '@backend/index';
 import busboy from 'busboy';

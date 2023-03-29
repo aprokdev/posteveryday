@@ -1,9 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import logo from '@public/images/logo.svg';
 import React from 'react';
-import image from '../../../public/icons/favicon-96.png';
-import { Logo } from '../../icons';
 import HeaderLink from './header-link';
 import HeaderProfile from './header-profile';
 
@@ -11,8 +10,6 @@ export default function Header({ user }) {
     const [isMobileMenuIsOpened, setMobileMenuIsOpened] = React.useState<boolean>(false);
 
     const headerRef = React.useRef<HTMLElement>();
-
-    const [isPensil, setIsPensil] = React.useState(false);
 
     const [isHeaderAttached, setAttached] = React.useState<boolean>(false);
 
@@ -75,23 +72,22 @@ export default function Header({ user }) {
                             user ? 'md:justify-start' : 'sm:justify-center'
                         }`}
                     >
-                        <div className="sm:block xl:grow">
+                        <div className="h-full sm:block xl:grow">
                             <div className="flex space-x-4 relative w-full h-full">
                                 <div className="xl:top-0 h-full xl:w-full flex xl:absolute top-1 justify-center">
                                     <Link
                                         href="/"
-                                        className="w-24 flex center relative text-zero"
-                                        onClick={() => setIsPensil(!isPensil)}
+                                        className="w-24 h-full flex center relative text-zero"
                                     >
-                                        {isPensil && (
-                                            <Image
-                                                src={image}
-                                                alt="logo-icon"
-                                                className="absolute -left-9 top-5 w-7 h-7 xs:hidden xl:block"
-                                            />
-                                        )}
                                         Header Logo
-                                        <Logo />
+                                        <Image
+                                            src={logo}
+                                            alt="posteveryday logo"
+                                            className="block w-full h-full"
+                                            sizes="(min-width: 0) 108px, 108px"
+                                            fill
+                                            loading="eager"
+                                        />
                                     </Link>
                                 </div>
 

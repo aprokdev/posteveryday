@@ -39,12 +39,10 @@ export default function PostsLoader({
         errorMessage: '',
     });
 
-    const isMobile = React.useMemo(() => {
-        if (typeof window !== 'undefined') {
-            return window.innerWidth < 640;
-        }
-        return false;
-    }, []);
+    const isMobile = React.useMemo(
+        () => typeof window !== 'undefined' && window.innerWidth < 640,
+        []
+    );
 
     const [isLoading, setIsLoading] = React.useState(false);
 
@@ -99,26 +97,19 @@ export default function PostsLoader({
 
     const { list, hasMore, errorMessage } = state;
 
+    const isLoader = !errorMessage && initialPosts.length >= amount;
+
     return (
         list.length > 0 && (
             <Container className="min-h-mainMin">
                 <InfiniteScroll
                     loadMore={loadPosts}
                     hasMore={hasMore}
-                    loader={
-                        !errorMessage &&
-                        initialPosts.length >= amount && (
-                            <SkeletonLoader amount={amount} key="123" />
-                        )
-                    }
+                    loader={isLoader && <SkeletonLoader amount={amount} key="#skeleton" />}
                     initialLoad={false}
                     threshold={isMobile ? 4500 : 1200}
                     className={className}
                 >
-                    {/* <div id="wrap">
-                        <SkeletonLoader amount={amount} />
-                    </div> */}
-
                     {list.map((data, i) => (
                         <Card {...data} key={data.id} index={i} />
                     ))}
