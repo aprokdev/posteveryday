@@ -1,32 +1,19 @@
 import { InfoIcon } from '@icons';
 import { makeCorrectPostsList } from '@utils/makeCorrectPostsList';
 import React from 'react';
-import InfiniteScroll from 'react-infinite-scroller';
 import { toast } from 'react-toastify';
+import Button from '@components/button';
 import Card from '@components/card';
-import CardSkeleton from '@components/card-skeleton';
 import Container from '@components/container';
 import FeedError from '@components/feed-error';
+import FeedSkeletonLoader from '@components/feed-skeleton-loader';
 import UpButton from '@components/up-button';
 import { IPostsLoaderProps } from './types';
-
-function SkeletonLoader({ amount }: { amount: number }) {
-    return (
-        <React.Fragment>
-            {Array(amount)
-                .fill('')
-                .map((item, i) => i)
-                .map((item) => (
-                    <CardSkeleton key={item} />
-                ))}
-        </React.Fragment>
-    );
-}
 
 const className =
     'grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8 xl:gap-4';
 
-export default function PostsLoader({
+export default function LoadPostsByRequest({
     cardsLoader,
     initialPosts,
     amount,
@@ -35,7 +22,7 @@ export default function PostsLoader({
         list: initialPosts,
         offset: amount,
         limit: amount,
-        hasMore: true,
+        hasMore: initialPosts.length === amount || initialPosts.length > amount,
         errorMessage: '',
     });
 
@@ -85,36 +72,40 @@ export default function PostsLoader({
             });
             setIsLoading(false);
         } catch (error) {
-            setIsLoading(false);
             setState({
                 ...state,
                 errorMessage: error.message,
             });
+            setIsLoading(false);
         }
     }, [isLoading, state]);
 
-    React.useEffect(() => document.documentElement.scrollTo(0, 0), []);
+    React.useEffect(() => {
+        document.documentElement.scrollTo(0, 0);
+        if (initialPosts.length === amount) {
+            loadPosts();
+        }
+    }, []);
 
     const { list, hasMore, errorMessage } = state;
-
-    const isLoader = !errorMessage && initialPosts.length >= amount;
 
     return (
         list.length > 0 && (
             <Container className="min-h-mainMin">
-                <InfiniteScroll
-                    loadMore={loadPosts}
-                    hasMore={hasMore}
-                    loader={isLoader && <SkeletonLoader amount={amount} key="#skeleton" />}
-                    initialLoad={false}
-                    threshold={isMobile ? 4500 : 1200}
-                    className={className}
-                >
+                <div className={className}>
                     {list.map((data, i) => (
                         <Card {...data} key={data.id} index={i} />
                     ))}
-                    {errorMessage && <FeedError message={errorMessage} />}
-                </InfiniteScroll>
+                    {isLoading && <FeedSkeletonLoader amount={amount} />}
+                </div>
+                {!errorMessage && hasMore && (
+                    <div className="flex justify-center w-full py-10">
+                        <Button className="w-40" onClick={loadPosts}>
+                            Load More
+                        </Button>
+                    </div>
+                )}
+                {errorMessage && <FeedError message={errorMessage} />}
                 {isMobile && <UpButton />}
             </Container>
         )

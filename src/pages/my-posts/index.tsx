@@ -7,13 +7,13 @@ import formatDateString from '@utils/formateDateString';
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import EmptyPosts from '@components/empty-posts';
+import { CardsLoaderParams } from '@components/infinite-posts-loader/types';
 import Layout from '@components/layout';
+import LoadPostsByRequest from '@components/load-posts-by-request';
 import PageError from '@components/page-error';
-import PostsLoader from '@components/posts-loader';
-import { CardsLoaderParams } from '@components/posts-loader/types';
 import ToastClose from '@components/toast-close';
 
-const cardsAmountToLoad = 8;
+const cardsAmountToLoad = 16;
 
 export async function getServerSideProps({ req, res }) {
     try {
@@ -73,7 +73,7 @@ export default function MyPosts({ user, posts = [], error = '' }): JSX.Element {
                 {error && <PageError message={error} />}
                 {!error && posts.length === 0 && <EmptyPosts user={user} />}
                 {!error && posts.length > 0 && (
-                    <PostsLoader
+                    <LoadPostsByRequest
                         cardsLoader={cardsLoader}
                         initialPosts={posts}
                         amount={cardsAmountToLoad}
