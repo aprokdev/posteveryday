@@ -98,7 +98,7 @@ export default function LoadPostsByRequest({
                     ))}
                     {isLoading && <FeedSkeletonLoader amount={amount} />}
                 </div>
-                {!errorMessage && hasMore && (
+                {!errorMessage && hasMore && !isLoading && (
                     <div className="flex justify-center w-full py-10">
                         <Button className="w-40" onClick={loadPosts}>
                             Load More
