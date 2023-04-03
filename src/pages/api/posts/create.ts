@@ -24,7 +24,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 author_lastname: session.last_name,
             },
         });
-        res.status(200).json({ success: true, data: result });
+        res.status(201).json({ success: true, data: result });
     } catch (error) {
         res.status(500).json({ sucess: false, message: error.message });
     }

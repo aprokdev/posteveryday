@@ -4,7 +4,7 @@ import { createSessionCookie, createToken } from '@backend/auth';
 import { localStrategy } from '@backend/passport-local';
 import passport from 'passport';
 
-function authenticate(method, req, res): Promise<Object> {
+function authenticate(method, req, res): Promise<string | Error> {
     return new Promise((resolve, reject) => {
         passport.authenticate(method, { session: false }, (error, token) => {
             if (error) {
