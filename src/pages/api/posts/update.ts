@@ -6,8 +6,8 @@ import formatDateString from '@utils/formateDateString';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
-        if (req.method !== 'POST') {
-            res.setHeader('Allow', 'POST');
+        if (req.method !== 'PUT') {
+            res.setHeader('Allow', 'PUT');
             res.status(405).json({ sucess: false, message: 'Method Not Allowed' });
             return;
         }

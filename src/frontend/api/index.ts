@@ -7,7 +7,6 @@ import {
     IAPIResponse,
     ICreatePostParams,
     IDeleteParams,
-    IGetPostsParams,
     IUpdatePostParams,
 } from './types';
 
@@ -26,6 +25,44 @@ export async function post(path: string, data, options?: { headers: Headers }) {
         return res.json();
     } catch (error) {
         console.error(`post() error: ${error.message}`);
+        return error;
+    }
+}
+
+export async function deleteMethod(path: string, data, options?: { headers: Headers }) {
+    const headers = options?.headers || {};
+    try {
+        const body = makeReqBody(data);
+        const res = await fetch(path, {
+            method: 'DELETE',
+            body,
+            headers: new Headers({
+                'Content-Type': 'application/json;charset=utf-8',
+                ...headers,
+            }),
+        });
+        return res.json();
+    } catch (error) {
+        console.error(`deleteMethod() error: ${error.message}`);
+        return error;
+    }
+}
+
+export async function put(path: string, data, options?: { headers: Headers }) {
+    const headers = options?.headers || {};
+    try {
+        const body = makeReqBody(data);
+        const res = await fetch(path, {
+            method: 'PUT',
+            body,
+            headers: new Headers({
+                'Content-Type': 'application/json;charset=utf-8',
+                ...headers,
+            }),
+        });
+        return res.json();
+    } catch (error) {
+        console.error(`put() error: ${error.message}`);
         return error;
     }
 }
@@ -89,7 +126,7 @@ export async function updatePost(data: IUpdatePostParams): Promise<IAPIPostRespo
         formData.append('id', data?.id);
 
         const res = await fetch(API_PATHS.updatePost, {
-            method: 'POST',
+            method: 'PUT',
             body: formData,
         });
         return await res.json();
@@ -100,5 +137,5 @@ export async function updatePost(data: IUpdatePostParams): Promise<IAPIPostRespo
 }
 
 export async function deletePost({ id, image }: IDeleteParams): Promise<IAPIPostResponse> {
-    return await post(API_PATHS.deletePost, { id, image });
+    return await deleteMethod(API_PATHS.deletePost, { id, image });
 }

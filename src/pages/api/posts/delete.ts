@@ -4,8 +4,8 @@ import { deleteS3File } from '@utils/deleteS3File';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
-        if (req.method !== 'POST') {
-            res.setHeader('Allow', 'POST');
+        if (req.method !== 'DELETE') {
+            res.setHeader('Allow', 'DELETE');
             res.status(405).json({ sucess: false, message: 'Method Not Allowed' });
             return;
         }
@@ -19,7 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const imageURL = new URL(req?.body?.image);
         const key = imageURL.pathname.slice(1); // key: '/images/filename.jpg' => 'images/filename.jpg'
         const { success } = await deleteS3File(key);
-        console.log('success', success);
+        console.log('S3 image has deleted', success);
 
         await prisma.post.delete({ where: { id: Number(req?.body?.id) } });
 
