@@ -19,6 +19,7 @@
     "@tailwindcss/typography": "^0.5.8",
     "@tinymce/tinymce-react": "^4.3.0",
     "@uiw/react-md-editor": "^3.19.7",
+    "@vercel/analytics": "^0.1.11",
     "aws-sdk": "^2.1338.0",
     "busboy": "^1.6.0",
     "cookie": "^0.5.0",
