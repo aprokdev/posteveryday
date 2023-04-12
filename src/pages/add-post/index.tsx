@@ -5,7 +5,6 @@ import { prisma } from '@backend/index';
 import { createPost } from '@frontend/api';
 import formatDateString from '@utils/formateDateString';
 import React, { useState } from 'react';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import Button from '@components/button';
 import Layout from '@components/layout';
 import Loading from '@components/loading';
