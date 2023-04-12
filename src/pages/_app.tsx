@@ -1,6 +1,6 @@
-import type { AppProps } from 'next/app';
+// import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import { Analytics } from '@vercel/analytics/react';
+// import { Analytics } from '@vercel/analytics/react';
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/globals.css';
 
@@ -19,7 +19,7 @@ export default function MyApp({ Component, pageProps }) {
                 <link rel="icon" type="image/png" sizes="96x96" href="icons/favicon-96.png" />
             </Head>
             <Component {...pageProps} />
-            <Analytics />
+            {/* <Analytics /> */}
         </>
     );
 }
