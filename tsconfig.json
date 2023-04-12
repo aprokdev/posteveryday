@@ -28,9 +28,6 @@
       "@utils/*": ["utils/*"],
       "@public/*": ["../public/*"],
     },
-    "types": [
-      "reflect-metadata"
-    ],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },
