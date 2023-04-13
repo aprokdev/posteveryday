@@ -29,6 +29,7 @@ module.exports = {
                 mainMin: 'calc(100vh - 72px)',
                 post: 'calc(100vh - 72px)',
                 500: '500px',
+                72: '18rem',
             },
         },
         screens: {

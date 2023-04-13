@@ -15,7 +15,7 @@ export default function Post(props: IPostPreviewProps) {
 
     return (
         <div className={`bg-grey-200${className ? ` ${className}` : ''}`}>
-            <div className="w-full overflow-hidden relative h-72 flex items-center justify-center bg-stone-200">
+            <div className="w-full overflow-hidden relative min-h-72 flex xs:py-4 md:py-8 items-center justify-center bg-stone-200">
                 <Image
                     src={img}
                     alt="Picture of the author"
@@ -24,6 +24,13 @@ export default function Post(props: IPostPreviewProps) {
                     (min-width: 1024px) 1024px, (max-width: 1200px) 1200px"
                     fill
                 />
+                <SmallerContainer className="relative flex content-center">
+                    <h1
+                        className={`xs:text-4xl md:text-5xl xl:text-6xl text-center text-white ${s.header}`}
+                    >
+                        {title}
+                    </h1>
+                </SmallerContainer>
             </div>
             <SmallerContainer>
                 <div className="flex justify-between pt-8 mb-6">
@@ -32,10 +39,8 @@ export default function Post(props: IPostPreviewProps) {
                     </span>
                     <span className="text-md">{created}</span>
                 </div>
+                {/* <h1 className="xs:text-4xl md:text-5xl xl:text-6xl mb-10 text-center">{title}</h1> */}
                 <div>
-                    <h1 className="xs:text-4xl md:text-5xl xl:text-6xl text-center mb-10">
-                        {title}
-                    </h1>
                     <div
                         dangerouslySetInnerHTML={{ __html: html }}
                         className={`mce-content-body ${s.html}`}
