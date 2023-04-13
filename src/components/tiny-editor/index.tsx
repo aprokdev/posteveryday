@@ -50,7 +50,7 @@ const TinyEditor = React.forwardRef<Editor, any>(({ initialValue, control }, ref
             ref={textFieldRef}
         >
             <Editor
-                apiKey={process.env.TINY_MCE_API_KEY}
+                apiKey={process.env.NEXT_PUBLIC_TINY_MCE_API_KEY}
                 onEditorChange={onChange}
                 init={{
                     height: 500,
