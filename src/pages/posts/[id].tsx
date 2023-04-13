@@ -1,3 +1,4 @@
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import Router from 'next/router';
 import { getLoginSession } from '@backend/auth';
@@ -8,10 +9,11 @@ import React, { useEffect, useReducer, useState } from 'react';
 import Button from '@components/button';
 import Layout from '@components/layout';
 import Loading from '@components/loading';
-import Modal from '@components/modal';
 import Post from '@components/post';
-import PostForm from '@components/post-form';
 import SmallerContainer from '@components/smaller-container';
+
+const Modal = dynamic(() => import('@components/modal'));
+const PostForm = dynamic(() => import('@components/post-form'));
 
 export async function getServerSideProps(context) {
     try {

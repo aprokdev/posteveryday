@@ -23,6 +23,16 @@ const listPlugins = [
     'wordcount',
 ];
 
+const toolbar = `
+    undo redo |
+    bold italic forecolor | 
+    alignleft aligncenter |
+    alignright alignjustify | 
+    bullist numlist outdent indent | 
+    removeformat | 
+    help
+`;
+
 const TinyEditor = React.forwardRef<Editor, any>(({ initialValue, control }, ref) => {
     const textFieldRef = useRef(null);
     const { field } = useController({
@@ -40,19 +50,19 @@ const TinyEditor = React.forwardRef<Editor, any>(({ initialValue, control }, ref
             ref={textFieldRef}
         >
             <Editor
-                apiKey="8srmupem2vxdakc5vomuuu2hrn97ep4c78zupz4k5if90gjg"
+                apiKey={process.env.TINY_MCE_API_KEY}
                 onEditorChange={onChange}
                 init={{
                     height: 500,
                     menubar: true,
                     plugins: listPlugins,
-                    toolbar:
-                        'undo redo | blocks | ' +
-                        'bold italic forecolor | alignleft aligncenter ' +
-                        'alignright alignjustify | bullist numlist outdent indent | ' +
-                        'removeformat | help',
-                    content_style:
-                        'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+                    toolbar,
+                    forced_root_block_attrs: {
+                        style: `body {
+                            font-family: font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+                            font-size: 14px;
+                        }`,
+                    },
                 }}
                 {...rest}
                 ref={ref}

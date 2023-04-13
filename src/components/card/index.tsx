@@ -72,7 +72,7 @@ export default function Card(props: ICardProps): JSX.Element {
                         sizes="(min-width: 640px) 640px, (min-width: 768px) 768px,
                         (min-width: 1024px) 1024px, (max-width: 1200px) 1200px"
                         fill
-                        loading={index > 8 ? 'lazy' : 'eager'}
+                        loading={index < 8 ? 'eager' : 'lazy'}
                     />
                 </div>
 

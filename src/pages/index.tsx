@@ -1,3 +1,4 @@
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { getLoginSession } from '@backend/auth';
 import { prisma } from '@backend/index';
@@ -6,12 +7,13 @@ import { getPosts } from '@frontend/api';
 import formatDateString from '@utils/formateDateString';
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
-import EmptyPosts from '@components/empty-posts';
 import { CardsLoaderParams } from '@components/infinite-posts-loader/types';
 import Layout from '@components/layout';
 import LoadPostsByRequest from '@components/load-posts-by-request';
-import PageError from '@components/page-error';
 import ToastClose from '@components/toast-close';
+
+const PageError = dynamic(() => import('@components/page-error'));
+const EmptyPosts = dynamic(() => import('@components/empty-posts'));
 
 const cardsAmountToLoad = 16;
 
