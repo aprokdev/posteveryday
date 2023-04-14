@@ -1,14 +1,9 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { IHeaderLinkProps } from './types';
 
-export interface IHeaderLinkProps {
-    href: string;
-    children: React.ReactNode;
-    className?: string;
-}
-
-export default function HeaderLink({ href, children, className }: IHeaderLinkProps) {
+export default function HeaderLink({ href, children, className }: IHeaderLinkProps): JSX.Element {
     const regularStyle =
         'relative xs:flex items-center transition hover:no-underline text-stone-900 hover:text-stone-500 px-3 py-2 rounded-md text-sm font-medium';
     const selectedStyle =

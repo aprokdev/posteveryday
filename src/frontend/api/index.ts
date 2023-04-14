@@ -7,6 +7,7 @@ import {
     IAPIResponse,
     ICreatePostParams,
     IDeleteParams,
+    IGetPostsParams,
     IUpdatePostParams,
 } from './types';
 
@@ -85,7 +86,7 @@ export async function get(path: string, params: any, options?: { headers: Header
     }
 }
 
-export async function getPosts(params): Promise<IAPIResponse> {
+export async function getPosts(params: IGetPostsParams): Promise<IAPIResponse> {
     return await get(API_PATHS.posts, params);
 }
 

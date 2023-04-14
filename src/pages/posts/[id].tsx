@@ -196,7 +196,7 @@ export default function PostPage({ user, data, error = '' }) {
             )}
 
             {mode.preview && (
-                <>
+                <div className="min-h-post">
                     <Post
                         {...preview}
                         created={formatDateString(data.created)}
@@ -223,7 +223,7 @@ export default function PostPage({ user, data, error = '' }) {
                             {isLoading ? <Loading text="Updating" /> : 'Update'}
                         </Button>
                     </div>
-                </>
+                </div>
             )}
         </Layout>
     ) : (

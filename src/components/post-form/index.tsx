@@ -15,18 +15,11 @@ export interface IFormInputs {
     Body: string;
 }
 
-const schema = yup
-    .object({
-        Title: yup.string().required().min(20),
-        Image: yup.mixed().required(),
-        Body: yup.string().required().min(20),
-    })
-    .required();
-
 // const defTitle = 'What is lorem ipsum dolor';
 // const defHTML = defaultHTML();
 
-function PostForm({ title, html, onSubmit, children, imageValidation }: IPostFormProps) {
+function PostForm(props: IPostFormProps): JSX.Element {
+    const { title, html, onSubmit, children, imageValidation } = props;
     const editorRef = useRef<any>();
 
     const methods = useForm<IFormInputs>({

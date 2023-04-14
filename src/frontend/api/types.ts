@@ -19,6 +19,12 @@ export interface IFullPostData extends IPostData {
     author_id?: number;
 }
 
+export interface IGetPostsParams {
+    limit: number;
+    offset: number;
+    author_id?: number;
+}
+
 export interface ICreatePostParams {
     image: string;
     title: string;

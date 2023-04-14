@@ -5,8 +5,9 @@ import logo from '@public/images/logo.svg';
 import React from 'react';
 import HeaderLink from './header-link';
 import HeaderProfile from './header-profile';
+import { IHeaderProps } from './types';
 
-export default function Header({ user }) {
+export default function Header({ user }: IHeaderProps): JSX.Element {
     const [isMobileMenuIsOpened, setMobileMenuIsOpened] = React.useState<boolean>(false);
 
     const headerRef = React.useRef<HTMLElement>();

@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import ArrowUp from '@public/images/arrow-up.svg';
 import React from 'react';
-import Button from '@components/button';
 
 export default function UpButton(): JSX.Element {
     const onClick = () => {

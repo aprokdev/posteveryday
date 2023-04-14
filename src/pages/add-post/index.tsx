@@ -65,7 +65,7 @@ export default function AddPost({ user }) {
                 <title>POSTEVERYDAY - ADD POST</title>
             </Head>
             {previewMode ? (
-                <>
+                <div className="min-h-post">
                     <Post
                         {...preview}
                         created={formatDateString(new Date().toISOString())}
@@ -91,7 +91,7 @@ export default function AddPost({ user }) {
                             {isLoding ? <Loading text="Publishing" /> : 'Publish'}
                         </Button>
                     </div>
-                </>
+                </div>
             ) : (
                 <div className="bg-gray-200 pt-8">
                     <SmallerContainer className="min-h-mainMin">

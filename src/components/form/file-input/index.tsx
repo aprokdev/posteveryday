@@ -1,8 +1,6 @@
 import React from 'react';
 import { IFileInput } from './types';
 
-export type Ref = HTMLDivElement;
-
 const baseClassName = `
     block
     duration-200
@@ -22,11 +20,13 @@ const baseClassName = `
     text-zinc-500
 `;
 
-export default React.forwardRef<Ref, IFileInput>(function FileInput<Ref, IFileInput>(props, ref) {
+export default React.forwardRef<HTMLDivElement, IFileInput>(function FileInput<Ref, IFileInput>(
+    props,
+    ref
+): JSX.Element {
     const { file, placeholder } = props;
-    const onChangeHandler = (e) => {
-        console.log(e.target.files.length);
-        if (e.target.files.length) {
+    const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        if (e.target.files?.length) {
             props.onChange && props.onChange(e);
         } else {
             e.target.files = null;
@@ -36,7 +36,7 @@ export default React.forwardRef<Ref, IFileInput>(function FileInput<Ref, IFileIn
     return (
         <div className="file-uploader">
             <label
-                htmlFor="#fileupload"
+                htmlFor={`#fileupload${placeholder}`}
                 className={`${baseClassName} ${file && file[0] ? '!border-black !text-black' : ''}`}
             >
                 {file && file[0] ? `Attached: ${file[0].name}` : placeholder}
@@ -46,7 +46,7 @@ export default React.forwardRef<Ref, IFileInput>(function FileInput<Ref, IFileIn
                 {...props}
                 onChange={onChangeHandler}
                 ref={ref}
-                id="#fileupload"
+                id={`#fileupload${placeholder}`}
                 className="hidden"
             />
         </div>

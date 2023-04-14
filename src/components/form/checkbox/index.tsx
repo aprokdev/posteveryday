@@ -9,11 +9,9 @@ const Checkbox = React.forwardRef(function cb<Ref, IInputProps>(
     { id, error, ...rest },
     ref
 ): JSX.Element {
-    const onKeyDown = React.useCallback((event: React.KeyboardEvent<HTMLLabelElement>) => {
+    const onKeyDown = React.useCallback((event: React.KeyboardEvent<HTMLLabelElement>): void => {
         if (event.key === 'Enter') {
             event.preventDefault();
-            console.log(ref);
-
             ref.change();
         }
     }, []);

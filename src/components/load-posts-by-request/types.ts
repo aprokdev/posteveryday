@@ -1,9 +1,7 @@
-import { IAPIResponse, IPostData } from '@frontend/api/types';
-
-export type CardsLoaderParams = { limit: number; offset: number };
+import { IAPIResponse, IGetPostsParams, IPostData } from '@frontend/api/types';
 
 export interface IPostsLoaderProps {
-    cardsLoader: (params: CardsLoaderParams) => Promise<IAPIResponse>;
+    cardsLoader: (params: IGetPostsParams) => Promise<IAPIResponse>;
     initialPosts: IPostData[];
     amount: number;
 }

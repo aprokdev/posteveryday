@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const IconCheck = ({ color }: { color: string }) => (
+export const IconCheck = ({ color }: { color: string }): JSX.Element => (
     <span className="icon">
         <svg
             width="24"

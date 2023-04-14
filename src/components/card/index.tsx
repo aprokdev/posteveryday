@@ -1,22 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { PhotoIcon } from '@heroicons/react/24/outline';
 import ImagePlug from '@public/images/image-plug.svg';
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
 import s from './style.module.scss';
-
-interface ICardProps {
-    image?: string;
-    title?: string;
-    html_preview?: string;
-    created?: string;
-    animate?: boolean;
-    id?: string;
-    author_firstname: string;
-    author_lastname: string;
-    index: number;
-}
+import { ICardProps } from './types';
 
 export default function Card(props: ICardProps): JSX.Element {
     const {
@@ -30,6 +18,7 @@ export default function Card(props: ICardProps): JSX.Element {
         author_lastname,
         index,
     } = props;
+
     const { ref, inView } = useInView({
         threshold: 0.005,
     });

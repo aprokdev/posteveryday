@@ -1,8 +1,6 @@
 import React from 'react';
 import { IInputProps } from './types';
 
-export type Ref = HTMLDivElement;
-
 const baseClassName = `
     py-2
     px-3
@@ -18,10 +16,10 @@ const baseClassName = `
     outline-none
 `;
 
-export default React.forwardRef<Ref, IInputProps>(function Input<Ref, IInputProps>(
-    { type = 'text', value, onChange, placeholder, disabled, className, ...rest },
+export default React.forwardRef<HTMLDivElement, IInputProps>(function Input<Ref, IInputProps>(
+    { type = 'text', value, onChange, className, ...rest },
     ref
-) {
+): JSX.Element {
     return (
         <input
             type={type}
@@ -29,8 +27,6 @@ export default React.forwardRef<Ref, IInputProps>(function Input<Ref, IInputProp
             value={value}
             onChange={onChange}
             ref={ref}
-            placeholder={placeholder}
-            disabled={disabled}
             {...rest}
         />
     );

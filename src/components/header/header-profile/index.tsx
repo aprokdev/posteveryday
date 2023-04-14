@@ -2,8 +2,9 @@ import Link from 'next/link';
 import { useDropdown } from '@frontend/hooks/useDropdown';
 import { UserCircleIcon } from '@heroicons/react/24/outline';
 import React from 'react';
+import { IHeaderProfileProps } from './types';
 
-export default function HeaderProfile({ user }): JSX.Element {
+export default function HeaderProfile({ user }: IHeaderProfileProps): JSX.Element {
     const { openBtnRef, popupRef, isVisible, setVisiability } = useDropdown();
     return (
         <div className="relative z-20 skrink-0">

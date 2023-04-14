@@ -13,11 +13,8 @@ import { IPostsLoaderProps } from './types';
 const className =
     'grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8 xl:gap-4';
 
-export default function LoadPostsByRequest({
-    cardsLoader,
-    initialPosts,
-    amount,
-}: IPostsLoaderProps): JSX.Element {
+export default function LoadPostsByRequest(props: IPostsLoaderProps): JSX.Element {
+    const { cardsLoader, initialPosts, amount } = props;
     const [state, setState] = React.useState({
         list: initialPosts,
         offset: amount,
@@ -26,10 +23,7 @@ export default function LoadPostsByRequest({
         errorMessage: '',
     });
 
-    const isMobile = React.useMemo(
-        () => typeof window !== 'undefined' && window.innerWidth < 640,
-        []
-    );
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
 
     const [isLoading, setIsLoading] = React.useState(false);
 

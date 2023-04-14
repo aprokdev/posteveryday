@@ -1,23 +1,25 @@
+import { GetServerSidePropsContext } from 'next';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { getLoginSession } from '@backend/auth';
 import { prisma } from '@backend/index';
 import { feedModel } from '@backend/utils/data';
 import { getPosts } from '@frontend/api';
+import { IAPIResponse, IGetPostsParams } from '@frontend/api/types';
 import formatDateString from '@utils/formateDateString';
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
-import { CardsLoaderParams } from '@components/infinite-posts-loader/types';
 import Layout from '@components/layout';
 import LoadPostsByRequest from '@components/load-posts-by-request';
 import ToastClose from '@components/toast-close';
+import { IPageProps } from './types';
 
 const PageError = dynamic(() => import('@components/page-error'));
 const EmptyPosts = dynamic(() => import('@components/empty-posts'));
 
 const cardsAmountToLoad = 16;
 
-export async function getServerSideProps({ req }) {
+export async function getServerSideProps({ req }: GetServerSidePropsContext) {
     try {
         const session = await getLoginSession(req);
         let user = null;
@@ -52,8 +54,8 @@ export async function getServerSideProps({ req }) {
     }
 }
 
-export default function Feed({ user, posts = [], error = '' }): JSX.Element {
-    const cardsLoader = async ({ limit, offset }: CardsLoaderParams) => {
+export default function Feed({ user, posts = [], error = '' }: IPageProps): JSX.Element {
+    const cardsLoader = async ({ limit, offset }: IGetPostsParams): Promise<IAPIResponse> => {
         return await getPosts({ limit, offset });
     };
 

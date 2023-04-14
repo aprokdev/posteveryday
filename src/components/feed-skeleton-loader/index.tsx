@@ -2,17 +2,16 @@ import React from 'react';
 import CardSkeleton from '@components/card-skeleton';
 import { IFeedSkeletonLoaderProps } from './types';
 
-function FeedSkeletonLoader({ amount }: IFeedSkeletonLoaderProps) {
+export default function FeedSkeletonLoader({ amount }: IFeedSkeletonLoaderProps): JSX.Element {
+    let arr = [];
+    for (let i = 0; i < amount; i++) {
+        arr.push(i);
+    }
     return (
         <React.Fragment>
-            {Array(amount)
-                .fill('')
-                .map((item, i) => i)
-                .map((item) => (
-                    <CardSkeleton key={item} />
-                ))}
+            {arr.map((item) => (
+                <CardSkeleton key={item} />
+            ))}
         </React.Fragment>
     );
 }
-
-export default FeedSkeletonLoader;
