@@ -1,15 +1,12 @@
 import React from 'react';
 import { ILoadingProps } from './types';
 
-export default function Loading({
-    text,
-    className,
-    speed = 200,
-    dotsMargin,
-}: ILoadingProps): JSX.Element {
-    const [state, setState] = React.useState(0);
+export default function Loading(props: ILoadingProps): JSX.Element {
+    const { text, className, speed = 200, dotsMargin } = props;
 
-    const ref = React.useRef<any>(null);
+    const [state, setState] = React.useState<number>(0);
+
+    const ref = React.useRef<NodeJS.Timer>(null);
 
     React.useEffect(() => {
         ref.current = setInterval(() => {

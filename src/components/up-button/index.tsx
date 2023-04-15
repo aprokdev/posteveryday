@@ -7,7 +7,7 @@ export default function UpButton(): JSX.Element {
         document.documentElement.scrollTo(0, 0);
     };
 
-    const [isVisible, setVisible] = React.useState(false);
+    const [isVisible, setVisible] = React.useState<boolean>(false);
 
     React.useEffect(() => {
         function handleScroll({ target }) {

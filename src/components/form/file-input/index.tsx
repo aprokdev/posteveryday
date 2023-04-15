@@ -20,10 +20,10 @@ const baseClassName = `
     text-zinc-500
 `;
 
-export default React.forwardRef<HTMLDivElement, IFileInput>(function FileInput<Ref, IFileInput>(
-    props,
-    ref
-): JSX.Element {
+export default React.forwardRef<HTMLDivElement, IFileInput>(function FileInput<
+    HTMLDivElement,
+    IFileInput
+>(props, ref): JSX.Element {
     const { file, placeholder } = props;
     const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
         if (e.target.files?.length) {

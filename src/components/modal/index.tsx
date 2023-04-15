@@ -3,12 +3,9 @@ import { useEffect } from 'react';
 import Portal from '@components/portal';
 import { IModalProps } from './types';
 
-function Modal({
-    onClose,
-    overlayClassName = '',
-    bodyClassName = '',
-    children,
-}: IModalProps): JSX.Element {
+export default function Modal(props: IModalProps): JSX.Element {
+    const { onClose, overlayClassName = '', bodyClassName = '', children } = props;
+
     useEffect(() => {
         const documentWidth = document.documentElement.clientWidth;
         const windowWidth = window.innerWidth;
@@ -48,5 +45,3 @@ function Modal({
         </Portal>
     );
 }
-
-export default Modal;

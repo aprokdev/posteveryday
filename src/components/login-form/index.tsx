@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Router from 'next/router';
 import { loginUser } from '@frontend/api';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import Button from '@components/button';
@@ -33,7 +33,7 @@ export default function LoginForm(): JSX.Element {
     const { errors, isSubmitting, defaultValues } = formState;
 
     const onSubmit = useCallback(
-        async (data: ILoginFormInputs) => {
+        async (data: ILoginFormInputs): Promise<void> => {
             const response = await loginUser(data);
             if (response?.success) {
                 Router.push('/my-posts');

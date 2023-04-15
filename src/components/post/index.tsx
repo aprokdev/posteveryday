@@ -4,14 +4,11 @@ import SmallerContainer from '@components/smaller-container';
 import s from './style.module.scss';
 import { IPostPreviewProps } from './types';
 
-export default function Post(props: IPostPreviewProps) {
+export default function Post(props: IPostPreviewProps): JSX.Element {
     const { image, title, html, created, author_firstname, author_lastname, imageFile, className } =
         props;
 
-    const img = React.useMemo(
-        () => (imageFile ? URL.createObjectURL(imageFile) : image),
-        [imageFile]
-    );
+    const img = imageFile ? URL.createObjectURL(imageFile) : image;
 
     return (
         <div className={`bg-grey-200${className ? ` ${className}` : ''}`}>

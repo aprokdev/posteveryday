@@ -7,3 +7,11 @@ export interface IPostsLoaderProps {
     initialPosts: IPostData[];
     amount: number;
 }
+
+export interface IState {
+    list: IPostData[];
+    offset: number;
+    limit: number;
+    hasMore: boolean;
+    errorMessage: string;
+}

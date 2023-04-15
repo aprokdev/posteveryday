@@ -12,3 +12,9 @@ export interface IPostFormProps {
     children?: React.ReactNode;
     imageValidation?: boolean;
 }
+
+export interface IFormInputs {
+    Title: string;
+    Image: object;
+    Body: string;
+}

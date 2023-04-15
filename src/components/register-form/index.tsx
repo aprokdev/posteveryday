@@ -2,25 +2,16 @@ import Link from 'next/link';
 import Router from 'next/router';
 import { registerUser } from '@frontend/api';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Logo } from '@icons';
 import { useCallback } from 'react';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
+import Button from '@components/button';
 import Checkbox from '@components/form/checkbox';
-import { Logo } from '../../icons';
-import Button from '../button';
-import FormError from '../form/error';
-import Input from '../form/input';
-
-export interface IRegisterFormInputs {
-    Email: string;
-    'First name': string;
-    'Last name': string;
-    Password: string;
-    Terms: boolean;
-}
-
-type Key = 'Email' | 'First name' | 'Last name' | 'Password' | 'Terms';
+import FormError from '@components/form/error';
+import Input from '@components/form/input';
+import { IRegisterFormInputs, Key } from './types';
 
 const schema = yup
     .object({
@@ -37,9 +28,11 @@ export default function RegisterForm(): JSX.Element {
         resolver: yupResolver(schema),
         defaultValues: { Email: '', 'First name': '', 'Last name': '', Password: '', Terms: false },
     });
+
     const { errors, isSubmitting, defaultValues } = formState;
+
     const onSubmit = useCallback(
-        async (data: IRegisterFormInputs) => {
+        async (data: IRegisterFormInputs): Promise<void> => {
             const response = await registerUser(data);
             console.log('onSubmit register', response);
             if (response?.success) {
@@ -103,24 +96,6 @@ export default function RegisterForm(): JSX.Element {
                     );
                 }
             })}
-
-            {/* <label className="flex justify-center cursor-pointer mb-2">
-                <Checkbox
-                    className=""
-                    checked={state}
-                    onChange={(e) => setState(e.target.checked)}
-                    id="1"
-                />
-                <span className="ml-4">
-                    I am agree with provided
-                    <Link
-                        href="/login"
-                        className="ml-2 text-black underline underline-offset-2 transition-opacity hover:opacity-50"
-                    >
-                        Terms of use
-                    </Link>
-                </span>
-            </label> */}
 
             <Button
                 type="submit"

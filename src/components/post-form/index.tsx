@@ -7,18 +7,12 @@ import FormError from '@components/form/error';
 import ImageInput from '@components/form/file-input';
 import Input from '@components/form/input';
 import TinyEditor from '@components/tiny-editor';
-import { IPostFormProps } from './types';
-
-export interface IFormInputs {
-    Title: string;
-    Image: object;
-    Body: string;
-}
+import { IFormInputs, IPostFormProps } from './types';
 
 // const defTitle = 'What is lorem ipsum dolor';
 // const defHTML = defaultHTML();
 
-function PostForm(props: IPostFormProps): JSX.Element {
+export default function PostForm(props: IPostFormProps): JSX.Element {
     const { title, html, onSubmit, children, imageValidation } = props;
     const editorRef = useRef<any>();
 
@@ -34,8 +28,8 @@ function PostForm(props: IPostFormProps): JSX.Element {
         ),
         defaultValues: { Title: title, Image: null, Body: html },
     });
-    const { register, handleSubmit, formState, watch, setError } = methods;
 
+    const { register, handleSubmit, formState, watch, setError } = methods;
     const { errors, isSubmitting } = formState;
 
     const onSubmitHandler = (data: IFormInputs) => {
@@ -98,5 +92,3 @@ function PostForm(props: IPostFormProps): JSX.Element {
         </FormProvider>
     );
 }
-
-export default PostForm;

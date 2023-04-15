@@ -34,7 +34,8 @@ const toolbar = `
 `;
 
 const TinyEditor = React.forwardRef<Editor, any>(({ initialValue, control }, ref) => {
-    const textFieldRef = useRef(null);
+    const textFieldRef = useRef<any>(null);
+
     const { field } = useController({
         name: 'Body',
         control,

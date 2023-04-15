@@ -1,7 +1,8 @@
 import Footer from '@components/footer';
 import Header from '@components/header';
+import { ILayoutProps } from './types';
 
-function Layout({ user, children }) {
+export default function Layout({ user, children }: ILayoutProps): JSX.Element {
     return (
         <>
             <Header user={user} />
@@ -10,5 +11,3 @@ function Layout({ user, children }) {
         </>
     );
 }
-
-export default Layout;

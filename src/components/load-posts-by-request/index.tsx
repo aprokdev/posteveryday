@@ -8,14 +8,15 @@ import Container from '@components/container';
 import FeedError from '@components/feed-error';
 import FeedSkeletonLoader from '@components/feed-skeleton-loader';
 import UpButton from '@components/up-button';
-import { IPostsLoaderProps } from './types';
+import { IPostsLoaderProps, IState } from './types';
 
 const className =
     'grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8 xl:gap-4';
 
 export default function LoadPostsByRequest(props: IPostsLoaderProps): JSX.Element {
     const { cardsLoader, initialPosts, amount } = props;
-    const [state, setState] = React.useState({
+
+    const [state, setState] = React.useState<IState>({
         list: initialPosts,
         offset: amount,
         limit: amount,
@@ -27,7 +28,7 @@ export default function LoadPostsByRequest(props: IPostsLoaderProps): JSX.Elemen
 
     const [isLoading, setIsLoading] = React.useState(false);
 
-    const loadPosts = React.useCallback(async () => {
+    const loadPosts = React.useCallback(async (): Promise<void> => {
         if (isLoading || errorMessage || initialPosts.length < amount) return;
 
         setIsLoading(true);
