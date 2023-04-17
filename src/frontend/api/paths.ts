@@ -4,5 +4,5 @@ export const API_PATHS = {
     createPost: '/api/posts/create',
     updatePost: '/api/posts/update',
     deletePost: '/api/posts/delete',
-    posts: '/api/posts/',
+    posts: '/api/posts',
 };

@@ -8,6 +8,6 @@ export async function deleteS3File(key): Promise<IAPIResponse> {
         await s3.send(command);
         return { success: true };
     } catch (error) {
-        return error;
+        throw error;
     }
 }
