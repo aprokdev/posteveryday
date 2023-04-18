@@ -15,8 +15,8 @@ export default async function user(req, res) {
             const { hash, salt, ...rest } = user;
             user = rest;
         }
-        res.status(200).json({ user });
+        res.status(200).json({ success: true, data: { user } });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ success: false, message: error.message });
     }
 }

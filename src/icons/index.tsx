@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function Logo({ color = '#111' }) {
+export function Logo({ color = '#111' }): JSX.Element {
     return (
         <svg
             viewBox="0 0 330.49641693811066 95.21436007369684"
@@ -20,7 +20,7 @@ export function Logo({ color = '#111' }) {
     );
 }
 
-export function InfoIcon({ color = '#3b82f6' }) {
+export function InfoIcon({ color = '#3b82f6' }): JSX.Element {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"

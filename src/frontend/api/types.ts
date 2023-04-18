@@ -1,3 +1,5 @@
+import { IUser } from '@utils/user-entity';
+
 export interface IAPIResponse {
     success: boolean;
     message?: string;
@@ -44,6 +46,20 @@ export interface IAPIPostResponse {
     message?: string;
 }
 
+export interface IAPIUpdateResponse {
+    success: boolean;
+    data?: IPostData;
+    message?: string;
+}
+
+export interface IAPIUserResponse {
+    success: boolean;
+    data?: {
+        user: IUser;
+    };
+    message?: string;
+}
+
 export interface IDeleteParams {
     id: string;
     image: string;
@@ -56,4 +72,8 @@ export interface IGetPostsParams {
     order?: string;
     order_field?: string;
     select?: IFullPostData;
+}
+
+export interface IOptions {
+    headers: Headers;
 }

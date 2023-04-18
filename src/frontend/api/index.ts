@@ -5,13 +5,16 @@ import { API_PATHS } from './paths';
 import {
     IAPIPostResponse,
     IAPIResponse,
+    IAPIUpdateResponse,
+    IAPIUserResponse,
     ICreatePostParams,
     IDeleteParams,
     IGetPostsParams,
+    IOptions,
     IUpdatePostParams,
 } from './types';
 
-export async function post(path: string, data, options?: { headers: Headers }) {
+export async function post(path: string, data: any, options?: IOptions): Promise<IAPIResponse> {
     const headers = options?.headers || {};
     try {
         const body = makeReqBody(data);
@@ -30,7 +33,11 @@ export async function post(path: string, data, options?: { headers: Headers }) {
     }
 }
 
-export async function deleteMethod(path: string, data, options?: { headers: Headers }) {
+export async function deleteMethod(
+    path: string,
+    data: any,
+    options?: IOptions
+): Promise<IAPIResponse> {
     const headers = options?.headers || {};
     try {
         const body = makeReqBody(data);
@@ -49,7 +56,7 @@ export async function deleteMethod(path: string, data, options?: { headers: Head
     }
 }
 
-export async function put(path: string, data, options?: { headers: Headers }) {
+export async function put(path: string, data, options?: IOptions): Promise<IAPIResponse> {
     const headers = options?.headers || {};
     try {
         const body = makeReqBody(data);
@@ -68,11 +75,11 @@ export async function put(path: string, data, options?: { headers: Headers }) {
     }
 }
 
-export async function get(path: string, params: any, options?: { headers: Headers }) {
+export async function get(path: string, params?: any, options?: IOptions): Promise<IAPIResponse> {
     const headers = options?.headers || {};
     const paramsStr = new URLSearchParams(params).toString();
     try {
-        const res = await fetch(`${path}?${paramsStr}`, {
+        const res = await fetch(`${path}${paramsStr ? `?${paramsStr}` : ''}`, {
             method: 'GET',
             headers: new Headers({
                 'Content-Type': 'application/json;charset=utf-8',
@@ -116,7 +123,7 @@ export async function createPost(data: ICreatePostParams): Promise<IAPIPostRespo
     }
 }
 
-export async function updatePost(data: IUpdatePostParams): Promise<IAPIPostResponse> {
+export async function updatePost(data: IUpdatePostParams): Promise<IAPIUpdateResponse> {
     try {
         const formData = new FormData();
         if (data?.image) {
@@ -139,4 +146,8 @@ export async function updatePost(data: IUpdatePostParams): Promise<IAPIPostRespo
 
 export async function deletePost({ id, image }: IDeleteParams): Promise<IAPIPostResponse> {
     return await deleteMethod(API_PATHS.deletePost, { id, image });
+}
+
+export async function getUser(path): Promise<IAPIResponse> {
+    return await get(path);
 }

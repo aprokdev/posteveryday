@@ -1,15 +1,11 @@
 import Router from 'next/router';
+import { getUser } from '@frontend/api';
+import { API_PATHS } from '@frontend/api/paths';
 import { IUser } from '@utils/user-entity';
 import { useEffect } from 'react';
 import useSWR from 'swr';
 
 type User = IUser | null;
-
-async function fetcher(url: string): Promise<{ user: User }> {
-    const res = await fetch(url);
-    const data: any = await res.json();
-    return { user: data?.user || null };
-}
 
 type useUserArgs = {
     redirectTo?: string;
@@ -17,8 +13,8 @@ type useUserArgs = {
 };
 
 export function useUser({ redirectTo, redirectIfFound }: useUserArgs = {}): User {
-    const { data, error } = useSWR('/api/users/user', fetcher);
-    const user = data?.user;
+    const { data } = useSWR(API_PATHS.user, getUser);
+    const user = data?.data?.user || null;
     const finished = Boolean(data);
     const hasUser = Boolean(user);
 
@@ -34,5 +30,5 @@ export function useUser({ redirectTo, redirectIfFound }: useUserArgs = {}): User
         }
     }, [redirectTo, redirectIfFound, finished, hasUser]);
 
-    return error ? null : user;
+    return user;
 }
