@@ -5,7 +5,6 @@ export interface IFormFields {
 }
 
 export interface IPostFormProps {
-    image: File;
     title: string;
     html: string;
     onSubmit: (IFormFields) => void;
@@ -15,6 +14,6 @@ export interface IPostFormProps {
 
 export interface IFormInputs {
     Title: string;
-    Image: object;
+    Image: File;
     Body: string;
 }

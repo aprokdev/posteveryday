@@ -28,13 +28,13 @@ export interface IGetPostsParams {
 }
 
 export interface ICreatePostParams {
-    image: string;
+    image: File;
     title: string;
     html: string;
 }
 
 export interface IUpdatePostParams {
-    image?: string;
+    image?: string | File;
     title: string;
     html: string;
     id: string;
@@ -76,4 +76,15 @@ export interface IGetPostsParams {
 
 export interface IOptions {
     headers: Headers;
+}
+
+export interface IPostPageData {
+    title: string;
+    image: string;
+    html: string;
+    author_id: number;
+    id: number;
+    author_firstname: string;
+    author_lastname: string;
+    created: string;
 }

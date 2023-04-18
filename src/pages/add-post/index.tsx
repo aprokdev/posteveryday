@@ -1,9 +1,11 @@
 import Head from 'next/head';
 import Router from 'next/router';
+import { GetServerSidePropsContext } from 'next/types';
 import { getLoginSession } from '@backend/auth';
 import { prisma } from '@backend/index';
 import { createPost } from '@frontend/api';
 import formatDateString from '@utils/formateDateString';
+import { IAddPostProps } from '@utils/pages-types';
 import React, { useState } from 'react';
 import Button from '@components/button';
 import Layout from '@components/layout';
@@ -13,7 +15,7 @@ import PostForm from '@components/post-form';
 import { IFormFields } from '@components/post-form/types';
 import SmallerContainer from '@components/smaller-container';
 
-export async function getServerSideProps({ req }) {
+export async function getServerSideProps({ req }: GetServerSidePropsContext) {
     try {
         const session = await getLoginSession(req);
         let user = null;
@@ -40,17 +42,17 @@ export async function getServerSideProps({ req }) {
     }
 }
 
-export default function AddPost({ user }) {
-    const [preview, setPreview] = useState(null);
-    const [previewMode, setPreviewMode] = useState(false);
-    const [isLoding, setIsLoading] = useState(false);
+export default function AddPost({ user }: IAddPostProps): JSX.Element {
+    const [preview, setPreview] = useState<IFormFields | null>(null);
+    const [previewMode, setPreviewMode] = useState<boolean>(false);
+    const [isLoding, setIsLoading] = useState<boolean>(false);
 
-    const goToPreview = (formFields: IFormFields) => {
+    const goToPreview = (formFields: IFormFields): void => {
         setPreview(formFields);
         setPreviewMode(true);
     };
 
-    const publishPost = async () => {
+    const publishPost = async (): Promise<void> => {
         setIsLoading(true);
         const result = await createPost(preview);
         if (result.success) {

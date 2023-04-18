@@ -5,10 +5,18 @@ import s from './style.module.scss';
 import { IPostPreviewProps } from './types';
 
 export default function Post(props: IPostPreviewProps): JSX.Element {
-    const { image, title, html, created, author_firstname, author_lastname, imageFile, className } =
-        props;
+    const {
+        imageURL,
+        title,
+        html,
+        created,
+        author_firstname,
+        author_lastname,
+        imageFile,
+        className,
+    } = props;
 
-    const img = imageFile ? URL.createObjectURL(imageFile) : image;
+    const img = imageFile ? URL.createObjectURL(imageFile) : imageURL;
 
     return (
         <div className={`bg-grey-200${className ? ` ${className}` : ''}`}>

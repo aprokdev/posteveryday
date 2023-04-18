@@ -6,20 +6,13 @@ import { prisma } from '@backend/index';
 import { feedModel } from '@backend/utils/data';
 import { getPosts } from '@frontend/api';
 import { IAPIResponse, IGetPostsParams } from '@frontend/api/types';
-import { IPostData } from '@frontend/api/types';
 import formatDateString from '@utils/formateDateString';
-import { IUser } from '@utils/user-entity';
+import { IFeedPageProps } from '@utils/pages-types';
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import Layout from '@components/layout';
 import LoadPostsByRequest from '@components/load-posts-by-request';
 import ToastClose from '@components/toast-close';
-
-export interface IPageProps {
-    user: IUser;
-    posts: IPostData[];
-    error?: string;
-}
 
 const PageError = dynamic(() => import('@components/page-error'));
 const EmptyPosts = dynamic(() => import('@components/empty-posts'));
@@ -70,7 +63,7 @@ export async function getServerSideProps({ req }: GetServerSidePropsContext) {
     }
 }
 
-export default function MyPosts({ user, posts = [], error = '' }: IPageProps): JSX.Element {
+export default function MyPosts({ user, posts = [], error = '' }: IFeedPageProps): JSX.Element {
     const cardsLoader = async ({ limit, offset }: IGetPostsParams): Promise<IAPIResponse> => {
         return await getPosts({ limit, offset, author_id: user.id });
     };
