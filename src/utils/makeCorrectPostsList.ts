@@ -16,18 +16,15 @@
 // that could be used to correct your request.
 import { IPostData } from '@frontend/api/types';
 
-export interface ICorrectPostsListValue {
+export interface IPostsValue {
     correctListPosts: IPostData[];
     additionalOffset: number;
 }
 
-export function makeCorrectPostsList(
-    stateList: IPostData[],
-    incomingList: IPostData[]
-): ICorrectPostsListValue {
+export function makeCorrectPostsList(stateList: IPostData[], newList: IPostData[]): IPostsValue {
     const stateIds = stateList.map(({ id }) => id);
     let additionalOffset = 0;
-    incomingList.forEach((post) => {
+    newList.forEach((post) => {
         if (!stateIds.includes(post.id)) {
             stateList.push(post);
         } else {

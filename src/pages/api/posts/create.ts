@@ -19,7 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 html,
                 html_preview: html.slice(0, 340),
                 image: imageURL,
-                author_id: session.id,
+                author_id: Number(session.id),
                 author_firstname: session.first_name,
                 author_lastname: session.last_name,
             },
