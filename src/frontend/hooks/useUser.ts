@@ -12,8 +12,13 @@ type useUserArgs = {
     redirectIfFound?: boolean;
 };
 
-export function useUser({ redirectTo, redirectIfFound }: useUserArgs = {}): User {
-    const { data } = useSWR(API_PATHS.user, getUser);
+interface IUserData {
+    user: User;
+    isLoading: boolean;
+}
+
+export function useUser({ redirectTo, redirectIfFound }: useUserArgs = {}): IUserData {
+    const { data, isLoading } = useSWR(API_PATHS.user, getUser);
     const user = data?.data?.user || null;
     const finished = Boolean(data);
     const hasUser = Boolean(user);
@@ -30,5 +35,5 @@ export function useUser({ redirectTo, redirectIfFound }: useUserArgs = {}): User
         }
     }, [redirectTo, redirectIfFound, finished, hasUser]);
 
-    return user;
+    return { user, isLoading };
 }

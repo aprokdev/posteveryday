@@ -36,7 +36,7 @@ function Profile({ user }) {
         return null;
     }
     return (
-        <Layout user={user}>
+        <Layout user={user} isUserFetching={false}>
             <Container className="min-h-mainMin">
                 <p>Email: {user.email}</p>
                 <p>First name: {user.first_name}</p>

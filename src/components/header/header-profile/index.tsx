@@ -21,7 +21,7 @@ export default function HeaderProfile({ user }: IHeaderProfileProps): JSX.Elemen
 
                 <span className="flex items-center relative ">
                     <span className="font-medium mr-3 xs:hidden sm:block">
-                        {user.first_name} {user.last_name.slice(0, 1)}.
+                        {user.first_name} {user.last_name?.slice(0, 1)}.
                     </span>
                     <div>
                         <UserCircleIcon className="block text-stone-800 h-10 w-10" />

@@ -2,12 +2,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import logo from '@public/images/logo.svg';
+import { log } from 'console';
 import React from 'react';
 import HeaderLink from './header-link';
 import HeaderProfile from './header-profile';
 import { IHeaderProps } from './types';
 
-export default function Header({ user }: IHeaderProps): JSX.Element {
+export default function Header({ user, isUserFetching }: IHeaderProps): JSX.Element {
     const [isMobileMenuIsOpened, setMobileMenuIsOpened] = React.useState<boolean>(false);
 
     const headerRef = React.useRef<HTMLElement>();
@@ -49,7 +50,7 @@ export default function Header({ user }: IHeaderProps): JSX.Element {
         >
             <div className="relative mx-auto px-2 sm:px-6 lg:px-8">
                 <div className="relative flex h-16 items-center justify-between">
-                    {user && (
+                    {user && !isUserFetching && (
                         <div className="absolute inset-y-0 left-0 flex items-center md:hidden z-20">
                             <button
                                 type="button"
@@ -68,41 +69,44 @@ export default function Header({ user }: IHeaderProps): JSX.Element {
                         </div>
                     )}
 
-                    <div
-                        className={`absolute top-0 left-0 right-0 flex flex-1 items-center justify-center h-full sm:items-stretch ${
-                            user ? 'md:justify-start' : 'sm:justify-center'
-                        }`}
-                    >
-                        <div className="h-full sm:block xl:grow">
-                            <div className="flex space-x-4 relative w-full h-full">
-                                <div className="xl:top-0 h-full xl:w-full flex xl:absolute top-1 justify-center">
-                                    <div className="w-24 h-full flex center relative text-zero color-black">
-                                        <Image
-                                            src={logo}
-                                            alt="posteveryday logo"
-                                            className="block w-full h-full"
-                                            sizes="(min-width: 0) 108px, 108px"
-                                            fill
-                                            loading="eager"
-                                        />
+                    {!isUserFetching && (
+                        <div
+                            className={`absolute top-0 left-0 right-0 flex flex-1 items-center justify-center h-full sm:items-stretch ${
+                                user ? 'md:justify-start' : 'sm:justify-center'
+                            }`}
+                        >
+                            <div className="h-full sm:block xl:grow">
+                                <div className="flex space-x-4 relative w-full h-full">
+                                    <div className="xl:top-0 h-full xl:w-full flex xl:absolute top-1 justify-center">
+                                        <div className="w-24 h-full flex center relative text-zero color-black">
+                                            <Image
+                                                src={logo}
+                                                alt="posteveryday logo"
+                                                className="block w-full h-full"
+                                                sizes="(min-width: 0) 108px, 108px"
+                                                fill
+                                                loading="eager"
+                                            />
+                                        </div>
                                     </div>
-                                </div>
 
-                                {user && (
-                                    <div className="hidden md:flex space-x-4">
-                                        <HeaderLink href="/">Feed</HeaderLink>
-                                        <HeaderLink href="/my-posts">My posts</HeaderLink>
-                                        <HeaderLink href="/add-post">Add post</HeaderLink>
-                                    </div>
-                                )}
+                                    {user && !isUserFetching && (
+                                        <div className="hidden md:flex space-x-4">
+                                            <HeaderLink href="/">Feed</HeaderLink>
+                                            <HeaderLink href="/my-posts">My posts</HeaderLink>
+                                            <HeaderLink href="/add-post">Add post</HeaderLink>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    {user ? (
+                    )}
+                    {user && !isUserFetching && (
                         <div className="absolute z-20 inset-y-0 right-0 flex items-center pr-2 sm:pr-0">
                             <HeaderProfile user={user} />
                         </div>
-                    ) : (
+                    )}
+                    {!user && !isUserFetching && (
                         <div className="absolute z-20 right-0">
                             <HeaderLink href="/login">Log In</HeaderLink>
                         </div>

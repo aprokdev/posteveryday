@@ -3,5 +3,6 @@ import { ReactNode } from 'react';
 
 export interface ILayoutProps {
     user: IUser;
+    isUserFetching: boolean;
     children: ReactNode;
 }

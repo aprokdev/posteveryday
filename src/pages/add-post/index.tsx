@@ -62,7 +62,7 @@ export default function AddPost({ user }: IAddPostProps): JSX.Element {
     };
 
     return (
-        <Layout user={user}>
+        <Layout user={user} isUserFetching={false}>
             <Head>
                 <title>POSTEVERYDAY - ADD POST</title>
             </Head>

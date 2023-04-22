@@ -111,7 +111,7 @@ export default function PostPage({ user, data, error = '' }: IPostPageProps): JS
     };
 
     return data && !error ? (
-        <Layout user={user}>
+        <Layout user={user} isUserFetching={false}>
             <Head>
                 <title>{postData.title}</title>
             </Head>
