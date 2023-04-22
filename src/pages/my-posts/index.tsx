@@ -20,100 +20,42 @@ const EmptyPosts = dynamic(() => import('@components/empty-posts'));
 
 const cardsAmountToLoad = 16;
 
-// export async function getServerSideProps({ req }: GetServerSidePropsContext) {
-//     try {
-//         const session = await getLoginSession(req);
-//         let user = null;
-//         let posts = null;
-//         if (session) {
-//             user = await prisma.user.findUnique({ where: { email: session?.email } });
-//             const { hash, salt, ...rest } = user;
-//             user = rest;
-
-//             posts = await prisma.post.findMany({
-//                 take: cardsAmountToLoad,
-//                 where: { author_id: Number(session?.id) },
-//                 orderBy: { created: 'desc' },
-//                 select: feedModel,
-//             });
-
-//             return {
-//                 props: {
-//                     user,
-//                     posts: posts.map((data) => {
-//                         return {
-//                             ...data,
-//                             created: formatDateString(data.created.toISOString()),
-//                         };
-//                     }),
-//                 },
-//             };
-//         } else {
-//             return {
-//                 redirect: {
-//                     destination: '/401',
-//                     permanent: true,
-//                 },
-//             };
-//         }
-//     } catch (error) {
-//         console.error(error);
-//         return {
-//             props: { error: error.message },
-//         };
-//     }
-// }
-
 export async function getStaticProps() {
-    try {
-        const posts = await prisma.post.findMany({
-            take: cardsAmountToLoad,
-            orderBy: { created: 'desc' },
-            select: feedModel,
-        });
-
-        return {
-            props: {
-                posts: posts.map((data) => {
-                    return {
-                        ...data,
-                        created: formatDateString(data.created.toISOString()),
-                    };
-                }),
-            },
-            revalidate: 10, // In seconds
-        };
-    } catch (error) {
-        return {
-            props: { error: error.message },
-        };
-    }
+    return {
+        props: {},
+    };
 }
 
 export default function MyPosts({ posts = [], error = '' }: IFeedPageProps): JSX.Element {
     const { user, isLoading } = useUser();
+
+    const [isPosts, setIsPosts] = React.useState(true);
 
     const cardsLoader = async ({ limit, offset }: IGetPostsParams): Promise<IAPIResponse> => {
         return await getPosts({ limit, offset, author_id: user.id });
     };
 
     return (
-        <Layout user={user} isUserFetching={isLoading}>
-            <Head>
-                <title>MY POSTS</title>
-            </Head>
-            <div className="bg-gray-200">
-                {error && <PageError message={error} />}
-                {!error && posts.length === 0 && <EmptyPosts user={user} />}
-                {!error && posts.length > 0 && (
-                    <LoadPostsByRequest
-                        cardsLoader={cardsLoader}
-                        initialPosts={posts}
-                        amount={cardsAmountToLoad}
-                    />
-                )}
-            </div>
-            <ToastContainer autoClose={6000} closeButton={ToastClose} />
-        </Layout>
+        user &&
+        !isLoading && (
+            <Layout user={user} isUserFetching={isLoading}>
+                <Head>
+                    <title>MY POSTS</title>
+                </Head>
+                <div className="bg-gray-200 min-h-post">
+                    {error && <PageError message={error} />}
+                    {!error && !isPosts && <EmptyPosts user={user} />}
+                    {!error && isPosts && (
+                        <LoadPostsByRequest
+                            cardsLoader={cardsLoader}
+                            initialPosts={posts}
+                            amount={cardsAmountToLoad}
+                            zeroPosts={() => setIsPosts(false)}
+                        />
+                    )}
+                </div>
+                <ToastContainer autoClose={6000} closeButton={ToastClose} />
+            </Layout>
+        )
     );
 }

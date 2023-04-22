@@ -14,13 +14,13 @@ const className =
     'grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8 xl:gap-4';
 
 export default function LoadPostsByRequest(props: IPostsLoaderProps): JSX.Element {
-    const { cardsLoader, initialPosts, amount } = props;
+    const { cardsLoader, initialPosts = [], amount, zeroPosts } = props;
 
     const [state, setState] = React.useState<IState>({
         list: initialPosts,
-        offset: amount,
+        offset: initialPosts.length === amount ? amount : 0,
         limit: amount,
-        hasMore: initialPosts.length === amount || initialPosts.length > amount,
+        hasMore: true,
         errorMessage: '',
     });
 
@@ -29,13 +29,21 @@ export default function LoadPostsByRequest(props: IPostsLoaderProps): JSX.Elemen
     const [isLoading, setIsLoading] = React.useState(false);
 
     const loadPosts = React.useCallback(async (): Promise<void> => {
-        if (isLoading || errorMessage || initialPosts.length < amount) return;
+        if (isLoading || errorMessage) return;
 
         setIsLoading(true);
         try {
             const { limit, offset, list } = state;
             const result = await cardsLoader({ limit, offset });
             let hasMore = true;
+
+            if (
+                result?.data?.list?.length === 0 &&
+                initialPosts.length === 0 &&
+                typeof zeroPosts === 'function'
+            ) {
+                zeroPosts();
+            }
             // for resolving possible issues, read makeCorrectPostsList description:
             const { correctListPosts, additionalOffset } = makeCorrectPostsList(
                 list,
@@ -77,9 +85,7 @@ export default function LoadPostsByRequest(props: IPostsLoaderProps): JSX.Elemen
 
     React.useEffect(() => {
         document.documentElement.scrollTo(0, 0);
-        if (initialPosts.length === amount) {
-            loadPosts();
-        }
+        loadPosts();
     }, []);
 
     const { list, hasMore, errorMessage } = state;

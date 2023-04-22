@@ -4,6 +4,7 @@ export interface IPostsLoaderProps {
     cardsLoader: (params: IGetPostsParams) => Promise<IAPIResponse>;
     initialPosts: IPostData[];
     amount: number;
+    zeroPosts?: () => void;
 }
 
 export interface IState {

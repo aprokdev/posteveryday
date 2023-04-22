@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useUser } from '@frontend/hooks/useUser';
 import LoginForm from '@components/login-form';
 
-export async function getStaticProps(context) {
+export async function getStaticProps() {
     return {
         props: {}, // will be passed to the page component as props
     };

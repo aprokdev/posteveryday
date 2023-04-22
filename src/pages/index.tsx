@@ -20,41 +20,6 @@ const EmptyPosts = dynamic(() => import('@components/empty-posts'));
 
 const cardsAmountToLoad = 16;
 
-// export async function getServerSideProps({ req }: GetServerSidePropsContext) {
-//     try {
-//         const session = await getLoginSession(req);
-//         let user = null;
-//         if (session) {
-//             user = await prisma.user.findUnique({ where: { email: session?.email } });
-//             const { hash, salt, ...rest } = user;
-//             user = rest;
-//         }
-
-//         const posts = await prisma.post.findMany({
-//             take: cardsAmountToLoad,
-//             orderBy: { created: 'desc' },
-//             select: feedModel,
-//         });
-
-//         return {
-//             props: {
-//                 user,
-//                 posts: posts.map((data) => {
-//                     return {
-//                         ...data,
-//                         created: formatDateString(data.created.toISOString()),
-//                     };
-//                 }),
-//             },
-//         };
-//     } catch (error) {
-//         console.error(error);
-//         return {
-//             props: { error: error.message },
-//         };
-//     }
-// }
-
 export async function getStaticProps() {
     try {
         const posts = await prisma.post.findMany({
