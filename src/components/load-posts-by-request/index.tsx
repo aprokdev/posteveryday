@@ -26,7 +26,7 @@ export default function LoadPostsByRequest(props: IPostsLoaderProps): JSX.Elemen
 
     const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
 
-    const [isLoading, setIsLoading] = React.useState(true);
+    const [isLoading, setIsLoading] = React.useState(false);
 
     const loadPosts = React.useCallback(async (): Promise<void> => {
         if (isLoading || errorMessage) return;
