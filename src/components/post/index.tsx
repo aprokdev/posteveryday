@@ -29,13 +29,6 @@ export default function Post(props: IPostPreviewProps): JSX.Element {
                     (min-width: 1024px) 1024px, (max-width: 1200px) 1200px"
                     fill
                 />
-                <SmallerContainer className="relative flex content-center">
-                    <h1
-                        className={`xs:text-4xl md:text-5xl xl:text-6xl text-center text-white ${s.header}`}
-                    >
-                        {title}
-                    </h1>
-                </SmallerContainer>
             </div>
             <SmallerContainer>
                 <div className="flex justify-between pt-8 mb-6">
@@ -44,7 +37,7 @@ export default function Post(props: IPostPreviewProps): JSX.Element {
                     </span>
                     <span className="text-md">{created}</span>
                 </div>
-                {/* <h1 className="xs:text-4xl md:text-5xl xl:text-6xl mb-10 text-center">{title}</h1> */}
+                <h1 className="xs:text-4xl md:text-5xl xl:text-6xl mb-10 text-center">{title}</h1>
                 <div>
                     <div
                         dangerouslySetInnerHTML={{ __html: html }}

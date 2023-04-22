@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import ImagePlug from '@public/images/image-plug.svg';
+import { ImagePlug } from '@icons';
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
 import s from './style.module.scss';
@@ -43,20 +43,10 @@ export default function Card(props: ICardProps): JSX.Element {
                 className={`${animationClassName}relative w-full shadow-lg border-2 border-stone-300 overflow-hidden bg-stone-100 rounded-md`}
             >
                 <div className="w-full relative h-48 flex items-center justify-center bg-stone-200">
-                    <div className="relative w-24 h-24">
-                        <Image
-                            src={ImagePlug}
-                            alt="Picture of the author"
-                            className="w-10 h-10 object-cover object-center text-stone-500"
-                            sizes="(min-width: 640px) 640px, 33vw"
-                            fill
-                            loading="eager"
-                        />
-                    </div>
-
+                    <ImagePlug />
                     <Image
                         src={image}
-                        alt="Picture of the author"
+                        alt=""
                         className="absolute w-full h-full object-cover object-center"
                         sizes="(min-width: 640px) 640px, (min-width: 768px) 768px,
                         (min-width: 1024px) 1024px, (max-width: 1200px) 1200px"

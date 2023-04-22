@@ -76,11 +76,7 @@ export default function Header({ user }: IHeaderProps): JSX.Element {
                         <div className="h-full sm:block xl:grow">
                             <div className="flex space-x-4 relative w-full h-full">
                                 <div className="xl:top-0 h-full xl:w-full flex xl:absolute top-1 justify-center">
-                                    <Link
-                                        href="/"
-                                        className="w-24 h-full flex center relative text-zero"
-                                    >
-                                        Header Logo
+                                    <div className="w-24 h-full flex center relative text-zero color-black">
                                         <Image
                                             src={logo}
                                             alt="posteveryday logo"
@@ -89,7 +85,7 @@ export default function Header({ user }: IHeaderProps): JSX.Element {
                                             fill
                                             loading="eager"
                                         />
-                                    </Link>
+                                    </div>
                                 </div>
 
                                 {user && (
