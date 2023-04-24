@@ -1,7 +1,5 @@
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import { GetServerSidePropsContext } from 'next/types';
-import { getLoginSession } from '@backend/auth';
 import { prisma } from '@backend/index';
 import { feedModel } from '@backend/utils/data';
 import { getPosts } from '@frontend/api';
@@ -66,6 +64,7 @@ export default function Feed({ posts = [], error = '' }: IFeedPageProps): JSX.El
                         cardsLoader={cardsLoader}
                         initialPosts={posts}
                         amount={cardsAmountToLoad}
+                        initialLoad
                     />
                 )}
             </div>

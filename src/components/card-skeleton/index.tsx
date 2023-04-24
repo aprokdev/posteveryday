@@ -2,7 +2,6 @@ import Image from 'next/image';
 import ImagePlug from '@public/images/image-plug.svg';
 import React from 'react';
 import Skeleton from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css';
 import s from './style.module.scss';
 
 export default function CardSkeleton(): JSX.Element {

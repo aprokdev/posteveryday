@@ -14,13 +14,13 @@ const className =
     'grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8 xl:gap-4';
 
 export default function LoadPostsByRequest(props: IPostsLoaderProps): JSX.Element {
-    const { cardsLoader, initialPosts = [], amount, zeroPosts } = props;
+    const { cardsLoader, initialPosts = [], amount, zeroPosts, initialLoad } = props;
 
     const [state, setState] = React.useState<IState>({
         list: initialPosts,
         offset: initialPosts.length === amount ? amount : 0,
         limit: amount,
-        hasMore: true,
+        hasMore: initialPosts.length !== 0 && initialPosts.length === amount,
         errorMessage: '',
     });
 
@@ -85,7 +85,9 @@ export default function LoadPostsByRequest(props: IPostsLoaderProps): JSX.Elemen
 
     React.useEffect(() => {
         document.documentElement.scrollTo(0, 0);
-        loadPosts();
+        if (initialLoad && initialPosts.length === amount) {
+            loadPosts();
+        }
     }, []);
 
     const { list, hasMore, errorMessage } = state;

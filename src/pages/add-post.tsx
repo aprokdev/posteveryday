@@ -1,9 +1,10 @@
 import Head from 'next/head';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 import { GetServerSidePropsContext } from 'next/types';
 import { getLoginSession } from '@backend/auth';
 import { prisma } from '@backend/index';
 import { createPost } from '@frontend/api';
+import { useUser } from '@frontend/hooks/useUser';
 import formatDateString from '@utils/formateDateString';
 import { IAddPostProps } from '@utils/pages-types';
 import React, { useState } from 'react';
@@ -42,7 +43,19 @@ export async function getServerSideProps({ req }: GetServerSidePropsContext) {
     }
 }
 
+// export async function getStaticProps() {
+//     return {
+//         props: {},
+//     };
+// }
+
 export default function AddPost({ user }: IAddPostProps): JSX.Element {
+    // const { user, isLoading } = useUser();
+    // const router = useRouter();
+
+    // if (!user && !isLoading) {
+    //     router.push('/401');
+    // }
     const [preview, setPreview] = useState<IFormFields | null>(null);
     const [previewMode, setPreviewMode] = useState<boolean>(false);
     const [isLoding, setIsLoading] = useState<boolean>(false);

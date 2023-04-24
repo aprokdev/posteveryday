@@ -14,7 +14,6 @@ export default function LoginPage(): JSX.Element {
     const { user } = useUser();
     if (user) {
         router.push('/');
-        return null;
     }
     return (
         <div className="flex items-center justify-center min-h">

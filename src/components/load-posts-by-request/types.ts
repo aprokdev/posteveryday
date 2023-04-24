@@ -5,6 +5,7 @@ export interface IPostsLoaderProps {
     initialPosts: IPostData[];
     amount: number;
     zeroPosts?: () => void;
+    initialLoad?: boolean;
 }
 
 export interface IState {
