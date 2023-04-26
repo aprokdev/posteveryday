@@ -92,7 +92,7 @@ export default function AddPost({ user }: IAddPostProps): JSX.Element {
                         <Button
                             type="button"
                             disabled={isLoding}
-                            className="w-32 mr-4 bg-white border-black text-black border-2"
+                            className="w-32 mr-4 !bg-white !border-black !text-black border-2"
                             onClick={() => setPreviewMode(false)}
                         >
                             Back
@@ -108,8 +108,8 @@ export default function AddPost({ user }: IAddPostProps): JSX.Element {
                     </div>
                 </div>
             ) : (
-                <div className="bg-gray-200 pt-8">
-                    <SmallerContainer className="min-h-mainMin">
+                <div className="bg-gray-200 pt-8 min-h-post">
+                    <SmallerContainer>
                         <PostForm {...preview} onSubmit={goToPreview} imageValidation>
                             <Button type="submit" className="w-32">
                                 Preview

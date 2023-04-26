@@ -115,26 +115,32 @@ export default function PostPage({ user, data, error = '' }: IPostPageProps): JS
             <Head>
                 <title>{postData.title}</title>
             </Head>
-            {mode.read && (
-                <ReadMode
-                    user={user}
-                    postData={postData}
-                    onEditClick={() => dispatch(actions.EDIT_MODE)}
-                />
-            )}
+            <div className="min-h-post">
+                {mode.read && (
+                    <ReadMode
+                        user={user}
+                        postData={postData}
+                        onEditClick={() => dispatch(actions.EDIT_MODE)}
+                    />
+                )}
 
-            {mode.edit && (
-                <EditMode postData={postData} backToReadMode={backToReadMode} onSubmit={onSubmit} />
-            )}
+                {mode.edit && (
+                    <EditMode
+                        postData={postData}
+                        backToReadMode={backToReadMode}
+                        onSubmit={onSubmit}
+                    />
+                )}
 
-            {mode.preview && (
-                <PreviewMode
-                    user={user}
-                    postData={preview}
-                    backToEdit={() => dispatch(actions.EDIT_MODE)}
-                    updatePageData={updatePageData}
-                />
-            )}
+                {mode.preview && (
+                    <PreviewMode
+                        user={user}
+                        postData={preview}
+                        backToEdit={() => dispatch(actions.EDIT_MODE)}
+                        updatePageData={updatePageData}
+                    />
+                )}
+            </div>
         </Layout>
     ) : (
         <div>{error}</div>

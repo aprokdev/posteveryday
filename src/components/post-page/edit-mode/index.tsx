@@ -6,12 +6,12 @@ import { IEditModeProps } from './types';
 export default function EditMode(props: IEditModeProps): JSX.Element {
     const { postData, backToReadMode, onSubmit } = props;
     return (
-        <div className="bg-gray-200 pt-8 min-h-mainMin">
+        <div className="bg-gray-200 pt-8">
             <SmallerContainer>
                 <PostForm {...postData} onSubmit={onSubmit}>
                     <Button
                         type="button"
-                        className="mr-4 border-black text-black border-2 !bg-gray-200 w-28"
+                        className="mr-4 !border-black !text-black !border-2 !bg-gray-200 w-28"
                         onClick={backToReadMode}
                     >
                         Back

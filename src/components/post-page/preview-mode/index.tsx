@@ -32,7 +32,7 @@ export default function PreviewMode(props: IPreviewModeProps): JSX.Element {
                 <Button
                     type="button"
                     disabled={isLoading}
-                    className="mr-4 bg-white border-black text-black border-2 w-28"
+                    className="mr-4 !bg-white !border-black !text-black !border-2 w-28"
                     onClick={backToEdit}
                 >
                     Back

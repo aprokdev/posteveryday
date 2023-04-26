@@ -38,7 +38,7 @@ export default function DeleteConfirmModal(props: IModalProps): JSX.Element {
                         <Button
                             onClick={onClose}
                             disabled={isLoading}
-                            className="mr-4 bg-white border-black text-black border-2 w-28"
+                            className="mr-4 !bg-white !border-black !text-black !border-2 w-28"
                         >
                             No
                         </Button>

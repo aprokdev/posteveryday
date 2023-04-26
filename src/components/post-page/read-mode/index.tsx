@@ -21,7 +21,7 @@ export default function ReadMode({ user, postData, onEditClick }: IReadModeProps
                     imageURL={postData?.image}
                 />
             )}
-            <div className="min-h-post">
+            <>
                 <Post
                     {...postData}
                     imageURL={postData.image}
@@ -32,7 +32,7 @@ export default function ReadMode({ user, postData, onEditClick }: IReadModeProps
                     <SmallerContainer className="flex items-center justify-end py-10">
                         <Button
                             onClick={() => setIsModal(true)}
-                            className="mr-4 bg-white border-black text-black border-2 w-28"
+                            className="mr-4 !bg-white !border-black !text-black border-2 w-28"
                         >
                             Delete
                         </Button>
@@ -41,7 +41,7 @@ export default function ReadMode({ user, postData, onEditClick }: IReadModeProps
                         </Button>
                     </SmallerContainer>
                 )}
-            </div>
+            </>
         </>
     );
 }
