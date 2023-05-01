@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import Router from 'next/router';
 import { loginUser } from '@frontend/api';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useCallback } from 'react';
@@ -25,7 +25,6 @@ const schema = yup
     .required();
 
 export default function LoginForm(): JSX.Element {
-    const router = useRouter();
     const { reset, register, setError, handleSubmit, formState } = useForm<ILoginFormInputs>({
         resolver: yupResolver(schema),
         defaultValues: { Email: '', Password: '' },
@@ -37,7 +36,7 @@ export default function LoginForm(): JSX.Element {
         async (data: ILoginFormInputs): Promise<void> => {
             const response = await loginUser(data);
             if (response?.success) {
-                router.push('/my-posts');
+                Router.push('/my-posts');
             } else if (response?.message === 'Provided credentials are invalid') {
                 setError('Email', { type: 'custom', message: response?.message });
                 setError('Password', { type: 'custom', message: response?.message });
