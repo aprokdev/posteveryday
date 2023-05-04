@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Router from 'next/router';
 import { registerUser } from '@frontend/api';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Logo } from '@icons';
+import { Logo } from '@svg';
 import { useCallback } from 'react';
 import React from 'react';
 import { useForm } from 'react-hook-form';

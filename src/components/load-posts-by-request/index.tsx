@@ -1,4 +1,4 @@
-import { InfoIcon } from '@icons';
+import { InfoIcon } from '@svg';
 import { makeCorrectPostsList } from '@utils/makeCorrectPostsList';
 import React from 'react';
 import { toast } from 'react-toastify';

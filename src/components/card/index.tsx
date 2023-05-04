@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { ImagePlug } from '@icons';
+import { ImagePlug } from '@svg';
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
 import s from './style.module.scss';
