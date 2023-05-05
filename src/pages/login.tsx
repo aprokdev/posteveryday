@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useUser } from '@frontend/hooks/useUser';
+import { useEffect } from 'react';
 import LoginForm from '@components/login-form';
 
 export async function getStaticProps() {
@@ -12,9 +13,13 @@ export async function getStaticProps() {
 export default function LoginPage(): JSX.Element {
     const router = useRouter();
     const { user } = useUser();
-    if (user) {
-        router.push('/');
-    }
+
+    useEffect(() => {
+        if (user) {
+            router.push('/');
+        }
+    }, []);
+
     return (
         <div className="flex items-center justify-center min-h">
             <Head>
