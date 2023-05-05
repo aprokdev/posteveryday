@@ -34,7 +34,8 @@ export default function LoginForm(): JSX.Element {
     const { errors, isSubmitting, defaultValues } = formState;
 
     const onSubmit = useCallback(
-        async (data: ILoginFormInputs): Promise<void> => {
+        async (data: ILoginFormInputs, event): Promise<void> => {
+            event.preventDefault();
             const response = await loginUser(data);
             if (response?.success) {
                 router.push('/my-posts');
