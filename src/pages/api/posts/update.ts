@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '@backend/index';
 import { deleteS3File } from '@utils/deleteS3File';
 import formatDateString from '@utils/formateDateString';
-import { parseFieldsAndS3Upload } from '@utils/parseFieldsAndS3Upload';
+import parseFieldsAndS3Upload from '@utils/parseFieldsAndS3Upload';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
