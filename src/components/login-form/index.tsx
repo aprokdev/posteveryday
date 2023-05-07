@@ -37,13 +37,11 @@ export default function LoginForm(): JSX.Element {
         async (data: ILoginFormInputs, event): Promise<void> => {
             event.preventDefault();
             const response = await loginUser(data);
-            if (response?.success) {
-                router.push('/my-posts');
-            } else if (response?.message === 'Provided credentials are invalid') {
+            // if response success, redirect on page level
+            if (response?.message === 'Provided credentials are invalid') {
                 setError('Email', { type: 'custom', message: response?.message });
                 setError('Password', { type: 'custom', message: response?.message });
             }
-
             console.log('onSubmit res: ', response);
         },
         [reset, setError]

@@ -1,8 +1,9 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useUser } from '@frontend/hooks/useUser';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import LoginForm from '@components/login-form';
+import LoginFormSkeleton from '@components/login-form/skeleton';
 
 export async function getStaticProps() {
     return {
@@ -12,20 +13,25 @@ export async function getStaticProps() {
 
 export default function LoginPage(): JSX.Element {
     const router = useRouter();
-    const { user } = useUser();
-
-    useEffect(() => {
-        if (user) {
-            router.push('/');
-        }
-    }, []);
+    const { user, isLoading } = useUser();
+    if (user) {
+        router.push('/my-posts');
+        return (
+            <div className="flex items-center justify-center min-h">
+                <Head>
+                    <title>LOG IN</title>
+                </Head>
+                <LoginFormSkeleton />
+            </div>
+        );
+    }
 
     return (
         <div className="flex items-center justify-center min-h">
             <Head>
                 <title>LOG IN</title>
             </Head>
-            <LoginForm />
+            {!isLoading ? <LoginForm /> : <LoginFormSkeleton />}
         </div>
     );
 }
