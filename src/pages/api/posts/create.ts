@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getLoginSession } from '@backend/auth';
 import { prisma } from '@backend/index';
-import { ParseFieldsAndS3Upload } from '@utils/ParseFieldsAndS3Upload';
+import { parseFieldsAndS3Upload } from '@utils/parseFieldsAndS3Upload';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
@@ -12,7 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
         const session = await getLoginSession(req);
 
-        const { title, html, imageURL } = await ParseFieldsAndS3Upload(req);
+        const { title, html, imageURL } = await parseFieldsAndS3Upload(req);
         const result = await prisma.post.create({
             data: {
                 title,

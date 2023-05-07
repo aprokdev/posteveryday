@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '@backend/index';
-import { ParseFieldsAndS3Upload } from '@utils/ParseFieldsAndS3Upload';
 import { deleteS3File } from '@utils/deleteS3File';
 import formatDateString from '@utils/formateDateString';
+import { parseFieldsAndS3Upload } from '@utils/parseFieldsAndS3Upload';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
@@ -12,26 +12,27 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             return;
         }
 
-        const { title, html, imageURL, id } = await ParseFieldsAndS3Upload(req);
+        const { title, html, imageURL, id } = await parseFieldsAndS3Upload(req);
 
         // ==== id field required in request! These 2 checks prevent undesirable behaviour
         // if image file was sent, it will be put in s3 anyways,
         // so after check we should remove it from bucket:
-        if (id === 'undefined' && imageURL) {
+        const isIdField = id !== 'undefined' && id !== '';
+        if (!isIdField && imageURL) {
             const url = new URL(imageURL);
             const key = url.pathname.slice(1); // key: '/images/filename.jpg' => 'images/filename.jpg'
             const { success } = await deleteS3File(key);
-            res.status(405).json({ sucess: false, message: 'id field is required' });
+            res.status(422).json({ sucess: false, message: "'id' field is required" });
             return;
         }
-        if (id === 'undefined' && !imageURL) {
-            res.status(405).json({ sucess: false, message: 'id field is required' });
+        if (!isIdField && !imageURL) {
+            res.status(422).json({ sucess: false, message: "'id' field is required" });
             return;
         }
         // ====
 
         // Don't forget to remove previous image from S3 bucket, if it had been passed
-        if (id !== 'undefined' && imageURL) {
+        if (isIdField && imageURL) {
             const previousPost = await prisma.post.findFirst({ where: { id: Number(id) } });
             const url = new URL(previousPost.image);
             const key = url.pathname.slice(1); // key: '/images/filename.jpg' => 'images/filename.jpg'
@@ -43,9 +44,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 id: Number(id),
             },
             data: {
-                title,
-                html,
-                html_preview: html.slice(0, 340),
+                title: title.length > 0 ? title : undefined,
+                html: html.length > 0 ? html : undefined,
+                html_preview: html.length > 0 ? html.slice(0, 340) : undefined,
                 image: imageURL,
             },
         });

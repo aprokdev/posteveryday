@@ -14,7 +14,7 @@ export interface IParseUploadResponse {
 // You should always remember, that if file has been passed in formData, it will be loaded on S3 anyways.
 // In case, when image file is absent, it returns only fields
 
-export function ParseFieldsAndS3Upload(req: NextApiRequest): Promise<IParseUploadResponse> {
+export function parseFieldsAndS3Upload(req: NextApiRequest): Promise<IParseUploadResponse> {
     return new Promise((res, rej) => {
         const bb = busboy({ headers: req.headers });
 
@@ -49,9 +49,6 @@ export function ParseFieldsAndS3Upload(req: NextApiRequest): Promise<IParseUploa
         bb.on('finish', (val) => {
             if (!isFile) {
                 res(fields);
-            }
-            if (isFile && imageURL) {
-                res({ imageURL, ...fields });
             }
         });
 
