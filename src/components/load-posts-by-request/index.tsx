@@ -11,7 +11,7 @@ import UpButton from '@components/up-button';
 import { IPostsLoaderProps, IState } from './types';
 
 const className =
-    'grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8 xl:gap-4';
+    'grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 gap-4 sm:gap-6 md:gap-8 xl:gap-4';
 
 export default function LoadPostsByRequest(props: IPostsLoaderProps): JSX.Element {
     const { cardsLoader, initialPosts = [], amount, zeroPosts, initialLoad } = props;
