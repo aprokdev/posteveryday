@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '@backend/index';
 import { deleteS3File } from '@utils/deleteS3File';
+import { HTTPError405, HTTPError422 } from '@utils/errors';
 import formatDateString from '@utils/formateDateString';
 import { parseFieldsAndS3Upload } from '@utils/parseFieldsAndS3Upload';
 
@@ -8,8 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     try {
         if (req.method !== 'PUT') {
             res.setHeader('Allow', 'PUT');
-            res.status(405).json({ sucess: false, message: 'Method Not Allowed' });
-            return;
+            throw new HTTPError405("'id' field is required");
         }
 
         const { title, html, imageURL, id } = await parseFieldsAndS3Upload(req);
@@ -22,12 +22,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             const url = new URL(imageURL);
             const key = url.pathname.slice(1); // key: '/images/filename.jpg' => 'images/filename.jpg'
             const { success } = await deleteS3File(key);
-            res.status(422).json({ sucess: false, message: "'id' field is required" });
-            return;
+            throw new HTTPError422("'id' field is required");
         }
         if (!isIdField && !imageURL) {
-            res.status(422).json({ sucess: false, message: "'id' field is required" });
-            return;
+            throw new HTTPError422("'id' field is required");
         }
         // ====
 
