@@ -42,7 +42,7 @@ export default function Card(props: ICardProps): JSX.Element {
                 ref={ref}
                 className={`${animationClassName}relative w-full shadow-lg border-2 border-stone-300 overflow-hidden bg-stone-100 rounded-md`}
             >
-                <div className="w-full relative h-48 flex items-center justify-center bg-stone-200">
+                <div className="w-full relative h-48 flex items-center justify-center bg-stone-200 border-b-2">
                     <ImagePlug />
                     <Image
                         src={image}

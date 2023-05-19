@@ -17,7 +17,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         // ==== id field required in request! These 2 checks prevent undesirable behaviour
         // if image file was sent, it will be put in s3 anyways,
         // so after check we should remove it from bucket:
-        const isIdField = id !== 'undefined' && id !== '';
+        const isIdField = id !== 'undefined' && id !== '' && id !== undefined;
         if (!isIdField && imageURL) {
             const url = new URL(imageURL);
             const key = url.pathname.slice(1); // key: '/images/filename.jpg' => 'images/filename.jpg'
@@ -27,11 +27,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         if (!isIdField && !imageURL) {
             throw new HTTPError422("'id' field is required");
         }
+        if (!isIdField) {
+            throw new HTTPError422("'id' field is required");
+        }
         // ====
 
         // Don't forget to remove previous image from S3 bucket, if it had been passed
-        if (isIdField && imageURL) {
-            const previousPost = await prisma.post.findFirst({ where: { id: Number(id) } });
+        const previousPost = await prisma.post.findFirst({ where: { id: Number(id) } });
+        if (previousPost && imageURL) {
             const url = new URL(previousPost.image);
             const key = url.pathname.slice(1); // key: '/images/filename.jpg' => 'images/filename.jpg'
             const { success } = await deleteS3File(key);

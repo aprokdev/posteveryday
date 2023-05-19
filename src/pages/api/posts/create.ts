@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getLoginSession } from '@backend/auth';
 import { prisma } from '@backend/index';
+import formatDateString from '@utils/formateDateString';
 import { parseFieldsAndS3Upload } from '@utils/parseFieldsAndS3Upload';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -24,7 +25,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 author_lastname: session.last_name,
             },
         });
-        res.status(201).json({ success: true, data: result });
+        res.status(201).json({
+            success: true,
+            data: { ...result, created: formatDateString(result.created.toISOString()) },
+        });
     } catch (error) {
         res.status(500).json({ sucess: false, message: error.message });
     }
