@@ -1,12 +1,12 @@
 <p align="center">
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Nextjs-logo.svg/2560px-Nextjs-logo.svg.png" style="display: block; width: 200px; margin: 10px auto;" />
+<img src="https://www.posteveryday.ca/_next/static/media/logo.614a4fab.svg" style="display: block; width: 200px; margin: 10px auto;" />
 </p>
 
 <p align="center" style="text-align: center"> Powered by: </p>
 
 <p align="center">
   <span>
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Next.js_Logotype_Light_Background.svg/591px-Next.js_Logotype_Light_Background.svg.png?20220905191500" style="width: 100px; padding-right: 20px;" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Nextjs-logo.svg/2560px-Nextjs-logo.svg.png" style="width: 100px; padding-right: 20px;" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   </span>
   
   <span>
