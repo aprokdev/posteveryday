@@ -34,6 +34,10 @@
   <span>
   <img src="https://gregberge.com/static/3391b102273cbd25da0acce0007703bd/29007/passport.png" style="width: 140px;" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   </span>
+
+  <span>
+  <img src="https://cdn.cdnlogo.com/logos/a/34/amazon-s3.svg" style="width: 100px; padding-right: 20px;" />&nbsp;&nbsp;&nbsp;&nbsp;
+  </span>
 </p>
 
 <br />
