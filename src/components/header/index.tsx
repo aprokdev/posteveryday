@@ -1,9 +1,7 @@
-import Image from 'next/image';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import logo from '@public/images/logo.svg';
 import React from 'react';
-import Skeleton from 'react-loading-skeleton';
 import HeaderLink from './header-link';
+import HeaderNav from './header-nav';
 import HeaderProfile from './header-profile';
 import { IHeaderProps } from './types';
 
@@ -68,43 +66,7 @@ export default function Header({ user, isUserFetching }: IHeaderProps): JSX.Elem
                         </div>
                     )}
 
-                    <div
-                        className={`absolute top-0 left-0 right-0 flex flex-1 items-center justify-center h-full sm:items-stretch ${
-                            user ? 'md:justify-start' : 'sm:justify-center'
-                        }`}
-                    >
-                        <div className="h-full sm:block xl:grow">
-                            <div className="flex space-x-4 relative w-full h-full">
-                                <div className="xl:top-0 h-full xl:w-full flex xl:absolute top-1 justify-center">
-                                    <div className="w-24 h-full flex center relative text-zero color-black">
-                                        {isUserFetching ? (
-                                            <Skeleton
-                                                className="h-8 w-24 absolute"
-                                                style={{ top: '18px' }}
-                                            />
-                                        ) : (
-                                            <Image
-                                                src={logo}
-                                                alt="posteveryday logo"
-                                                className="block w-full h-full"
-                                                sizes="(min-width: 0) 108px, 108px"
-                                                fill
-                                                loading="eager"
-                                            />
-                                        )}
-                                    </div>
-                                </div>
-
-                                {user && !isUserFetching && (
-                                    <div className="hidden md:flex space-x-4">
-                                        <HeaderLink href="/">Feed</HeaderLink>
-                                        <HeaderLink href="/my-posts">My posts</HeaderLink>
-                                        <HeaderLink href="/add-post">Add post</HeaderLink>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                    </div>
+                    <HeaderNav user={user} isUserFetching={isUserFetching} />
 
                     {user && !isUserFetching && (
                         <div className="absolute z-20 inset-y-0 right-0 flex items-center pr-2 sm:pr-0">
@@ -120,7 +82,7 @@ export default function Header({ user, isUserFetching }: IHeaderProps): JSX.Elem
             </div>
 
             {isMobileMenuIsOpened && user && (
-                <div className="sm:hidden" id="mobile-menu">
+                <div className="md:hidden" id="mobile-menu">
                     <div className="space-y-1 px-2 pt-2 pb-3">
                         <HeaderLink href="/">Feed</HeaderLink>
                         <HeaderLink href="/my-posts">My posts</HeaderLink>
