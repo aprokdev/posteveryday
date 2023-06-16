@@ -6,7 +6,7 @@ import { ISession } from './types';
 
 const TOKEN_NAME = 'posteveryday_token';
 const TOKEN_SECRET = process.env.TOKEN_SECRET;
-export const MAX_AGE = 60 * 60 * 8; // 8 hours
+export const MAX_AGE = 60 * 60 * 8; // 8 hours in seconds
 
 export async function createToken(session: ISession): Promise<string> {
     // Create a session object with a max age that we can validate later

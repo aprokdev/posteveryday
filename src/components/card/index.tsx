@@ -37,7 +37,10 @@ export default function Card(props: ICardProps): JSX.Element {
     }
 
     return (
-        <Link href={`/posts/${id}`} className="hover:no-underline flex">
+        <Link
+            href={`/posts/${id}`}
+            className="hover:no-underline flex active:opacity-75 transition-opacity ease-in-out duration-150"
+        >
             <article
                 ref={ref}
                 className={`${animationClassName}relative w-full shadow-lg border-2 border-stone-300 overflow-hidden bg-stone-100 rounded-md`}
@@ -62,7 +65,12 @@ export default function Card(props: ICardProps): JSX.Element {
                         </span>
                         <span className="text-xs">{created}</span>
                     </div>
-                    <h1 className={`text-2xl mb-2 ${s.linesClipHeader} ${s.boxOrient}`}>{title}</h1>
+                    <h1
+                        className={`text-2xl mb-2 ${s.linesClipHeader} ${s.boxOrient}`}
+                        title={title}
+                    >
+                        {title}
+                    </h1>
                     <div
                         className={`${s.linesClipText} ${s.boxOrient} m-0 ${s.removeInnerMargin}`}
                         dangerouslySetInnerHTML={{ __html: html_preview }}
