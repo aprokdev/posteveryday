@@ -38,12 +38,7 @@ export default function LoginFormSkeleton() {
 
             <span className="block text-center mt-8">
                 Don't have an account?{' '}
-                <Link
-                    href="/register"
-                    className="text-black underline underline-offset-2 transition-opacity hover:opacity-50"
-                >
-                    Register
-                </Link>
+                <span className="text-black underline underline-offset-2 opacity-50">Register</span>
             </span>
         </div>
     );
