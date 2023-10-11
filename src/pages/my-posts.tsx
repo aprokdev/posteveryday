@@ -7,7 +7,7 @@ import { prisma } from '@backend/index';
 import { feedModel } from '@backend/utils/data';
 import { getPosts } from '@frontend/api';
 import { IAPIResponse, IGetPostsParams } from '@frontend/api/types';
-import { useUser } from '@frontend/hooks/useUser';
+// import { useUser } from '@frontend/hooks/useUser';
 import formatDateString from '@utils/formateDateString';
 import { IFeedPageProps } from '@utils/pages-types';
 import React from 'react';
@@ -72,8 +72,8 @@ export async function getServerSideProps({ req }: GetServerSidePropsContext) {
     }
 }
 
-export default function MyPosts({ posts = [], error = '' }: IFeedPageProps): JSX.Element {
-    const { user, isLoading } = useUser();
+export default function MyPosts({ user, posts = [], error = '' }: IFeedPageProps): JSX.Element {
+    // const { user, isLoading } = useUser();
     // const router = useRouter();
 
     // console.log('user, isLoading', user, isLoading);
