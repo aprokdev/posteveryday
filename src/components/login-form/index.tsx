@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { loginUser } from '@frontend/api';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Logo } from '@svg';
@@ -25,7 +24,6 @@ const schema = yup
     .required();
 
 export default function LoginForm(): JSX.Element {
-    const router = useRouter();
     const { reset, register, setError, handleSubmit, formState } = useForm<ILoginFormInputs>({
         resolver: yupResolver(schema),
         defaultValues: { Email: '', Password: '' },

@@ -106,7 +106,7 @@ export default function RegisterForm(): JSX.Element {
             </Button>
 
             <span className="block text-center mt-6">
-                Ulready have an account?{' '}
+                Already have an account?{' '}
                 <Link
                     href="/login"
                     className="text-black underline underline-offset-2 transition-opacity hover:opacity-50"

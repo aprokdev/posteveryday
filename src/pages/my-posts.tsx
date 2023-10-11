@@ -72,8 +72,8 @@ export async function getServerSideProps({ req }: GetServerSidePropsContext) {
     }
 }
 
-export default function MyPosts({ user, posts = [], error = '' }: IFeedPageProps): JSX.Element {
-    // const { user, isLoading } = useUser();
+export default function MyPosts({ posts = [], error = '' }: IFeedPageProps): JSX.Element {
+    const { user, isLoading } = useUser();
     // const router = useRouter();
 
     // console.log('user, isLoading', user, isLoading);

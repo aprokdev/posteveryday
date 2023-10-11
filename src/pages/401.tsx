@@ -11,7 +11,14 @@ export default function FourZeroOne() {
         <div className="flex flex-col items-center justify-center min-h">
             <h1 className="block mb-5 text-center w-full text-5xl">401</h1>
             <p>
-                You should <Link href="/login">log in</Link> to perform this action
+                You should{' '}
+                <Link
+                    href="/login"
+                    className="text-black underline underline-offset-2 transition-opacity hover:opacity-50"
+                >
+                    log in
+                </Link>{' '}
+                to perform this action
             </p>
         </div>
     );

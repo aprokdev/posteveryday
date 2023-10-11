@@ -1,7 +1,6 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useUser } from '@frontend/hooks/useUser';
-import { useEffect, useState } from 'react';
 import LoginForm from '@components/login-form';
 import LoginFormSkeleton from '@components/login-form/skeleton';
 
