@@ -10,7 +10,7 @@ import FeedSkeletonLoader from '@components/feed-skeleton-loader';
 import UpButton from '@components/up-button';
 import { IPostsLoaderProps, IState } from './types';
 
-const className =
+const gridClassName =
     'grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 gap-4 sm:gap-6 md:gap-8 xl:gap-4';
 
 export default function LoadPostsByRequest(props: IPostsLoaderProps): JSX.Element {
@@ -20,7 +20,7 @@ export default function LoadPostsByRequest(props: IPostsLoaderProps): JSX.Elemen
         list: initialPosts,
         offset: initialPosts.length === amount ? amount : 0,
         limit: amount,
-        hasMore: initialPosts.length !== 0 && initialPosts.length === amount,
+        hasMore: true,
         errorMessage: '',
     });
 
@@ -32,12 +32,14 @@ export default function LoadPostsByRequest(props: IPostsLoaderProps): JSX.Elemen
         if (isLoading || errorMessage) return;
 
         setIsLoading(true);
+
         try {
             const { limit, offset, list } = state;
             const result = await cardsLoader({ limit, offset });
             let hasMore = true;
 
             if (
+                result &&
                 result?.data?.list?.length === 0 &&
                 initialPosts.length === 0 &&
                 typeof zeroPosts === 'function'
@@ -79,13 +81,14 @@ export default function LoadPostsByRequest(props: IPostsLoaderProps): JSX.Elemen
                 ...state,
                 errorMessage: error.message,
             });
+            console.error(`[LoadPostsByRequest Error] : ${error.message}`);
             setIsLoading(false);
         }
     }, [isLoading, state]);
 
     React.useEffect(() => {
         document.documentElement.scrollTo(0, 0);
-        if (initialLoad && initialPosts.length === amount) {
+        if (initialLoad) {
             loadPosts();
         }
     }, []);
@@ -95,7 +98,7 @@ export default function LoadPostsByRequest(props: IPostsLoaderProps): JSX.Elemen
     return (
         list.length > 0 && (
             <Container className="min-h-mainMin">
-                <div className={className}>
+                <div className={gridClassName}>
                     {list.map((data, i) => (
                         <Card {...data} key={data.id} index={i} />
                     ))}

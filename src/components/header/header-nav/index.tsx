@@ -51,6 +51,7 @@ function HeaderNav({ user, isUserFetching }) {
                         <div className="hidden md:flex space-x-4">
                             <HeaderLink href="/">Feed</HeaderLink>
                             <HeaderLink href="/my-posts">My posts</HeaderLink>
+                            <HeaderLink href="/my-posts-isr">My posts ISR</HeaderLink>
                             <HeaderLink href="/add-post">Add post</HeaderLink>
                         </div>
                     )}
