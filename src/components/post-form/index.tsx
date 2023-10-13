@@ -13,7 +13,7 @@ import { IFormInputs, IPostFormProps } from './types';
 // const defHTML = defaultHTML();
 
 export default function PostForm(props: IPostFormProps): JSX.Element {
-    const { title, html, onSubmit, children, imageValidation } = props;
+    const { title, html, onSubmit, children, imageValidation, disabled } = props;
     const editorRef = useRef<any>();
 
     const methods = useForm<IFormInputs>({
@@ -57,7 +57,7 @@ export default function PostForm(props: IPostFormProps): JSX.Element {
                     </span>
                     <Input
                         {...register('Title')}
-                        disabled={isSubmitting}
+                        disabled={isSubmitting || disabled}
                         aria-invalid={errors['Title'] ? 'true' : 'false'}
                         autoFocus
                         placeholder="Enter your title..."
@@ -72,7 +72,7 @@ export default function PostForm(props: IPostFormProps): JSX.Element {
                     <ImageInput
                         {...register('Image')}
                         file={watch('Image')}
-                        disabled={isSubmitting}
+                        disabled={isSubmitting || disabled}
                         placeholder="Select image"
                         accept="image/*,.png,.jpg,.jpeg,.web"
                     />

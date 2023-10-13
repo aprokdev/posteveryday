@@ -16,34 +16,47 @@ import PostForm from '@components/post-form';
 import { IFormFields } from '@components/post-form/types';
 import SmallerContainer from '@components/smaller-container';
 
-export async function getServerSideProps({ req }: GetServerSidePropsContext) {
-    try {
-        const session = await getLoginSession(req);
-        let user = null;
-        if (session) {
-            user = await prisma.user.findUnique({ where: { email: session?.email } });
-            const { hash, salt, ...rest } = user;
-            user = rest;
-            return { props: { user } };
-        } else {
-            return {
-                redirect: {
-                    destination: '/401',
-                    permanent: true,
-                },
-            };
-        }
-    } catch (error) {
-        return {
-            redirect: {
-                destination: '/401',
-                permanent: true,
-            },
-        };
-    }
+// export async function getServerSideProps({ req }: GetServerSidePropsContext) {
+//     try {
+//         const session = await getLoginSession(req);
+//         let user = null;
+//         if (session) {
+//             user = await prisma.user.findUnique({ where: { email: session?.email } });
+//             const { hash, salt, ...rest } = user;
+//             user = rest;
+//             return { props: { user } };
+//         } else {
+//             return {
+//                 redirect: {
+//                     destination: '/401',
+//                     permanent: true,
+//                 },
+//             };
+//         }
+//     } catch (error) {
+//         return {
+//             redirect: {
+//                 destination: '/401',
+//                 permanent: true,
+//             },
+//         };
+//     }
+// }
+
+export async function getStaticProps() {
+    return {
+        props: {},
+        revalidate: 10, // In seconds
+    };
 }
 
-export default function AddPost({ user }: IAddPostProps): JSX.Element {
+export default function AddPost(): JSX.Element {
+    const { user, isLoading } = useUser();
+    const router = useRouter();
+
+    if (!user && !isLoading) {
+        router.push('/401');
+    }
     const [preview, setPreview] = useState<IFormFields | null>(null);
     const [previewMode, setPreviewMode] = useState<boolean>(false);
     const [isLoding, setIsLoading] = useState<boolean>(false);
@@ -98,7 +111,12 @@ export default function AddPost({ user }: IAddPostProps): JSX.Element {
             ) : (
                 <div className="bg-gray-200 pt-8 min-h-post">
                     <SmallerContainer>
-                        <PostForm {...preview} onSubmit={goToPreview} imageValidation>
+                        <PostForm
+                            {...preview}
+                            onSubmit={goToPreview}
+                            imageValidation
+                            disabled={isLoading}
+                        >
                             <Button type="submit" className="w-32">
                                 Preview
                             </Button>

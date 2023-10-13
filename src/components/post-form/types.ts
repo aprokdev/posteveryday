@@ -10,6 +10,7 @@ export interface IPostFormProps {
     onSubmit: (IFormFields) => void;
     children?: React.ReactNode;
     imageValidation?: boolean;
+    disabled?: boolean;
 }
 
 export interface IFormInputs {
