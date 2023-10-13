@@ -20,7 +20,12 @@ export default function LoadPostsByRequest(props: IPostsLoaderProps): JSX.Elemen
         list: initialPosts,
         offset: initialPosts.length === amount ? amount : 0,
         limit: amount,
-        hasMore: true,
+        hasMore:
+            initialPosts.length === 0 && !initialLoad
+                ? false
+                : initialPosts.length < amount
+                ? false
+                : true,
         errorMessage: '',
     });
 
@@ -88,7 +93,10 @@ export default function LoadPostsByRequest(props: IPostsLoaderProps): JSX.Elemen
 
     React.useEffect(() => {
         document.documentElement.scrollTo(0, 0);
-        if (initialLoad) {
+        if (
+            (initialLoad && initialPosts.length === amount) ||
+            (initialLoad && initialPosts.length === 0)
+        ) {
             loadPosts();
         }
     }, []);

@@ -1,13 +1,11 @@
 import { GetServerSidePropsContext } from 'next';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 import { getLoginSession } from '@backend/auth';
 import { prisma } from '@backend/index';
 import { feedModel } from '@backend/utils/data';
 import { getPosts } from '@frontend/api';
 import { IAPIResponse, IGetPostsParams } from '@frontend/api/types';
-// import { useUser } from '@frontend/hooks/useUser';
 import formatDateString from '@utils/formateDateString';
 import { IFeedPageProps } from '@utils/pages-types';
 import React from 'react';
@@ -20,13 +18,6 @@ const PageError = dynamic(() => import('@components/page-error'));
 const EmptyPosts = dynamic(() => import('@components/empty-posts'));
 
 const cardsAmountToLoad = 16;
-
-// export async function getStaticProps() {
-//     return {
-//         props: {},
-//         revalidate: 10, // In seconds
-//     };
-// }
 
 export async function getServerSideProps({ req }: GetServerSidePropsContext) {
     try {
@@ -73,15 +64,6 @@ export async function getServerSideProps({ req }: GetServerSidePropsContext) {
 }
 
 export default function MyPosts({ user, posts = [], error = '' }: IFeedPageProps): JSX.Element {
-    // const { user, isLoading } = useUser();
-    // const router = useRouter();
-
-    // console.log('user, isLoading', user, isLoading);
-
-    // if (isLoading === false && user === null) {
-    //     router.push('/401');
-    // }
-
     const [isPosts, setIsPosts] = React.useState(true);
 
     const cardsLoader = async ({ limit, offset }: IGetPostsParams): Promise<IAPIResponse> => {
