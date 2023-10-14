@@ -50,10 +50,8 @@ function HeaderNav({ user, isUserFetching }) {
                     {user && !isUserFetching && (
                         <div className="hidden md:flex space-x-4">
                             <HeaderLink href="/">Feed</HeaderLink>
-                            <HeaderLink href="/my-posts">My posts SSR</HeaderLink>
-                            <HeaderLink href="/my-posts-isr">My posts ISR</HeaderLink>
-                            <HeaderLink href="/add-post">Add post SSR</HeaderLink>
-                            <HeaderLink href="/add-post-isr">Add post ISR</HeaderLink>
+                            <HeaderLink href="/my-posts">My posts</HeaderLink>
+                            <HeaderLink href="/add-post">Add post</HeaderLink>
                         </div>
                     )}
                     {!user && !isUserFetching && router.pathname === '/posts/[id]' && (

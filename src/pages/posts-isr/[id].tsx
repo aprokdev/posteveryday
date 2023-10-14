@@ -1,44 +1,40 @@
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import { GetServerSidePropsContext } from 'next/types';
-import { getLoginSession } from '@backend/auth';
 import { prisma } from '@backend/index';
+import { useUser } from '@frontend/hooks/useUser';
 import formatDateString from '@utils/formateDateString';
 import { IPostPageProps, IReducerState } from '@utils/pages-types';
 import React, { useEffect, useReducer, useState } from 'react';
 import Layout from '@components/layout';
-import { useUser } from '@frontend/hooks/useUser';
 import ReadMode from '@components/post-page/read-mode';
-import {getPosts} from '@frontend/api';
 
 const EditMode = dynamic(() => import('@components/post-page/edit-mode'));
 const PreviewMode = dynamic(() => import('@components/post-page/preview-mode'));
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-    try {
-        const session = await getLoginSession(context.req);
-        let user = null;
-        if (session) {
-            user = await prisma.user.findUnique({ where: { email: session?.email } });
-        }
-        const data = await prisma.post.findUnique({
-            where: {
-                id: Number(context.params.id),
+export async function getStaticProps(context) {
+    const data = await prisma.post.findUnique({
+        where: {
+            id: Number(context.params.id),
+        },
+    });
+    return {
+        props: {
+            data: {
+                ...data,
+                created: formatDateString(data.created.toISOString()),
             },
-        });
+        },
+        revalidate: 10, // In seconds
+    };
+}
 
-        return {
-            props: {
-                user,
-                data: { ...data, created: formatDateString(data.created.toISOString()) },
-            },
-        };
-    } catch (error) {
-        console.error(error);
-        return {
-            props: { error: error.message },
-        };
-    }
+export async function getStaticPaths() {
+    const posts = await prisma.post.findMany();
+
+    const paths = posts.map((post) => ({
+        params: { id: String(post.id) },
+    }));
+    return { paths, fallback: 'blocking' };
 }
 
 export const actions = {
@@ -74,10 +70,8 @@ export function reducer(state: IReducerState, action: string): IReducerState {
     return state;
 }
 
-export default function PostPage({ user, data, error = '' }: IPostPageProps): JSX.Element {
+export default function PostPage({ data, error = '' }: IPostPageProps): JSX.Element {
     const { user, isLoading } = useUser();
-
-    const data = 
 
     const [mode, dispatch] = useReducer(reducer, initialState);
 
@@ -117,7 +111,7 @@ export default function PostPage({ user, data, error = '' }: IPostPageProps): JS
     };
 
     return data && !error ? (
-        <Layout user={user} isUserFetching={false}>
+        <Layout user={user} isUserFetching={isLoading}>
             <Head>
                 <title>{postData.title}</title>
             </Head>
