@@ -1,12 +1,8 @@
 import Head from 'next/head';
-import Router, { useRouter } from 'next/router';
-import { GetServerSidePropsContext } from 'next/types';
-import { getLoginSession } from '@backend/auth';
-import { prisma } from '@backend/index';
+import Router from 'next/router';
 import { createPost } from '@frontend/api';
 import { useUser } from '@frontend/hooks/useUser';
 import formatDateString from '@utils/formateDateString';
-import { IAddPostProps } from '@utils/pages-types';
 import React, { useState } from 'react';
 import Button from '@components/button';
 import Layout from '@components/layout';
@@ -16,33 +12,6 @@ import PostForm from '@components/post-form';
 import { IFormFields } from '@components/post-form/types';
 import SmallerContainer from '@components/smaller-container';
 
-// export async function getServerSideProps({ req }: GetServerSidePropsContext) {
-//     try {
-//         const session = await getLoginSession(req);
-//         let user = null;
-//         if (session) {
-//             user = await prisma.user.findUnique({ where: { email: session?.email } });
-//             const { hash, salt, ...rest } = user;
-//             user = rest;
-//             return { props: { user } };
-//         } else {
-//             return {
-//                 redirect: {
-//                     destination: '/401',
-//                     permanent: true,
-//                 },
-//             };
-//         }
-//     } catch (error) {
-//         return {
-//             redirect: {
-//                 destination: '/401',
-//                 permanent: true,
-//             },
-//         };
-//     }
-// }
-
 export async function getStaticProps() {
     return {
         props: {},
@@ -51,12 +20,7 @@ export async function getStaticProps() {
 }
 
 export default function AddPost(): JSX.Element {
-    const { user, isLoading } = useUser();
-    const router = useRouter();
-
-    if (!user && !isLoading) {
-        router.push('/401');
-    }
+    const { user, isLoading } = useUser({ redirectTo: '/401' });
     const [preview, setPreview] = useState<IFormFields | null>(null);
     const [previewMode, setPreviewMode] = useState<boolean>(false);
     const [isLoding, setIsLoading] = useState<boolean>(false);

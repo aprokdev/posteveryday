@@ -1,6 +1,5 @@
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 import { getPosts } from '@frontend/api';
 import { IAPIResponse, IGetPostsParams } from '@frontend/api/types';
 import { useUser } from '@frontend/hooks/useUser';
@@ -27,12 +26,7 @@ export async function getStaticProps() {
 }
 
 export default function MyPosts(): JSX.Element {
-    const { user, isLoading } = useUser();
-    const router = useRouter();
-
-    if (isLoading === false && user === null) {
-        router.push('/401');
-    }
+    const { user, isLoading } = useUser({ redirectTo: '/401' });
 
     const [isPosts, setIsPosts] = React.useState(true);
 
