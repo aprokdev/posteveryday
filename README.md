@@ -46,10 +46,13 @@ I made this project to get some practice with [Next.js](https://nextjs.org/), [T
 
 App consists of 6 pages:
 
-1.  (SSR) [Main Feed](https://www.posteveryday.ca/) contains list of cards (posts). First 16 posts are rendered on the backend (SSR) and another 16 posts are rendering on frontend side. Than you can additionally upload posts by clicking "Load more" button.
+1.  (SSG) [Main Feed](https://www.posteveryday.ca/) contains list of cards (posts). First 16 posts are rendered on the backend during build time and another 16 posts are rendering on frontend side. Than you can additionally upload posts by clicking "Load more" button.
 2.  (SSG) [Login](https://www.posteveryday.ca/login), where you can login into the app.
 3.  (SSG) [Register](https://www.posteveryday.ca/register) to create new user
 4.  (SSR) [My Posts](https://www.posteveryday.ca/my-posts), that contains list of posts, created by you. First 16 posts are rendered on the backend (SSR) and another 16 posts are rendering on frontend side. Than you can additionally upload posts by clicking "Load more" button.
-5.  (SSR) [Add post](https://www.posteveryday.ca/add-post), a place to create new posts. Each post should contain a tile, image, and html content. Images will be posted on AWS S3 bucket.
-6.  (SSR) [Post page](https://www.posteveryday.ca/posts/1) to read the post, and delete/update it if you are the person, who have created it (there is also a "role" field in user data, and if you have an "admin" role you can delete/update any post of any user. You will see this page after clicking on post card in the [Main Feed](https://www.posteveryday.ca/) or [My Posts](https://www.posteveryday.ca/my-posts). When you are updating a post with another image, previous one will be deleted from AWS S3 bucket.
-7.  (SSG) [Terms of use](https://www.posteveryday.ca/terms)
+5.  (SSG) [My Posts](https://www.posteveryday.ca/my-posts-ssg), that contains list of posts, created by you. First 16 posts are rendering on frontend side. Than you can additionally upload posts by clicking "Load more" button.
+6.  (SSR) [Add post](https://www.posteveryday.ca/add-post), a place to create new posts. Each post should contain a tile, image, and html content. Images will be posted on AWS S3 bucket.
+7.  (SSG) [Add post](https://www.posteveryday.ca/add-post-ssg), a place to create new posts. Each post should contain a tile, image, and html content. Images will be posted on AWS S3 bucket. Made as SSG to faster load initial content.
+8.  (SSR) [Post page](https://www.posteveryday.ca/posts/1) to read the post, and delete/update it if you are the person, who have created it (there is also a "role" field in user data, and if you have an "admin" role you can delete/update any post of any user. You will see this page after clicking on post card in the [Main Feed](https://www.posteveryday.ca/) or [My Posts](https://www.posteveryday.ca/my-posts). When you are updating a post with another image, previous one will be deleted from AWS S3 bucket.
+9.  (ISR) [Post page](https://www.posteveryday.ca/posts-isr/1) the same as /posts/[id] page, but made as ISR.
+10. (SSG) [Terms of use](https://www.posteveryday.ca/terms)
