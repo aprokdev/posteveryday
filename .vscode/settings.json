@@ -10,8 +10,8 @@
   },
   "[typescript]": {},
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true,
-    "source.fixAll.prettier": true
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.prettier": "explicit"
   },
   "sqltools.connections": [
     {
