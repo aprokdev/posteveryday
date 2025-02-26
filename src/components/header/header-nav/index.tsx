@@ -52,6 +52,7 @@ function HeaderNav({ user, isUserFetching }) {
                             <HeaderLink href="/">Feed</HeaderLink>
                             <HeaderLink href="/my-posts">My posts</HeaderLink>
                             {/* <HeaderLink href="/add-post">Add post</HeaderLink> */}
+                            <HeaderLink href="/terms">Terms</HeaderLink>
                         </div>
                     )}
                     {!user && !isUserFetching && router.pathname === '/posts/[id]' && (

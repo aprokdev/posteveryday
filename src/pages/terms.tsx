@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import HeaderLink from '@components/header/header-link';
 import SmallerContainer from '@components/smaller-container';
 
 export async function getStaticProps(context) {
@@ -138,6 +139,9 @@ export default function TermsOfUsePage(): JSX.Element {
                         aprokopenko.dev@gmail.com
                     </a>
                 </p>
+                <div className="grid justify-center">
+                    <HeaderLink href="/">BACK TO FEED</HeaderLink>
+                </div>
             </SmallerContainer>
         </div>
     );
